@@ -6,3 +6,6 @@ export { SearchIcon } from "./SearchIcon";
 export { HeartIcon } from "./HeartIcon";
 export { CartIcon } from "./CartIcon";
 export { BellIcon } from "./BellIcon";
+export { InstagramIcon } from "./InstagramIcon";
+export { YoutubeIcon } from "./YoutubeIcon";
+export { BlogIcon } from "./BlogIcon";
