@@ -33,7 +33,7 @@ interface TextProps {
   fontWeight?: CSSProperties["fontWeight"];
 }
 
-export default function Text({
+const Text = ({
   children,
   tag: Tag = "span",
   fontSize = 14,
@@ -41,10 +41,12 @@ export default function Text({
   lineHeight,
   letterSpacing,
   fontWeight,
-}: TextProps) {
+}: TextProps) => {
   return (
     <Tag style={{ fontSize, color, lineHeight, letterSpacing, fontWeight }}>
       {children}
     </Tag>
   );
-}
+};
+
+export default Text;
