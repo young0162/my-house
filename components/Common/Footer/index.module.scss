@@ -1,0 +1,205 @@
+.root {
+  width: 100%;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ebebeb;
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 32px;
+}
+
+/* 상단 */
+.top {
+  display: flex;
+  gap: 48px;
+  justify-content: space-between;
+}
+
+.linkGroups {
+  display: flex;
+  gap: 48px;
+  flex: 1;
+}
+
+.linkGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 100px;
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  text-decoration: none;
+
+  &:hover span {
+    color: #1a1a1a;
+  }
+}
+
+/* 소셜 */
+.sideSection {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.socialList {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.socialBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
+  color: #555;
+  text-decoration: none;
+  transition: background-color 0.12s, color 0.12s;
+
+  &:hover {
+    background-color: #f0f0f0;
+    color: #1a1a1a;
+  }
+}
+
+.appBadges {
+  display: flex;
+  gap: 8px;
+}
+
+.appBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.12s;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+/* 구분선 */
+.divider {
+  height: 1px;
+  background-color: #e8e8e8;
+  margin: 32px 0 24px;
+}
+
+/* 정책 */
+.policyNav {
+  margin-bottom: 16px;
+}
+
+.policyList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.policyItem {
+  display: flex;
+  align-items: center;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    background-color: #d0d0d0;
+    margin: 0 10px;
+  }
+
+  &:last-child::after {
+    display: none;
+  }
+}
+
+.policyLink {
+  text-decoration: none;
+
+  &:hover span {
+    color: #1a1a1a;
+  }
+}
+
+/* 사업자 정보 */
+.companySection {
+  margin-bottom: 16px;
+}
+
+.companyToggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.toggleIcon {
+  transition: transform 0.2s;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.companyInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.companyItem {
+  display: flex;
+
+  &::after {
+    content: '|';
+    color: #d0d0d0;
+    margin: 0 8px;
+    font-size: 11px;
+  }
+
+  &:last-child::after {
+    display: none;
+  }
+}
+
+/* 카피라이트 */
+.copyright {
+  margin-top: 4px;
+}
