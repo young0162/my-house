@@ -2,3 +2,7 @@ export { KakaoIcon } from "./KakaoIcon";
 export { NaverIcon } from "./NaverIcon";
 export { AppleIcon } from "./AppleIcon";
 export { GoogleIcon } from "./GoogleIcon";
+export { SearchIcon } from "./SearchIcon";
+export { HeartIcon } from "./HeartIcon";
+export { CartIcon } from "./CartIcon";
+export { BellIcon } from "./BellIcon";
