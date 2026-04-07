@@ -1,22 +1,8 @@
 "use client";
 
 import Text from "@/components/Common/Text";
-import { AppleIcon, GoogleIcon, KakaoIcon, NaverIcon } from "@/components/Common/Icon";
 import styles from "./page.module.scss";
-import type { SocialItem } from "@/app/types/login";
-
-const ACCOUNT_LINKS = [
-  { label: "아이디 찾기", href: "#" },
-  { label: "비밀번호 찾기", href: "#" },
-  { label: "회원가입", href: "#" },
-];
-
-const SOCIAL_ITEMS: SocialItem[] = [
-  { key: "kakao", label: "카카오로 계속하기", Icon: KakaoIcon, styleClass: styles.kakao },
-  { key: "naver", label: "네이버로 계속하기", Icon: NaverIcon, styleClass: styles.naver },
-  { key: "apple", label: "Apple로 계속하기", Icon: AppleIcon, styleClass: styles.apple },
-  { key: "google", label: "Google로 계속하기", Icon: GoogleIcon, styleClass: styles.google },
-];
+import { ACCOUNT_LINKS, SOCIAL_ITEMS } from "@/constants/login";
 
 export default function LoginPage() {
   return (
@@ -76,9 +62,9 @@ export default function LoginPage() {
 
         <section aria-label="소셜 로그인">
           <ul className={styles.socialList}>
-            {SOCIAL_ITEMS.map(({ key, label, Icon, styleClass }) => (
+            {SOCIAL_ITEMS.map(({ key, label, Icon }) => (
               <li key={key}>
-                <button type="button" className={`${styles.socialBtn} ${styleClass}`}>
+                <button type="button" className={`${styles.socialBtn} ${styles[key]}`}>
                   <Icon />
                   <Text tag="span" fontSize={15} fontWeight={500}>{label}</Text>
                 </button>
