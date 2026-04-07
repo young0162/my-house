@@ -3,6 +3,20 @@
 import Text from "@/components/Common/Text";
 import { AppleIcon, GoogleIcon, KakaoIcon, NaverIcon } from "@/components/Common/Icon";
 import styles from "./page.module.scss";
+import type { SocialItem } from "@/app/types/login";
+
+const ACCOUNT_LINKS = [
+  { label: "아이디 찾기", href: "#" },
+  { label: "비밀번호 찾기", href: "#" },
+  { label: "회원가입", href: "#" },
+];
+
+const SOCIAL_ITEMS: SocialItem[] = [
+  { key: "kakao", label: "카카오로 계속하기", Icon: KakaoIcon, styleClass: styles.kakao },
+  { key: "naver", label: "네이버로 계속하기", Icon: NaverIcon, styleClass: styles.naver },
+  { key: "apple", label: "Apple로 계속하기", Icon: AppleIcon, styleClass: styles.apple },
+  { key: "google", label: "Google로 계속하기", Icon: GoogleIcon, styleClass: styles.google },
+];
 
 export default function LoginPage() {
   return (
@@ -19,12 +33,7 @@ export default function LoginPage() {
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <fieldset style={{ border: "none", padding: 0, margin: 0 }}>
             <legend style={{ display: "none" }}>이메일 로그인</legend>
-            <input
-              type="email"
-              placeholder="이메일 주소"
-              className={styles.input}
-              autoComplete="email"
-            />
+            <input type="email" placeholder="이메일 주소" className={styles.input} autoComplete="email" />
             <input
               type="password"
               placeholder="비밀번호"
@@ -42,11 +51,20 @@ export default function LoginPage() {
 
         <nav aria-label="계정 관련 링크">
           <ul className={styles.links}>
-            <li><a href="#" className={styles.link}><Text tag="span" fontSize={13}>아이디 찾기</Text></a></li>
-            <li aria-hidden="true"><span className={styles.dot}>·</span></li>
-            <li><a href="#" className={styles.link}><Text tag="span" fontSize={13}>비밀번호 찾기</Text></a></li>
-            <li aria-hidden="true"><span className={styles.dot}>·</span></li>
-            <li><a href="#" className={styles.link}><Text tag="span" fontSize={13}>회원가입</Text></a></li>
+            {ACCOUNT_LINKS.map((item, index) => (
+              <>
+                <li key={item.label}>
+                  <a href={item.href} className={styles.link}>
+                    <Text tag="span" fontSize={13}>{item.label}</Text>
+                  </a>
+                </li>
+                {index < ACCOUNT_LINKS.length - 1 && (
+                  <li key={`dot-${index}`} aria-hidden="true">
+                    <span className={styles.dot}>·</span>
+                  </li>
+                )}
+              </>
+            ))}
           </ul>
         </nav>
 
@@ -58,30 +76,14 @@ export default function LoginPage() {
 
         <section aria-label="소셜 로그인">
           <ul className={styles.socialList}>
-            <li>
-              <button type="button" className={`${styles.socialBtn} ${styles.kakao}`}>
-                <KakaoIcon />
-                <Text tag="span" fontSize={15} fontWeight={500}>카카오로 계속하기</Text>
-              </button>
-            </li>
-            <li>
-              <button type="button" className={`${styles.socialBtn} ${styles.naver}`}>
-                <NaverIcon />
-                <Text tag="span" fontSize={15} fontWeight={500}>네이버로 계속하기</Text>
-              </button>
-            </li>
-            <li>
-              <button type="button" className={`${styles.socialBtn} ${styles.apple}`}>
-                <AppleIcon />
-                <Text tag="span" fontSize={15} fontWeight={500}>Apple로 계속하기</Text>
-              </button>
-            </li>
-            <li>
-              <button type="button" className={`${styles.socialBtn} ${styles.google}`}>
-                <GoogleIcon />
-                <Text tag="span" fontSize={15} fontWeight={500}>Google로 계속하기</Text>
-              </button>
-            </li>
+            {SOCIAL_ITEMS.map(({ key, label, Icon, styleClass }) => (
+              <li key={key}>
+                <button type="button" className={`${styles.socialBtn} ${styleClass}`}>
+                  <Icon />
+                  <Text tag="span" fontSize={15} fontWeight={500}>{label}</Text>
+                </button>
+              </li>
+            ))}
           </ul>
         </section>
       </article>
