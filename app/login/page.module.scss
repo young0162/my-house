@@ -1,0 +1,158 @@
+.root {
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 0 24px 48px;
+}
+
+.header {
+  text-align: center;
+  padding-top: 48px;
+  margin-bottom: 36px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+  color: #00c896;
+  letter-spacing: -0.5px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  font-size: 15px;
+  color: #1a1a1a;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+  background-color: #fff;
+
+  &:focus {
+    border-color: #1a1a1a;
+  }
+
+  &::placeholder {
+    color: #aaa;
+  }
+}
+
+.loginBtn {
+  width: 100%;
+  height: 52px;
+  margin-top: 4px;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.link {
+  font-size: 13px;
+  color: #888;
+  text-decoration: none;
+
+  &:hover {
+    color: #444;
+  }
+}
+
+.dot {
+  color: #ccc;
+  font-size: 13px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0;
+
+  &Line {
+    flex: 1;
+    height: 1px;
+    background-color: #ebebeb;
+  }
+}
+
+.socialList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.socialBtn {
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+  font-family: inherit;
+
+  &.kakao {
+    background-color: #FEE500;
+    color: #3C1E1E;
+  }
+
+  &.naver {
+    background-color: #03C75A;
+    color: #fff;
+  }
+
+  &.apple {
+    background-color: #000;
+    color: #fff;
+  }
+
+  &.google {
+    background-color: #fff;
+    color: #1a1a1a;
+    border: 1.5px solid #e0e0e0;
+  }
+}
