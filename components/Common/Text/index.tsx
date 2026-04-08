@@ -31,19 +31,29 @@ interface TextProps {
   lineHeight?: CSSProperties["lineHeight"];
   letterSpacing?: CSSProperties["letterSpacing"];
   fontWeight?: CSSProperties["fontWeight"];
+  className?: string;
 }
 
 const Text = ({
   children,
   tag: Tag = "span",
-  fontSize = 14,
-  color = "#222",
+  fontSize,
+  color,
   lineHeight,
   letterSpacing,
   fontWeight,
+  className,
 }: TextProps) => {
+  const style: CSSProperties = {
+    ...(fontSize !== undefined && { fontSize }),
+    ...(color !== undefined && { color }),
+    ...(lineHeight !== undefined && { lineHeight }),
+    ...(letterSpacing !== undefined && { letterSpacing }),
+    ...(fontWeight !== undefined && { fontWeight }),
+  };
+
   return (
-    <Tag style={{ fontSize, color, lineHeight, letterSpacing, fontWeight }}>
+    <Tag style={style} className={className}>
       {children}
     </Tag>
   );
