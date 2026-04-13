@@ -70,7 +70,7 @@ const ProductCard = ({
         <div className={styles.meta}>
           {rating !== undefined && reviewCount !== undefined && (
             <Text tag="span" className={styles.rating}>
-              ★ {rating.toFixed(1)}
+              ★ {rating?.toFixed(1)}
               <Text tag="span" className={styles.reviewCount}>
                 {" "}
                 ({reviewCount.toLocaleString()})

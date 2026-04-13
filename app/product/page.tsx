@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "@/components/Product/ProductCard";
 import Text from "@/components/Common/Text";
-import { MOCK_PRODUCTS, PRODUCT_SORT_OPTIONS } from "@/constants/product";
-import { SortOption } from "@/app/types/product";
+import { PRODUCT_SORT_OPTIONS } from "@/constants/product";
+import { ProductCardProps, SortOption } from "@/app/types/product";
+import { getProducts } from "@/app/services/product";
 import styles from "./page.module.scss";
 
 const ProductPage = () => {
   const [sortBy, setSortBy] = useState<SortOption>("recommended");
+  const [products, setProducts] = useState<ProductCardProps[]>([]);
+
+  useEffect(() => {
+    getProducts(sortBy).then(setProducts);
+  }, [sortBy]);
 
   return (
     <div className={styles.page}>
@@ -24,7 +30,7 @@ const ProductPage = () => {
 
         <div className={styles.toolbar}>
           <Text tag="span" className={styles.totalCount}>
-            총 {MOCK_PRODUCTS.length}개
+            총 {products.length}개
           </Text>
           <div className={styles.sortOptions}>
             {PRODUCT_SORT_OPTIONS.map((option) => (
@@ -43,7 +49,7 @@ const ProductPage = () => {
         </div>
 
         <ul className={styles.grid}>
-          {MOCK_PRODUCTS.map((product) => (
+          {products.map((product) => (
             <li key={product.id}>
               <ProductCard {...product} />
             </li>
