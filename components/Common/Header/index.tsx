@@ -7,7 +7,7 @@ import { SearchIcon, HeartIcon, CartIcon, BellIcon } from "@/components/Common/I
 import styles from "./index.module.scss";
 
 const NAV_ITEMS = [
-  { label: "스토어", href: "#" },
+  { label: "스토어", href: "/product" },
   { label: "커뮤니티", href: "#" },
   { label: "전문가", href: "#" },
   { label: "집들이", href: "#" },
