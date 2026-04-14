@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
 }
 
 .container {
@@ -133,15 +132,14 @@
   border-radius: 8px;
   cursor: pointer;
   letter-spacing: -0.2px;
-  font-family: inherit;
 
   &.kakao {
-    background-color: #FEE500;
-    color: #3C1E1E;
+    background-color: #fee500;
+    color: #3c1e1e;
   }
 
   &.naver {
-    background-color: #03C75A;
+    background-color: #03c75a;
     color: #fff;
   }
 
