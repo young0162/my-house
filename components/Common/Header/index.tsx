@@ -5,6 +5,7 @@ import Link from "next/link";
 import Text from "@/components/Common/Text";
 import { SearchIcon, HeartIcon, CartIcon, BellIcon } from "@/components/Common/Icon";
 import styles from "./index.module.scss";
+import { LogoIcon } from "../Icon/LogoIcon";
 
 const NAV_ITEMS = [
   { label: "스토어", href: "/product" },
@@ -23,12 +24,7 @@ const Header = () => {
       <div className={styles.inner}>
         {/* Logo */}
         <Link href="/" className={styles.logo} aria-label="오늘의집 홈">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2L3 9.5V21h6v-6h6v6h6V9.5L12 2z" fill="#00c896" />
-          </svg>
-          <Text tag="span" fontSize={18} fontWeight={800} color="#222">
-            오늘의집
-          </Text>
+          <LogoIcon />
         </Link>
 
         {/* Nav */}
@@ -37,7 +33,7 @@ const Header = () => {
             {NAV_ITEMS.map((item) => (
               <li key={item.label}>
                 <Link href={item.href} className={styles.navLink}>
-                  <Text tag="span" fontSize={15} fontWeight={500} color="#333">
+                  <Text tag="span" fontSize={18} fontWeight={500} color="#333">
                     {item.label}
                   </Text>
                 </Link>

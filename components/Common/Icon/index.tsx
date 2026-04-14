@@ -9,3 +9,4 @@ export { BellIcon } from "./BellIcon";
 export { InstagramIcon } from "./InstagramIcon";
 export { YoutubeIcon } from "./YoutubeIcon";
 export { BlogIcon } from "./BlogIcon";
+export { LogoIcon } from "./LogoIcon";
