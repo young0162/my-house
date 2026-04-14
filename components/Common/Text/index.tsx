@@ -21,7 +21,7 @@ type TextTag =
   | "code"
   | "label";
 
-type TextColor = "gray01" | "primary";
+type TextColor = "gray01" | "primary" | "white";
 
 interface TextProps {
   children: ReactNode;
@@ -47,6 +47,7 @@ const Text = ({
   const COLOR_MAP: Record<string, string> = {
     primary: "var(--color-primary, #00A1FF)",
     gray01: "var(--color-text-primary, #2f3438)",
+    white: "var(--color-text-white, #fff)",
   };
 
   const resolvedColor = color !== undefined ? (COLOR_MAP[color] ?? color) : undefined;

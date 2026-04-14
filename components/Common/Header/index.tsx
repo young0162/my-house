@@ -75,7 +75,7 @@ const Header = () => {
             <BellIcon />
           </button>
           <Link href="/login" className={styles.loginBtn}>
-            <Text tag="span" fontSize={14} fontWeight={600} color="gray01">
+            <Text tag="span" fontSize={14} fontWeight={600} color="white">
               로그인
             </Text>
           </Link>
