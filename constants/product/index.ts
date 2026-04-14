@@ -1,4 +1,5 @@
 import { ProductCardProps, SortOption } from "@/app/types/product";
+import { BannerItem } from "@/app/types/bannerSlider";
 
 export const MOCK_PRODUCTS: ProductCardProps[] = [
   {
@@ -98,6 +99,39 @@ export const MOCK_PRODUCTS: ProductCardProps[] = [
     rating: 4.3,
     reviewCount: 189,
     isFreeShipping: true,
+  },
+];
+
+export const PRODUCT_BANNERS: BannerItem[] = [
+  {
+    id: 1,
+    subtitle: "단독 컬렉션",
+    title: "ohouse",
+    titleBadge: "edition",
+    description: "OLLY 컴팩트 모듈 선풍기 쿠폰 할인",
+    imageUrl: "https://picsum.photos/seed/banner1/600/400",
+    bgColor: "#f0eeeb",
+    href: "/product/exclusive",
+  },
+  {
+    id: 2,
+    subtitle: "신규 입점",
+    title: "여름 특가",
+    titleBadge: "SALE",
+    description: "에어컨 & 냉방 가전 최대 20% 할인",
+    imageUrl: "https://picsum.photos/seed/banner2/600/400",
+    bgColor: "#e8f0f8",
+    href: "/product/deal",
+  },
+  {
+    id: 3,
+    subtitle: "베스트 셀러",
+    title: "인테리어",
+    titleBadge: "pick",
+    description: "이달의 베스트 인테리어 아이템",
+    imageUrl: "https://picsum.photos/seed/banner3/600/400",
+    bgColor: "#f0f0e8",
+    href: "/product/best",
   },
 ];
 

@@ -1,0 +1,150 @@
+.root {
+  position: relative;
+  width: 100%;
+}
+
+/* 슬라이드 뷰포트 */
+.viewport {
+  width: 100%;
+  overflow: hidden;
+  height: 280px;
+  position: relative;
+}
+
+/* 슬라이드 트랙 */
+.track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 슬라이드 각 아이템 */
+.slide {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-decoration: none;
+}
+
+/* 슬라이드 내부 콘텐츠 래퍼 */
+.slideInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1256px;
+  padding: 0 60px;
+  gap: 32px;
+}
+
+/* 텍스트 영역 */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* 타이틀 + 뱃지 */
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  background-color: #1a1a1a;
+  border-radius: 6px;
+}
+
+/* 이미지 */
+.imageWrap {
+  position: relative;
+  width: 380px;
+  height: 240px;
+  flex-shrink: 0;
+}
+
+/* 컨트롤 오버레이 (화살표 + 카운터) */
+.controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.controlsVisible {
+    opacity: 1;
+  }
+}
+
+/* 컨트롤 내부 레이아웃 — 콘텐츠와 동일한 max-width/padding */
+.controlsInner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1380px;
+  height: 100%;
+  padding: 0 60px;
+  margin: 0 auto;
+}
+
+/* 화살표 버튼 */
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  cursor: pointer;
+  pointer-events: all;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  &:hover {
+    background-color: #f5f5f5;
+    border-color: #bbb;
+  }
+}
+
+/* 카운터 래퍼 — 콘텐츠 영역과 동일한 max-width/padding */
+.counterWrapper {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.counterInner {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 1256px;
+  padding: 0 60px;
+  margin: 0 auto;
+}
+
+/* 카운터 */
+.counter {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
