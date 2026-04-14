@@ -18,14 +18,14 @@ const Footer = () => {
           <div className={styles.linkGroups}>
             {FOOTER_LINKS.map(({ title, items }) => (
               <div key={title} className={styles.linkGroup}>
-                <Text tag="strong" fontSize={14} fontWeight={700} color="#222">
+                <Text tag="strong" fontSize={14} fontWeight={700} color="gray01">
                   {title}
                 </Text>
                 <ul className={styles.linkList}>
                   {items.map(({ label, href }) => (
                     <li key={label}>
                       <Link href={href} className={styles.link}>
-                        <Text tag="span" fontSize={13} color="#444">
+                        <Text tag="span" fontSize={13} color="gray01">
                           {label}
                         </Text>
                       </Link>
@@ -38,7 +38,7 @@ const Footer = () => {
 
           {/* 소셜 + 앱 다운로드 */}
           <div className={styles.sideSection}>
-            <Text tag="strong" fontSize={14} fontWeight={700} color="#222">
+            <Text tag="strong" fontSize={14} fontWeight={700} color="gray01">
               SNS
             </Text>
             <ul className={styles.socialList}>
@@ -53,10 +53,10 @@ const Footer = () => {
 
             <div className={styles.appBadges}>
               <Link href="#" className={styles.appBadge}>
-                <Text tag="span" fontSize={12} fontWeight={600} color="#222">App Store</Text>
+                <Text tag="span" fontSize={12} fontWeight={600} color="gray01">App Store</Text>
               </Link>
               <Link href="#" className={styles.appBadge}>
-                <Text tag="span" fontSize={12} fontWeight={600} color="#222">Google Play</Text>
+                <Text tag="span" fontSize={12} fontWeight={600} color="gray01">Google Play</Text>
               </Link>
             </div>
           </div>
@@ -71,7 +71,7 @@ const Footer = () => {
             {POLICY_LINKS.map(({ label, href }, index) => (
               <li key={label} className={styles.policyItem}>
                 <Link href={href} className={styles.policyLink}>
-                  <Text tag="span" fontSize={12} fontWeight={index === 0 ? 700 : 400} color="#333">
+                  <Text tag="span" fontSize={12} fontWeight={index === 0 ? 700 : 400} color="gray01">
                     {label}
                   </Text>
                 </Link>
@@ -88,7 +88,7 @@ const Footer = () => {
             onClick={() => setCompanyOpen((prev) => !prev)}
             aria-expanded={companyOpen}
           >
-            <Text tag="span" fontSize={12} color="#444">
+            <Text tag="span" fontSize={12} color="gray01">
               버킷플레이스 사업자 정보
             </Text>
             <svg
@@ -107,8 +107,8 @@ const Footer = () => {
             <ul className={styles.companyInfo}>
               {COMPANY_INFO.map(({ label, value }) => (
                 <li key={label} className={styles.companyItem}>
-                  <Text tag="span" fontSize={12} color="#444">{label}</Text>
-                  <Text tag="span" fontSize={12} color="#444">&nbsp;{value}</Text>
+                  <Text tag="span" fontSize={12} color="gray01">{label}</Text>
+                  <Text tag="span" fontSize={12} color="gray01">&nbsp;{value}</Text>
                 </li>
               ))}
             </ul>
@@ -117,7 +117,7 @@ const Footer = () => {
 
         {/* 카피라이트 */}
         <div className={styles.copyright}>
-          <Text tag="span" fontSize={12} color="#444">
+          <Text tag="span" fontSize={12} color="gray01">
             © 2015 Bucketplace Co., Ltd. All rights reserved.
           </Text>
         </div>

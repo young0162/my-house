@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Text from "@/components/Common/Text";
 import { SearchIcon, HeartIcon, CartIcon, BellIcon } from "@/components/Common/Icon";
 import styles from "./index.module.scss";
@@ -16,6 +17,7 @@ const NAV_ITEMS = [
 ];
 
 const Header = () => {
+  const pathname = usePathname();
   const [searchValue, setSearchValue] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
 
@@ -33,7 +35,11 @@ const Header = () => {
             {NAV_ITEMS.map((item) => (
               <li key={item.label}>
                 <Link href={item.href} className={styles.navLink}>
-                  <Text tag="span" fontSize={18} fontWeight={500} color="#333">
+                  <Text
+                    fontSize={18}
+                    fontWeight="bold"
+                    color={pathname.startsWith(item.href) && item.href !== "#" ? "primary" : "gray01"}
+                  >
                     {item.label}
                   </Text>
                 </Link>
@@ -69,7 +75,7 @@ const Header = () => {
             <BellIcon />
           </button>
           <Link href="/login" className={styles.loginBtn}>
-            <Text tag="span" fontSize={14} fontWeight={600} color="#222">
+            <Text tag="span" fontSize={14} fontWeight={600} color="gray01">
               로그인
             </Text>
           </Link>

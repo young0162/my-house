@@ -10,7 +10,7 @@ export default function LoginPage() {
       <article className={styles.container}>
         <header className={styles.header}>
           <h1 className={styles.logo}>
-            <Text tag="span" fontSize={28} fontWeight={800} color="#222">
+            <Text tag="span" fontSize={28} fontWeight={800} color="gray01">
               오늘의집
             </Text>
           </h1>
@@ -29,7 +29,7 @@ export default function LoginPage() {
             />
           </fieldset>
           <button type="submit" className={styles.loginBtn}>
-            <Text tag="span" fontSize={16} fontWeight={600} color="#222">
+            <Text tag="span" fontSize={16} fontWeight={600} color="gray01">
               로그인
             </Text>
           </button>
@@ -56,7 +56,7 @@ export default function LoginPage() {
 
         <div className={styles.divider} role="separator">
           <div className={styles.dividerLine} />
-          <Text tag="span" fontSize={13} color="#444">또는</Text>
+          <Text tag="span" fontSize={13} color="gray01">또는</Text>
           <div className={styles.dividerLine} />
         </div>
 
