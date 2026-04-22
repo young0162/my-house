@@ -41,9 +41,10 @@ const CategoryPageContent = () => {
               <Divider height={25} />
               <MdPick />
 
-              <Divider />
+              <Divider height={30} />
               <FilterBar />
 
+              <Divider height={30} />
               <div className={styles.toolbar}>
                 <span className={styles.totalCount}>전체 {MOCK_PRODUCTS.length}개</span>
                 <SortDropdown value={sortBy} onChange={setSortBy} />
