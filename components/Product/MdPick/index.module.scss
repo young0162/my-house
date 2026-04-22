@@ -1,0 +1,74 @@
+.root {
+  margin-bottom: 48px;
+}
+
+/* ── Title ── */
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: $color-text-primary;
+  letter-spacing: -0.3px;
+  margin-bottom: 16px;
+}
+
+/* ── Carousel ── */
+.carouselWrap {
+  position: relative;
+}
+
+.carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+  list-style: none;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.cardWrap {
+  flex-shrink: 0;
+  width: 220px;
+  scroll-snap-align: start;
+}
+
+/* ── Arrow ── */
+.arrowBtn {
+  position: absolute;
+  top: 38%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: $color-bg-white;
+  border: 1px solid $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.15s;
+  color: $color-text-primary;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.arrowBtnRight {
+  right: -18px;
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+.arrowBtnLeft {
+  left: -18px;
+  transform: translateY(-50%) rotate(90deg);
+}

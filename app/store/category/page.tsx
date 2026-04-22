@@ -6,6 +6,7 @@ import NavBar from "@/components/Common/NavBar";
 import CategoryList from "@/components/Product/CategoryList";
 import ProductCard from "@/components/Product/ProductCard";
 import Breadcrumb from "@/components/Common/Breadcrumb";
+import MdPick from "@/components/Product/MdPick";
 import { MOCK_PRODUCTS } from "@/constants/product";
 import { CATEGORIES, DEFAULT_CATEGORY_ID } from "@/constants/category";
 
@@ -31,6 +32,8 @@ const CategoryPageContent = () => {
                   items={[{ label: "스토어", href: "/store" }, { label: currentCategory?.label ?? "카테고리" }]}
                 />
               </div>
+
+              <MdPick />
 
               <ul className={styles.grid}>
                 {MOCK_PRODUCTS.map((product) => (

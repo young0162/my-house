@@ -1,0 +1,12 @@
+.delivery {
+  font-size: 12px;
+  color: $color-text-tertiary;
+}
+
+.deliveryExpress {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: $color-primary;
+  font-weight: 500;
+}
