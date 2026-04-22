@@ -12,7 +12,7 @@
   position: relative;
   width: 100%;
   padding-top: 100%;
-  border-radius: 10px;
+  border-radius: 4px;
   overflow: hidden;
   background-color: $color-bg-gray;
 }
@@ -36,7 +36,9 @@
   align-items: center;
   justify-content: center;
   color: #aaa;
-  transition: background-color 0.15s, color 0.15s;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
 
   &:hover {
     background-color: #fff;
