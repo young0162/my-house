@@ -252,10 +252,12 @@ export const MD_PICK_ITEMS: MdPickItem[] = [
   },
 ];
 
-export const PRODUCT_SORT_OPTIONS: { label: string; value: SortOption }[] = [
-  { label: "추천순", value: "recommended" },
-  { label: "신상품순", value: "newest" },
+export const PRODUCT_SORT_OPTIONS: { label: string; value: SortOption; info?: string }[] = [
+  { label: "판매순", value: "sales" },
+  { label: "추천순", value: "recommended", info: "오늘의집 추천 알고리즘 기반 정렬입니다." },
   { label: "낮은가격순", value: "price_asc" },
   { label: "높은가격순", value: "price_desc" },
   { label: "리뷰많은순", value: "review" },
+  { label: "유저사진 많은순", value: "user_photo" },
+  { label: "최신순", value: "newest" },
 ];

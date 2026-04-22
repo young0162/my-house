@@ -13,4 +13,4 @@ export interface ProductCardProps {
   isLiked?: boolean;
 }
 
-export type SortOption = "recommended" | "newest" | "price_asc" | "price_desc" | "review";
+export type SortOption = "recommended" | "sales" | "price_asc" | "price_desc" | "review" | "user_photo" | "newest";

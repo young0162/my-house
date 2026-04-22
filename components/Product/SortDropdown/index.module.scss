@@ -1,0 +1,146 @@
+.root {
+  position: relative;
+}
+
+/* ── Trigger ── */
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-text-secondary;
+  padding: 0;
+  position: relative;
+  z-index: 101;
+
+  svg {
+    width: 11px;
+    height: 11px;
+    color: $color-text-tertiary;
+  }
+
+  &:hover {
+    color: $color-text-primary;
+  }
+}
+
+/* ── Backdrop ── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: transparent;
+  cursor: default;
+}
+
+/* ── Modal 패널 ── */
+.modal {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 100;
+
+  background: $color-bg-white;
+  border: 1px solid $color-border-light;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 20px 24px;
+
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.modalOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ── 옵션 그리드 (2열) ── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 40px;
+  list-style: none;
+}
+
+/* ── 옵션 버튼 ── */
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.label {
+  font-size: 15px;
+  color: $color-text-secondary;
+  transition: color 0.12s;
+  white-space: nowrap;
+}
+
+.optionActive .label {
+  color: $color-text-primary;
+  font-weight: 500;
+}
+
+/* ── 라디오 버튼 ── */
+.radio {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.8px solid $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.radioActive {
+  border-color: $color-primary;
+  background-color: $color-primary;
+}
+
+.radioDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+/* ── Info 아이콘 & 툴팁 ── */
+.infoWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 11px;
+  padding: 5px 9px;
+  border-radius: 5px;
+  pointer-events: none;
+  z-index: 10;
+}
