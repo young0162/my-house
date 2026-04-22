@@ -20,7 +20,7 @@ const ProductPage = () => {
 
   return (
     <>
-      <NavBar activeHref="/product" />
+      <NavBar activeHref="/store" />
       <BannerSlider items={PRODUCT_BANNERS} />
       <div className={styles.page}>
         <div className={styles.inner}>

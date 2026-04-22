@@ -111,7 +111,7 @@ export const PRODUCT_BANNERS: BannerItem[] = [
     description: "OLLY 컴팩트 모듈 선풍기 쿠폰 할인",
     imageUrl: "https://picsum.photos/seed/banner1/600/400",
     bgColor: "#f0eeeb",
-    href: "/product/exclusive",
+    href: "/store/exclusive",
   },
   {
     id: 2,
@@ -121,7 +121,7 @@ export const PRODUCT_BANNERS: BannerItem[] = [
     description: "에어컨 & 냉방 가전 최대 20% 할인",
     imageUrl: "https://picsum.photos/seed/banner2/600/400",
     bgColor: "#e8f0f8",
-    href: "/product/deal",
+    href: "/store/deal",
   },
   {
     id: 3,
@@ -131,7 +131,7 @@ export const PRODUCT_BANNERS: BannerItem[] = [
     description: "이달의 베스트 인테리어 아이템",
     imageUrl: "https://picsum.photos/seed/banner3/600/400",
     bgColor: "#f0f0e8",
-    href: "/product/best",
+    href: "/store/best",
   },
 ];
 
