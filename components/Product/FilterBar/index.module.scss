@@ -1,0 +1,158 @@
+.root {
+  margin-bottom: 24px;
+}
+
+/* ── Chip Row ── */
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chipWrap {
+  position: relative;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-text-secondary;
+  background: $color-bg-white;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+
+  svg {
+    width: 11px;
+    height: 11px;
+    color: $color-text-tertiary;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    border-color: $color-text-secondary;
+  }
+
+  &Active {
+    border-color: $color-primary;
+    color: $color-primary;
+
+    svg {
+      color: $color-primary;
+    }
+
+    &:hover {
+      border-color: $color-primary;
+    }
+  }
+}
+
+/* ── Dropdown 애니메이션 ── */
+.dropdownWrap {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 100;
+  width: max-content;
+
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.22s ease;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.1));
+}
+
+.dropdownOpen {
+  grid-template-rows: 1fr;
+}
+
+.dropdownInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Dropdown Panel ── */
+.dropdown {
+  width: max-content;
+  background: $color-bg-white;
+  border: 1px solid $color-border-light;
+  border-radius: 8px;
+  padding: 20px 24px;
+}
+
+.optionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  list-style: none;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover .optionText {
+    color: $color-text-primary;
+  }
+}
+
+/* 기본 checkbox 숨김 */
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 커스텀 체크박스 */
+.customCheck {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid $color-border;
+  border-radius: 4px;
+  background: $color-bg-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    border-color 0.15s,
+    background-color 0.15s;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    transform: rotate(-45deg) translateY(-1px);
+    transition: border-color 0.15s;
+  }
+
+  &Active {
+    border-color: $color-primary;
+    background: $color-primary;
+
+    &::after {
+      border-left-color: #fff;
+      border-bottom-color: #fff;
+    }
+  }
+}
+
+.optionText {
+  font-size: 14px;
+  color: $color-text-secondary;
+  transition: color 0.12s;
+}
