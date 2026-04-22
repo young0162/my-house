@@ -1,5 +1,6 @@
 .root {
-  width: 180px;
+  width: 289px;
+  padding: 0 10px;
   flex-shrink: 0;
 }
 
@@ -15,6 +16,7 @@
 /* ── Group (1단계) ── */
 .groupList {
   list-style: none;
+  max-width: 160px;
 }
 
 .groupItem {

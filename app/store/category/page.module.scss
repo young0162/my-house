@@ -16,6 +16,13 @@
   min-width: 0;
 }
 
+/* ── Breadcrumb ── */
+.breadcrumbRow {
+  display: flex;
+  padding-top: 6px;
+  margin-bottom: 20px;
+}
+
 /* ── Toolbar ── */
 .toolbar {
   display: flex;
