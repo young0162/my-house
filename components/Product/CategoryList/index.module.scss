@@ -1,0 +1,136 @@
+.root {
+  width: 180px;
+  flex-shrink: 0;
+}
+
+/* ── Category Title ── */
+.categoryTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: $color-text-primary;
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+}
+
+/* ── Group (1단계) ── */
+.groupList {
+  list-style: none;
+}
+
+.groupItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 11px 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: $color-text-primary;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 8px;
+
+  svg {
+    color: $color-text-tertiary;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  &Plain {
+    cursor: default;
+    &:hover {
+      color: $color-text-primary;
+    }
+  }
+}
+
+/* ── 애니메이션 래퍼 ── */
+.collapseWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+
+  &.open {
+    grid-template-rows: 1fr;
+  }
+}
+
+.collapseInner {
+  overflow: hidden;
+}
+
+/* ── Sub (2단계) ── */
+.subList {
+  list-style: none;
+  padding: 4px 0 8px;
+}
+
+.subItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 0 9px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-text-secondary;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 8px;
+
+  svg {
+    color: $color-text-tertiary;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+
+  &:hover {
+    color: $color-text-primary;
+  }
+
+  &Active {
+    color: $color-primary;
+    font-weight: 700;
+
+    svg {
+      color: $color-primary;
+    }
+  }
+}
+
+/* ── Leaf (3단계) ── */
+.leafList {
+  list-style: none;
+  padding: 2px 0 4px;
+}
+
+.leafItem {
+  display: block;
+  width: 100%;
+  padding: 7px 0 7px 24px;
+  font-size: 13px;
+  font-weight: 400;
+  color: $color-text-tertiary;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.12s;
+
+  &:hover {
+    color: $color-text-primary;
+  }
+
+  &Active {
+    color: $color-text-primary;
+    font-weight: 500;
+  }
+}
