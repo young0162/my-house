@@ -12,4 +12,8 @@ export { BlogIcon } from "./BlogIcon";
 export { LogoIcon } from "./LogoIcon";
 export { ChevronDownIcon } from "./ChevronDownIcon";
 export { ChevronUpIcon } from "./ChevronUpIcon";
+export { ChevronRightIcon } from "./ChevronRightIcon";
 export { BookmarkIcon } from "./BookmarkIcon";
+export { ShareIcon } from "./ShareIcon";
+export { StarIcon } from "./StarIcon";
+export { InfoIcon } from "./InfoIcon";

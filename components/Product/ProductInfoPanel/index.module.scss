@@ -1,0 +1,581 @@
+.panel {
+  width: 480px;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+/* ── Header (brand + actions) ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.brand {
+  font-size: 13px;
+  color: $color-text-secondary;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.actionBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-primary;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: $color-bg-gray;
+  }
+
+  &--liked {
+    color: $color-primary;
+  }
+}
+
+.likeCount {
+  font-size: 10px;
+  color: $color-text-tertiary;
+  line-height: 1;
+}
+
+/* ── Product Name ── */
+.productName {
+  font-size: 17px;
+  font-weight: 700;
+  color: $color-text-primary;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  word-break: keep-all;
+}
+
+/* ── Rating ── */
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  color: $color-primary;
+}
+
+.reviewCount {
+  font-size: 13px;
+  color: $color-text-tertiary;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── Price ── */
+.priceBlock {
+  margin-bottom: 14px;
+}
+
+.originalRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.discountRate {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ff5c35;
+}
+
+.originalPrice {
+  font-size: 14px;
+  color: $color-text-tertiary;
+  text-decoration: line-through;
+}
+
+.finalRow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.finalPrice {
+  font-size: 26px;
+  font-weight: 800;
+  color: $color-text-primary;
+  letter-spacing: -0.5px;
+}
+
+.finalPriceLabel {
+  font-size: 14px;
+  color: $color-text-primary;
+}
+
+.couponLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-primary;
+  font-size: 13px;
+  padding: 0;
+  margin-left: 4px;
+}
+
+/* ── Coupon Banner ── */
+.couponBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #e8f4ff;
+  border: 1px solid #b3d9f7;
+  border-radius: 8px;
+  padding: 12px 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: #1a7ac7;
+}
+
+.couponBannerText {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── Info List ── */
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 20px;
+  border-top: 1px solid $color-border-light;
+}
+
+.infoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid $color-border-light;
+
+  dt {
+    flex-shrink: 0;
+    width: 36px;
+  }
+
+  dd {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+}
+
+.infoLabel {
+  font-size: 13px;
+  color: $color-text-tertiary;
+  font-weight: 500;
+}
+
+.infoLabelEmpty {
+  flex-shrink: 0;
+  width: 36px;
+}
+
+.infoValue {
+  font-size: 13px;
+  color: $color-text-primary;
+}
+
+.infoSub {
+  font-size: 12px;
+  color: $color-text-tertiary;
+}
+
+.infoNote {
+  font-size: 11px;
+  color: $color-text-tertiary;
+}
+
+.infoLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-secondary;
+  font-size: 12px;
+  padding: 0;
+  text-align: left;
+}
+
+.shippingPrice {
+  font-size: 13px;
+  color: $color-text-primary;
+  font-weight: 700;
+}
+
+.shippingFree {
+  font-size: 13px;
+  color: $color-primary;
+  font-weight: 700;
+}
+
+.deliveryDate {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.infoIconBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-tertiary;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Divider ── */
+.divider {
+  border: none;
+  border-top: 1px solid $color-border;
+  margin: 0 0 16px;
+}
+
+/* ── Brand Row ── */
+.brandRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.brandIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: $color-bg-gray;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+}
+
+.brandInfo {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.brandLinkText {
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.brandLinkSub {
+  font-size: 12px;
+  color: $color-text-tertiary;
+  margin-left: 4px;
+}
+
+.brandBookmark {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-primary;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Options ── */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  padding: 14px 40px 14px 14px;
+  font-size: 14px;
+  color: $color-text-primary;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+
+  &:focus {
+    border-color: $color-text-primary;
+  }
+
+  option:first-child {
+    color: $color-text-tertiary;
+  }
+}
+
+.selectArrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: $color-text-tertiary;
+  pointer-events: none;
+}
+
+/* ── 주문금액 ── */
+.orderAmountRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-top: 1px solid $color-border-light;
+  border-bottom: 1px solid $color-border-light;
+  margin-bottom: 12px;
+}
+
+.orderAmountLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-text-primary;
+}
+
+.orderAmountValue {
+  font-size: 22px;
+  font-weight: 800;
+  color: $color-text-primary;
+  letter-spacing: -0.5px;
+}
+
+/* ── 쿠폰 받기 박스 ── */
+.couponReceiveBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+
+.couponReceiveText {
+  font-size: 13px;
+  color: $color-text-primary;
+}
+
+.couponReceiveBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f45b5b;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0;
+}
+
+.couponReceiveIcon {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ── 패키지 토글 박스 ── */
+.packageBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $color-bg-gray;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.packageBoxLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.packageBoxText {
+  font-size: 13px;
+  color: $color-text-secondary;
+}
+
+.packageBoxLink {
+  font-size: 12px;
+  color: $color-primary;
+  text-decoration: none;
+}
+
+.toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: #ccc;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+
+  &--on {
+    background-color: $color-primary;
+  }
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: left 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+  .toggle--on & {
+    left: 22px;
+  }
+}
+
+/* ── 구매 버튼 ── */
+.buyButtons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.btnPackage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  padding: 14px 0;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-text-primary;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: $color-bg-gray;
+  }
+}
+
+.btnPackageIcon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.btnCart {
+  flex: 1.2;
+  padding: 14px 0;
+  border: 1px solid $color-primary;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-primary;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: $color-primary-light;
+  }
+}
+
+.btnBuy {
+  flex: 1.4;
+  padding: 14px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: $color-primary;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: $color-primary-hover;
+  }
+}
+
+/* ── 하단 배너 ── */
+.bottomBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $color-primary;
+  border-radius: 8px;
+  padding: 14px 18px;
+  cursor: pointer;
+}
+
+.bottomBannerText {
+  font-size: 13px;
+  color: #fff;
+}
+
+.bottomBannerHighlight {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffe066;
+}
+
+.bottomBannerBrand {
+  font-size: 16px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
