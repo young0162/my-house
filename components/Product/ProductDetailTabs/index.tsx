@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Text from "@/components/Common/Text";
+import ReviewSection from "@/components/Review/ReviewSection";
 import styles from "./index.module.scss";
 
 interface Tab {
@@ -99,10 +100,7 @@ const ProductDetailTabs = ({ reviewCount, inquiryCount }: ProductDetailTabsProps
       </section>
 
       <section id="review" ref={setRef("review")} className={styles.section} aria-labelledby="tab-review">
-        <Text tag="h2" className={styles.sectionTitle}>
-          리뷰
-        </Text>
-        <div className={styles.sectionPlaceholder} />
+        <ReviewSection totalCount={reviewCount} />
       </section>
 
       <section id="inquiry" ref={setRef("inquiry")} className={styles.section} aria-labelledby="tab-inquiry">

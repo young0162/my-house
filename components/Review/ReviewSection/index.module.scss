@@ -1,0 +1,68 @@
+.section {
+  width: 100%;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.titleCount {
+  font-size: 18px;
+  font-weight: 700;
+  color: $color-primary;
+}
+
+.writeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-primary;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ── App Banner ── */
+.appBanner {
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+}
+
+.appBannerText {
+  font-size: 13px;
+  color: $color-text-secondary;
+  line-height: 1.5;
+}
+
+.appBannerHighlight {
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text-secondary;
+}
+
+/* ── Review List ── */
+.reviewList {
+  list-style: none;
+}

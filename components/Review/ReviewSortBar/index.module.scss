@@ -1,0 +1,78 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $color-border-light;
+  margin-bottom: 16px;
+}
+
+.sortList {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+
+.sortBtn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 6px 8px 8px;
+  cursor: pointer;
+  margin-bottom: -1px;
+
+  &[aria-selected="true"] {
+    border-bottom-color: $color-primary;
+
+    .sortLabel {
+      color: $color-primary;
+      font-weight: 600;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+.sortLabel {
+  font-size: 14px;
+  color: $color-text-tertiary;
+  transition: color 0.15s;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+.filterBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid $color-border;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  color: $color-text-secondary;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: $color-text-secondary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}
