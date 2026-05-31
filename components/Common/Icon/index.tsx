@@ -17,3 +17,4 @@ export { BookmarkIcon } from "./BookmarkIcon";
 export { ShareIcon } from "./ShareIcon";
 export { StarIcon } from "./StarIcon";
 export { InfoIcon } from "./InfoIcon";
+export { ThumbUpIcon } from "./ThumbUpIcon";
