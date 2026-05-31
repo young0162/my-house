@@ -14,9 +14,9 @@ const ProductPage = () => {
   const [sortBy, setSortBy] = useState<SortOption>("recommended");
   const [products, setProducts] = useState<ProductCardProps[]>([]);
 
-  useEffect(() => {
-    getProducts(sortBy).then(setProducts);
-  }, [sortBy]);
+  // useEffect(() => {
+  //   getProducts(sortBy).then(setProducts);
+  // }, [sortBy]);
 
   return (
     <>
