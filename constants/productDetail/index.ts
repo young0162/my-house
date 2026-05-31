@@ -19,6 +19,7 @@ export const MOCK_PRODUCT_DETAILS: ProductDetail[] = [
     price: 159200,
     rating: 4.8,
     reviewCount: 14122,
+    inquiryCount: 10083,
     likeCount: 124733,
     couponBanner: "쿠폰지원 받으면 더 할인돼요",
     savings: {
@@ -64,6 +65,7 @@ export const MOCK_PRODUCT_DETAILS: ProductDetail[] = [
     price: 189000,
     rating: 4.8,
     reviewCount: 1243,
+    inquiryCount: 532,
     likeCount: 8420,
     couponBanner: "쿠폰지원 받으면 더 할인돼요",
     savings: {

@@ -32,6 +32,7 @@ export interface ProductDetail {
   price: number;
   rating: number;
   reviewCount: number;
+  inquiryCount: number;
   likeCount: number;
   couponBanner?: string;
   savings: ProductDetailSavings;

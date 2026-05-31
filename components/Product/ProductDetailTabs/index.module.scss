@@ -1,0 +1,93 @@
+.wrapper {
+  margin-top: 48px;
+}
+
+/* ── Sticky Tab Bar ── */
+.tabBar {
+  position: sticky;
+  top: 80px;
+  z-index: 50;
+  background-color: #fff;
+  border-bottom: 2px solid $color-border-light;
+}
+
+.tabList {
+  display: flex;
+  list-style: none;
+  max-width: 1256px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+/* ── Tab Button ── */
+.tabBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 16px 20px 14px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s;
+
+  &[aria-selected="true"] {
+    border-bottom-color: $color-primary;
+
+    .tabLabel {
+      color: $color-primary;
+      font-weight: 600;
+    }
+
+    .tabCount {
+      color: $color-primary;
+    }
+  }
+
+  &[aria-selected="false"],
+  &:not([aria-selected="true"]) {
+    &:hover .tabLabel {
+      color: $color-text-primary;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
+}
+
+.tabLabel {
+  font-size: 15px;
+  color: $color-text-secondary;
+  transition: color 0.15s;
+}
+
+.tabCount {
+  font-size: 13px;
+  color: $color-text-tertiary;
+  transition: color 0.15s;
+}
+
+/* ── Sections ── */
+.section {
+  max-width: 1256px;
+  margin: 0 auto;
+  padding: 48px 60px;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: $color-text-primary;
+  margin-bottom: 24px;
+}
+
+.sectionPlaceholder {
+  height: 400px;
+  background-color: $color-bg-light;
+  border-radius: 8px;
+}

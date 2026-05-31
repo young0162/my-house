@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import ProductImageGallery from "@/components/Product/ProductImageGallery";
 import ProductInfoPanel from "@/components/Product/ProductInfoPanel";
+import ProductDetailTabs from "@/components/Product/ProductDetailTabs";
 import { MOCK_PRODUCT_DETAILS } from "@/constants/productDetail";
 import styles from "./page.module.scss";
 
@@ -30,6 +31,11 @@ const ProductDetailPage = async ({ params }: ProductDetailPageProps) => {
         />
         <ProductInfoPanel product={product} />
       </div>
+
+      <ProductDetailTabs
+        reviewCount={product.reviewCount}
+        inquiryCount={product.inquiryCount}
+      />
     </main>
   );
 };
