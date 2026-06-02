@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Common/Header";
 import Footer from "@/components/Common/Footer";
 import Container from "@/components/Common/Container";
+import Providers from "./providers";
 import "@/styles/global.scss";
 import localFont from "next/font/local";
 
@@ -24,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="ko" className={pretendard.variable}>
       <body>
-        <Header />
-        <Container>{children}</Container>
-        <Footer />
+        <Providers>
+          <Header />
+          <Container>{children}</Container>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
