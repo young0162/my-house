@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import Text from "@/components/Common/Text";
 import { SearchIcon, HeartIcon, CartIcon, BellIcon } from "@/components/Common/Icon";
 import styles from "./index.module.scss";
@@ -18,6 +19,7 @@ const Header = () => {
   const pathname = usePathname();
   const [searchValue, setSearchValue] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
+  const { status } = useSession();
 
   return (
     <header className={styles.root}>
@@ -72,11 +74,19 @@ const Header = () => {
           <button type="button" className={styles.actionBtn} aria-label="알림">
             <BellIcon />
           </button>
-          <Link href="/login" className={styles.loginBtn}>
-            <Text tag="span" fontSize={14} fontWeight={600} color="white">
-              로그인
-            </Text>
-          </Link>
+          {status === "authenticated" ? (
+            <button type="button" className={styles.loginBtn} onClick={() => signOut({ callbackUrl: "/" })}>
+              <Text tag="span" fontSize={14} fontWeight={600} color="white">
+                로그아웃
+              </Text>
+            </button>
+          ) : (
+            <Link href="/login" className={styles.loginBtn}>
+              <Text tag="span" fontSize={14} fontWeight={600} color="white">
+                로그인
+              </Text>
+            </Link>
+          )}
         </div>
       </div>
     </header>
