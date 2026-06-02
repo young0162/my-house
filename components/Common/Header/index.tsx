@@ -9,11 +9,9 @@ import styles from "./index.module.scss";
 import { LogoIcon } from "../Icon/LogoIcon";
 
 const NAV_ITEMS = [
-  { label: "스토어", href: "/store" },
-  { label: "커뮤니티", href: "#" },
-  { label: "전문가", href: "#" },
-  { label: "집들이", href: "#" },
-  { label: "인테리어", href: "#" },
+  { label: "집구경", href: "#" },
+  { label: "쇼핑", href: "/store" },
+  { label: "인테리어/생활", href: "#" },
 ];
 
 const Header = () => {
