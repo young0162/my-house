@@ -60,6 +60,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
+    async signIn({ account, profile }) {
+      if (account?.provider === "kakao") {
+        const kakaoProfile = profile as { kakao_account?: { email?: string } } | undefined;
+        if (!kakaoProfile?.kakao_account?.email) return false;
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;

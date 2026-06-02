@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@/app/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { hashPassword, isValidPassword } from "@/lib/auth/password";
+import { getRegisterConflictMessage } from "@/lib/auth/account";
 import { RegisterRequestBody } from "@/app/types/auth";
 
 export async function POST(request: NextRequest) {
@@ -18,6 +19,22 @@ export async function POST(request: NextRequest) {
 
   if (!isValidPassword(password)) {
     return NextResponse.json({ message: "비밀번호는 8자 이상 72자 이하로 입력해주세요." }, { status: 400 });
+  }
+
+  const existingUser = await prisma.user.findFirst({
+    where: { email, deletedAt: null },
+    select: {
+      id: true,
+      passwordHash: true,
+      accounts: { select: { provider: true } },
+    },
+  });
+
+  if (existingUser) {
+    return NextResponse.json(
+      { message: getRegisterConflictMessage({ passwordHash: existingUser.passwordHash, accounts: existingUser.accounts }) },
+      { status: 409 },
+    );
   }
 
   try {
