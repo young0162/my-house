@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import NavBar from "@/components/Common/NavBar";
 import CategoryList from "@/components/Product/CategoryList";
@@ -9,10 +9,8 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import MdPick from "@/components/Product/MdPick";
 import FilterBar from "@/components/Product/FilterBar";
 import SortDropdown from "@/components/Product/SortDropdown";
-import { MOCK_PRODUCTS } from "@/constants/product";
 import { CATEGORIES, DEFAULT_CATEGORY_ID } from "@/constants/category";
-import { SortOption } from "@/app/types/product";
-import { useState } from "react";
+import { ProductCardProps, SortOption } from "@/app/types/product";
 import styles from "./page.module.scss";
 import Divider from "@/components/Common/Divider";
 
@@ -20,8 +18,15 @@ const CategoryPageContent = () => {
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("category_id") ?? DEFAULT_CATEGORY_ID;
   const [sortBy, setSortBy] = useState<SortOption>("recommended");
+  const [products, setProducts] = useState<ProductCardProps[]>([]);
 
   const currentCategory = CATEGORIES.find((c) => c.id === categoryId);
+
+  useEffect(() => {
+    fetch(`/api/products?sortBy=${sortBy}`)
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, [sortBy]);
 
   return (
     <>
@@ -46,12 +51,12 @@ const CategoryPageContent = () => {
 
               <Divider height={30} />
               <div className={styles.toolbar}>
-                <span className={styles.totalCount}>전체 {MOCK_PRODUCTS.length}개</span>
+                <span className={styles.totalCount}>전체 {products.length}개</span>
                 <SortDropdown value={sortBy} onChange={setSortBy} />
               </div>
 
               <ul className={styles.grid}>
-                {MOCK_PRODUCTS.map((product) => (
+                {products.map((product) => (
                   <li key={product.id}>
                     <ProductCard {...product} />
                   </li>
