@@ -77,7 +77,7 @@ const Header = () => {
           </button>
           {status === "authenticated" ? (
             <>
-              <Link href="/my" className={styles.profileBtn} aria-label="마이페이지">
+              <Link href="/my/shopping" className={styles.profileBtn} aria-label="마이페이지">
                 <Image
                   src="/image/user_default_image.jpg"
                   alt="프로필"
