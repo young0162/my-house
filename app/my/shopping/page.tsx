@@ -3,9 +3,28 @@
 import { useState } from "react";
 import { CouponIcon, PointIcon, GradeIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
+import OrderFilter from "@/components/MyPage/OrderFilter";
+import ReviewPointBanner from "@/components/MyPage/ReviewPointBanner";
+import OrderItem from "@/components/MyPage/OrderItem";
 import { SUB_TABS, ORDER_STEPS } from "@/constants/mypage";
-import type { SubTab } from "@/types/mypage";
+import type { SubTab, Order } from "@/types/mypage";
 import styles from "./page.module.scss";
+
+const MOCK_ORDERS: Order[] = [
+  {
+    id: "20230105-001",
+    date: "2023.01.05",
+    status: "구매확정",
+    deliveryInfo: "1/7(토) 도착 완료",
+    product: {
+      name: "샤워기 9차 필터 (봉돌 슛 차단 필터)",
+      option: "1자담터 1set(3개)",
+      price: 9900,
+      quantity: 1,
+      imageUrl: "https://picsum.photos/64/64?random=1",
+    },
+  },
+];
 
 const ShoppingPage = () => {
   const [activeSubTab, setActiveSubTab] = useState<SubTab>("주문배송목록");
@@ -113,6 +132,14 @@ const ShoppingPage = () => {
             ))}
           </div>
         </section>
+
+        <div className={styles.orderListSection}>
+          <OrderFilter />
+          <ReviewPointBanner />
+          {MOCK_ORDERS.map((order) => (
+            <OrderItem key={order.id} order={order} />
+          ))}
+        </div>
       </div>
     </div>
   );
