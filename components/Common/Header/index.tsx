@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import Text from "@/components/Common/Text";
@@ -75,11 +76,22 @@ const Header = () => {
             <BellIcon />
           </button>
           {status === "authenticated" ? (
-            <button type="button" className={styles.loginBtn} onClick={() => signOut({ callbackUrl: "/" })}>
-              <Text tag="span" fontSize={14} fontWeight={600} color="white">
-                로그아웃
-              </Text>
-            </button>
+            <>
+              <Link href="/my" className={styles.profileBtn} aria-label="마이페이지">
+                <Image
+                  src="/image/user_default_image.jpg"
+                  alt="프로필"
+                  width={32}
+                  height={32}
+                  className={styles.profileImg}
+                />
+              </Link>
+              <button type="button" className={styles.loginBtn} onClick={() => signOut({ callbackUrl: "/" })}>
+                <Text tag="span" fontSize={14} fontWeight={600} color="white">
+                  로그아웃
+                </Text>
+              </button>
+            </>
           ) : (
             <Link href="/login" className={styles.loginBtn}>
               <Text tag="span" fontSize={14} fontWeight={600} color="white">
