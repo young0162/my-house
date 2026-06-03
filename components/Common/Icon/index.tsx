@@ -18,3 +18,6 @@ export { ShareIcon } from "./ShareIcon";
 export { StarIcon } from "./StarIcon";
 export { InfoIcon } from "./InfoIcon";
 export { ThumbUpIcon } from "./ThumbUpIcon";
+export { CouponIcon } from "./CouponIcon";
+export { PointIcon } from "./PointIcon";
+export { GradeIcon } from "./GradeIcon";

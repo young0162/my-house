@@ -1,0 +1,21 @@
+export const TOP_TABS = ["프로필", "나의 쇼핑", "나의 리뷰", "설정"] as const;
+
+export const SUB_TABS = [
+  "주문배송목록",
+  "상품 스크랩북",
+  "패키지할인",
+  "나의문의내역",
+  "포인트",
+  "결제수단",
+  "공지사항",
+  "고객센터",
+] as const;
+
+export const ORDER_STEPS = [
+  "입금대기",
+  "결제완료",
+  "배송준비",
+  "배송중",
+  "배송완료",
+  "구매확정",
+] as const;
