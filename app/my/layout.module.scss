@@ -1,0 +1,41 @@
+.topTabsWrap {
+  background-color: $color-bg-white;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.topTabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1256px;
+  margin: 0 auto;
+  padding: 0 60px;
+  list-style: none;
+}
+
+.topTab {
+  position: relative;
+  display: block;
+  padding: 18px 24px 16px;
+  text-decoration: none;
+  transition: color 0.15s;
+
+  &:hover span {
+    color: $color-text-primary !important;
+  }
+}
+
+.topTabActive {
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid $color-primary;
+  }
+}

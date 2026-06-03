@@ -3,57 +3,6 @@
   background-color: $color-bg-gray;
 }
 
-// ── 상단 탭 ──────────────────────────────────────────────
-.topTabsWrap {
-  background-color: $color-bg-white;
-  border-bottom: 1px solid $color-border-light;
-}
-
-.topTabs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  max-width: 1256px;
-  margin: 0 auto;
-  padding: 0 60px;
-  list-style: none;
-}
-
-.topTab {
-  position: relative;
-  padding: 18px 24px 16px;
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: $color-text-secondary;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.15s;
-
-  &:hover {
-    color: $color-text-primary;
-  }
-}
-
-.topTabActive {
-  color: $color-primary;
-  font-weight: 700;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 6px solid $color-primary;
-  }
-}
-
 // ── 서브 탭 ──────────────────────────────────────────────
 .subTabsWrap {
   background-color: $color-bg-white;
