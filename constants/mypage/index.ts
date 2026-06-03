@@ -1,5 +1,3 @@
-export const TOP_TABS = ["프로필", "나의 쇼핑", "나의 리뷰", "설정"] as const;
-
 export const SUB_TABS = [
   "주문배송목록",
   "상품 스크랩북",
