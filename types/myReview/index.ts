@@ -15,3 +15,28 @@ export interface ReviewableProduct {
 export interface ReviewSearchState {
   query: string;
 }
+
+export interface ReviewPhoto {
+  file: File;
+  previewUrl: string;
+}
+
+export interface ReviewDraft {
+  productId: string;
+  rating: number;
+  photo: ReviewPhoto | null;
+  content: string;
+  policyAgreed: boolean;
+}
+
+export interface ReviewDraftErrors {
+  rating?: string;
+  content?: string;
+  policyAgreed?: string;
+}
+
+export interface ReviewWriteModalProps {
+  product: ReviewableProduct;
+  onClose: () => void;
+  onSubmit: (draft: ReviewDraft) => void;
+}

@@ -23,3 +23,6 @@ export { PointIcon } from "./PointIcon";
 export { GradeIcon } from "./GradeIcon";
 export { ExclamationCircleIcon } from "./ExclamationCircleIcon";
 export { ProfilePlaceholderIcon } from "./ProfilePlaceholderIcon";
+export { CloseIcon } from "./CloseIcon";
+export { ImageIcon } from "./ImageIcon";
+export { RatingStarIcon } from "./RatingStarIcon";
