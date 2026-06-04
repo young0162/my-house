@@ -5,7 +5,6 @@ import ProductCard from "@/components/Product/ProductCard";
 import Text from "@/components/Common/Text";
 import { PRODUCT_SORT_OPTIONS, PRODUCT_BANNERS } from "@/constants/product";
 import { ProductCardProps, SortOption } from "@/app/types/product";
-import { getProducts } from "@/app/services/product";
 import styles from "./page.module.scss";
 import NavBar from "@/components/Common/NavBar";
 import BannerSlider from "@/components/Common/BannerSlider";
@@ -14,9 +13,13 @@ const ProductPage = () => {
   const [sortBy, setSortBy] = useState<SortOption>("recommended");
   const [products, setProducts] = useState<ProductCardProps[]>([]);
 
-  // useEffect(() => {
-  //   getProducts(sortBy).then(setProducts);
-  // }, [sortBy]);
+  useEffect(() => {
+
+    fetch(`/api/products?sortBy=${sortBy}`)
+    .then((res) => res.json())
+    .then((data) => setProducts(data))
+  }, [sortBy]);
+  
 
   return (
     <>
