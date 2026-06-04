@@ -26,3 +26,5 @@ export { ProfilePlaceholderIcon } from "./ProfilePlaceholderIcon";
 export { CloseIcon } from "./CloseIcon";
 export { ImageIcon } from "./ImageIcon";
 export { RatingStarIcon } from "./RatingStarIcon";
+export { ProfileSmileIcon } from "./ProfileSmileIcon";
+export { CameraIcon } from "./CameraIcon";

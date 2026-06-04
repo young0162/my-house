@@ -1,0 +1,57 @@
+.root {
+  min-height: 100vh;
+  background-color: $color-bg-white;
+}
+
+.loading,
+.placeholder {
+  width: 370px;
+  min-height: 500px;
+  margin: 0 auto;
+  padding-top: 44px;
+}
+
+.skeletonAvatar {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 72px;
+  background-color: $color-border-light;
+  border-radius: 50%;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.skeletonLine {
+  height: 43px;
+  margin-bottom: 34px;
+  background-color: $color-bg-light;
+  border-radius: 4px;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.placeholder {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 640px) {
+  .loading,
+  .error,
+  .placeholder {
+    width: 100%;
+    padding: 32px 20px 80px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonAvatar,
+  .skeletonLine {
+    animation: none;
+  }
+}

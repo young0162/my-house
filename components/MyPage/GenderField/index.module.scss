@@ -1,0 +1,56 @@
+.fieldset {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: 8px;
+
+  span {
+    color: $color-text-tertiary !important;
+  }
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-height: 30px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 30px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.radio {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid $color-border;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:checked {
+    border: 6px solid $color-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+@media (max-width: 390px) {
+  .options {
+    flex-wrap: wrap;
+    gap: 10px 20px;
+  }
+}

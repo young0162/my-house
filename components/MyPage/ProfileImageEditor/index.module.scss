@@ -1,0 +1,60 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatarWrap {
+  position: relative;
+  width: 92px;
+  height: 92px;
+}
+
+.avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cameraButton {
+  position: absolute;
+  right: -7px;
+  bottom: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 1px;
+  }
+}
+
+.cameraVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  background-color: #111;
+  border-radius: 50%;
+}
+
+.fileInput {
+  display: none;
+}
+
+.error {
+  margin-top: 12px;
+  color: #e64b4b !important;
+  text-align: center;
+}

@@ -1,0 +1,53 @@
+.root {
+  background-color: $color-bg-white;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.tab {
+  position: relative;
+  height: 66px;
+  padding: 0 8px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 3px;
+    background-color: transparent;
+  }
+
+  &:hover span {
+    color: $color-primary !important;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -4px;
+  }
+}
+
+.active::after {
+  background-color: $color-primary;
+}
+
+@media (max-width: 640px) {
+  .list {
+    gap: 10px;
+  }
+
+  .tab {
+    padding: 0 5px;
+  }
+}
