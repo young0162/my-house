@@ -1,0 +1,79 @@
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 128px;
+  gap: 10px;
+  height: 44px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: minmax(0, 1fr) 112px;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr 76px;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.input {
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  font-size: 14px;
+  color: $color-text-primary;
+  background-color: $color-bg-white;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &::placeholder {
+    color: $color-text-disabled;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.12);
+  }
+}
+
+.btn {
+  height: 44px;
+  width: 100%;
+  background-color: $color-primary;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &:hover {
+    background-color: $color-primary-hover;
+  }
+
+  &:active {
+    background-color: darken($color-primary-hover, 5%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
