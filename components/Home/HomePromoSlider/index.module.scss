@@ -1,0 +1,94 @@
+.root {
+  width: 290px;
+  height: 548px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s ease;
+}
+
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.topGradient {
+  position: absolute;
+  inset: 0 0 42%;
+  background: linear-gradient(to bottom, rgba(255, 228, 190, 0.98) 0%, rgba(255, 228, 190, 0.92) 55%, transparent 100%);
+}
+
+.bottomGradient {
+  position: absolute;
+  inset: 55% 0 0;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.42));
+}
+
+.heading {
+  position: absolute;
+  top: 84px;
+  right: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.badge {
+  padding: 6px 9px;
+  background-color: rgba(120, 95, 60, 0.24);
+  border-radius: 5px;
+}
+
+.title {
+  white-space: pre-line;
+}
+
+.meta {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.counter {
+  padding: 5px 8px;
+  background-color: rgba(0, 0, 0, 0.45);
+  border-radius: 14px;
+}
+
+@media (max-width: 1024px) {
+  .root {
+    width: 250px;
+    height: 480px;
+  }
+}
+
+@media (max-width: 640px) {
+  .root {
+    width: 100%;
+    height: 320px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    transition: none;
+  }
+}

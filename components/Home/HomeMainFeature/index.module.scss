@@ -1,0 +1,81 @@
+.root {
+  position: relative;
+  display: block;
+  min-width: 0;
+  height: 548px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.root:hover .image {
+  transform: scale(1.02);
+}
+
+.gradient {
+  position: absolute;
+  inset: 38% 0 0;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.62));
+}
+
+.content {
+  position: absolute;
+  right: 32px;
+  bottom: 30px;
+  left: 32px;
+}
+
+.title {
+  display: block;
+  max-width: 760px;
+  margin-bottom: 14px;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.authorImage {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+  .root {
+    height: 480px;
+  }
+
+  .title {
+    font-size: 26px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .root {
+    height: 390px;
+  }
+
+  .content {
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .title {
+    font-size: 22px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    transition: none;
+  }
+}

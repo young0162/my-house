@@ -28,3 +28,4 @@ export { ImageIcon } from "./ImageIcon";
 export { RatingStarIcon } from "./RatingStarIcon";
 export { ProfileSmileIcon } from "./ProfileSmileIcon";
 export { CameraIcon } from "./CameraIcon";
+export { HomeQuickMenuIcon } from "./HomeQuickMenuIcon";

@@ -7,11 +7,12 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import Text from "@/components/Common/Text";
 import { SearchIcon, HeartIcon, CartIcon, BellIcon } from "@/components/Common/Icon";
+import { HOME_NAV_ITEMS } from "@/constants/home";
 import styles from "./index.module.scss";
 import { LogoIcon } from "../Icon/LogoIcon";
 
 const NAV_ITEMS = [
-  { label: "집구경", href: "#" },
+  { label: "집구경", href: "/" },
   { label: "쇼핑", href: "/store" },
   { label: "인테리어/생활", href: "#" },
 ];
@@ -21,6 +22,7 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const { status } = useSession();
+  const isHomeCategoryPath = HOME_NAV_ITEMS.some(({ href }) => href !== "#" && pathname === href);
 
   return (
     <header className={styles.root}>
@@ -33,19 +35,25 @@ const Header = () => {
         {/* Nav */}
         <nav className={styles.nav} aria-label="주요 메뉴">
           <ul className={styles.navList}>
-            {NAV_ITEMS.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href} className={styles.navLink}>
-                  <Text
-                    fontSize={18}
-                    fontWeight="bold"
-                    color={pathname.startsWith(item.href) && item.href !== "#" ? "primary" : "gray01"}
-                  >
-                    {item.label}
-                  </Text>
-                </Link>
-              </li>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const isActive = item.href === "/"
+                ? isHomeCategoryPath
+                : !isHomeCategoryPath && item.href !== "#" && pathname.startsWith(item.href);
+
+              return (
+                <li key={item.label}>
+                  <Link href={item.href} className={styles.navLink} aria-current={isActive ? "page" : undefined}>
+                    <Text
+                      fontSize={18}
+                      fontWeight="bold"
+                      color={isActive ? "primary" : "gray01"}
+                    >
+                      {item.label}
+                    </Text>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
