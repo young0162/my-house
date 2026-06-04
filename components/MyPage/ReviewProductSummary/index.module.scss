@@ -1,0 +1,50 @@
+.root {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.thumbnail {
+  flex-shrink: 0;
+}
+
+.image {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  background-color: $color-bg-white;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.brand {
+  color: $color-text-tertiary;
+  display: block;
+}
+
+.name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.option {
+  color: $color-text-secondary;
+  display: block;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: $color-bg-light;
+  border-radius: 4px;
+  padding: 7px 10px;
+  align-self: flex-start;
+}
