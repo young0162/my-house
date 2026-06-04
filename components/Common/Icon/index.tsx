@@ -22,3 +22,4 @@ export { CouponIcon } from "./CouponIcon";
 export { PointIcon } from "./PointIcon";
 export { GradeIcon } from "./GradeIcon";
 export { ExclamationCircleIcon } from "./ExclamationCircleIcon";
+export { ProfilePlaceholderIcon } from "./ProfilePlaceholderIcon";
