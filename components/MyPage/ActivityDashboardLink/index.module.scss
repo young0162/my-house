@@ -1,0 +1,12 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  background-color: $color-bg-white;
+  border: 1px solid $color-border-light;
+  border-radius: 4px;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

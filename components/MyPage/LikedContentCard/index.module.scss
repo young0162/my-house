@@ -1,0 +1,60 @@
+.card {
+  display: block;
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: $color-bg-gray;
+  text-decoration: none;
+
+  &:hover .thumbnail {
+    transform: scale(1.02);
+  }
+
+  &:hover .overlay {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+.thumbnailWrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.thumbnail {
+  object-fit: cover;
+  transition: transform 0.18s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background-color: rgba(0, 0, 0, 0.55);
+  padding: 4px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

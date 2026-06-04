@@ -1,0 +1,41 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px 8px;
+  min-height: 44px;
+  cursor: default;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: $color-bg-light;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
+
+  @media (max-width: 640px) {
+    padding: 12px 6px;
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+
+  svg {
+    height: 28px;
+    width: auto;
+  }
+}
