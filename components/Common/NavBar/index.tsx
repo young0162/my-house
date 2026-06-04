@@ -9,12 +9,6 @@ const NAV_ITEMS = [
   { label: "쇼핑홈", href: "/store" },
   { label: "카테고리", href: "/store/category" },
   { label: "베스트", href: "/store/best" },
-  { label: "오늘의딜", href: "/store/deal" },
-  { label: "단독상품", href: "/store/exclusive" },
-  { label: "오마트", href: "/store/omart" },
-  { label: "원하는날도착", href: "/store/delivery" },
-  { label: "오!쇼룸", href: "/store/showroom" },
-  { label: "기획전", href: "/store/exhibition" },
 ];
 
 interface NavBarProps {

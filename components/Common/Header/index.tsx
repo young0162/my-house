@@ -14,7 +14,6 @@ import { LogoIcon } from "../Icon/LogoIcon";
 const NAV_ITEMS = [
   { label: "집구경", href: "/" },
   { label: "쇼핑", href: "/store" },
-  { label: "인테리어/생활", href: "#" },
 ];
 
 const Header = () => {

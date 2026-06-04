@@ -2,16 +2,9 @@ import type { HomeMainFeatureItem, HomeNavItem, HomePromoItem, HomeQuickMenuItem
 
 export const HOME_NAV_ITEMS: HomeNavItem[] = [
   { label: "홈", href: "/" },
-  { label: "추천", href: "#" },
-  { label: "집들이", href: "#" },
-  { label: "집사진", href: "#" },
-  { label: "인기", href: "#" },
   { label: "쇼핑수다", href: "#" },
-  { label: "집꾸미기", href: "#" },
-  { label: "이사정보", href: "#" },
   { label: "오집소식", href: "#" },
   { label: "취미/일상", href: "#" },
-  { label: "3D인테리어", href: "#" },
 ];
 
 export const HOME_MAIN_FEATURE: HomeMainFeatureItem = {
@@ -21,6 +14,7 @@ export const HOME_MAIN_FEATURE: HomeMainFeatureItem = {
   authorImageUrl: "https://picsum.photos/seed/home-author/40/40",
   href: "#",
 };
+
 
 export const HOME_PROMO_ITEMS: HomePromoItem[] = [
   {
