@@ -6,7 +6,7 @@ import Text from "@/components/Common/Text";
 import { ShareIcon, BookmarkIcon, StarIcon, ChevronRightIcon, InfoIcon } from "@/components/Common/Icon";
 import { formatPrice } from "@/app/utils/format";
 import { ProductDetail } from "@/app/types/productDetail";
-import styles from "./index.module.scss";
+import styles from "./ProductInfoPanel.module.scss";
 
 interface ProductInfoPanelProps {
   product: ProductDetail;

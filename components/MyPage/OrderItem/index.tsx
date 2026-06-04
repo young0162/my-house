@@ -2,7 +2,7 @@ import Image from "next/image";
 import { CartIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import type { Order } from "@/types/mypage";
-import styles from "./index.module.scss";
+import styles from "./OrderItem.module.scss";
 
 interface OrderItemProps {
   order: Order;

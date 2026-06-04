@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@/components/Common/Icon";
 import { CATEGORY_FILTERS, FilterGroup } from "@/constants/filter";
-import styles from "./index.module.scss";
+import styles from "./FilterBar.module.scss";
 
 export type SelectedFilters = Record<string, string[]>;
 

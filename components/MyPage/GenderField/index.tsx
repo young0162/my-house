@@ -1,7 +1,7 @@
 import Text from "@/components/Common/Text";
 import { GENDER_OPTIONS } from "@/constants/memberSettings";
 import type { Gender } from "@/types/memberSettings";
-import styles from "./index.module.scss";
+import styles from "./GenderField.module.scss";
 
 interface GenderFieldProps {
   value: Gender;

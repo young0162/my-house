@@ -7,7 +7,7 @@ import ReviewSortBar from "@/components/Review/ReviewSortBar";
 import ReviewCard from "@/components/Review/ReviewCard";
 import { ReviewSortType } from "@/app/types/review";
 import { MOCK_REVIEW_SUMMARY, MOCK_REVIEWS } from "@/constants/review";
-import styles from "./index.module.scss";
+import styles from "./ReviewSection.module.scss";
 
 interface ReviewSectionProps {
   totalCount: number;

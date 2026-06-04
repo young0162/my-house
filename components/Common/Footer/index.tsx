@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Text from "@/components/Common/Text";
 import { FOOTER_LINKS, POLICY_LINKS, SOCIAL_LINKS, COMPANY_INFO } from "@/constants/footer";
-import styles from "./index.module.scss";
+import styles from "./Footer.module.scss";
 
 const Footer = () => {
   const [companyOpen, setCompanyOpen] = useState(false);

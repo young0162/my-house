@@ -1,7 +1,7 @@
 import ReviewableProductItem from "@/components/MyPage/ReviewableProductItem";
 import Text from "@/components/Common/Text";
 import type { ReviewableProduct } from "@/types/myReview";
-import styles from "./index.module.scss";
+import styles from "./ReviewableProductList.module.scss";
 
 interface ReviewableProductListProps {
   products: ReviewableProduct[];

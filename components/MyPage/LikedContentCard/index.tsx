@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Text from "@/components/Common/Text";
 import type { LikedContent } from "@/types/mypage";
-import styles from "./index.module.scss";
+import styles from "./LikedContentCard.module.scss";
 
 interface LikedContentCardProps {
   content: LikedContent;

@@ -1,6 +1,6 @@
 import Text from "@/components/Common/Text";
 import { REVIEW_MAX_LENGTH, REVIEW_REWARD_LENGTH } from "@/constants/myReview";
-import styles from "./index.module.scss";
+import styles from "./ReviewContentField.module.scss";
 
 interface ReviewContentFieldProps {
   content: string;

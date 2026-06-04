@@ -3,7 +3,7 @@ import { BookmarkIcon } from "@/components/Common/Icon";
 import DeliveryBadge from "@/components/Product/DeliveryBadge";
 import { MdPickItem } from "@/constants/product";
 import { formatPrice } from "@/app/utils/format";
-import styles from "./index.module.scss";
+import styles from "./MdPickCard.module.scss";
 
 interface MdPickCardProps {
   item: MdPickItem;

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { CATEGORIES, SNB_TREE, SnbGroup, SnbSub } from "@/constants/category";
 import { ChevronDownIcon, ChevronUpIcon } from "@/components/Common/Icon";
-import styles from "./index.module.scss";
+import styles from "./CategoryList.module.scss";
 
 interface CategoryListProps {
   activeCategoryId: string;

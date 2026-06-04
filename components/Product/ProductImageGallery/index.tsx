@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./ProductImageGallery.module.scss";
 
 interface ProductImageGalleryProps {
   images: string[];

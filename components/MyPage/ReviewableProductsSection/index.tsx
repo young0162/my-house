@@ -6,7 +6,7 @@ import ReviewProductSearchForm from "@/components/MyPage/ReviewProductSearchForm
 import ReviewableProductList from "@/components/MyPage/ReviewableProductList";
 import ReviewWriteModal from "@/components/MyPage/ReviewWriteModal";
 import type { ReviewableProduct, ReviewDraft } from "@/types/myReview";
-import styles from "./index.module.scss";
+import styles from "./ReviewableProductsSection.module.scss";
 
 interface ReviewableProductsSectionProps {
   products: ReviewableProduct[];

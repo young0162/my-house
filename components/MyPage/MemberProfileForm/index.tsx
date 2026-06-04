@@ -9,7 +9,7 @@ import ProfileImageEditor from "@/components/MyPage/ProfileImageEditor";
 import SettingsTextField from "@/components/MyPage/SettingsTextField";
 import { NICKNAME_MAX_LENGTH, NICKNAME_MIN_LENGTH } from "@/constants/memberSettings";
 import type { MemberProfile, MemberProfileFormErrors, MemberProfileFormValue } from "@/types/memberSettings";
-import styles from "./index.module.scss";
+import styles from "./MemberProfileForm.module.scss";
 
 interface MemberProfileFormProps {
   profile: MemberProfile;

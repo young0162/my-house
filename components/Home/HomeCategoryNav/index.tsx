@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { ChevronDownIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import { HOME_NAV_ITEMS } from "@/constants/home";
-import styles from "./index.module.scss";
+import styles from "./HomeCategoryNav.module.scss";
 
 const HomeCategoryNav = () => {
   const pathname = usePathname();

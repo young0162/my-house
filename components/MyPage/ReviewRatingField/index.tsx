@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RatingStarIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./ReviewRatingField.module.scss";
 
 interface ReviewRatingFieldProps {
   rating: number;

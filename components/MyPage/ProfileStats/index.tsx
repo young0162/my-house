@@ -1,6 +1,6 @@
 import { BookmarkIcon, HeartIcon, CouponIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./ProfileStats.module.scss";
 
 interface ProfileStatsProps {
   scrapbookCount: number;

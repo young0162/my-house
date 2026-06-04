@@ -1,7 +1,7 @@
 import LikedContentCard from "@/components/MyPage/LikedContentCard";
 import Text from "@/components/Common/Text";
 import type { LikedContent } from "@/types/mypage";
-import styles from "./index.module.scss";
+import styles from "./LikedContentGrid.module.scss";
 
 interface LikedContentGridProps {
   contents: LikedContent[];

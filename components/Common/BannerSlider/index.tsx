@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./BannerSlider.module.scss";
 import { BannerSliderProps } from "@/app/types/bannerSlider";
 
 const BannerSlider = ({ items, autoPlayInterval = 4000 }: BannerSliderProps) => {

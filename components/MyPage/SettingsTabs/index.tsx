@@ -1,7 +1,7 @@
 import Text from "@/components/Common/Text";
 import { SETTINGS_TABS } from "@/constants/memberSettings";
 import type { SettingsTab } from "@/types/memberSettings";
-import styles from "./index.module.scss";
+import styles from "./SettingsTabs.module.scss";
 
 interface SettingsTabsProps {
   activeTab: SettingsTab;

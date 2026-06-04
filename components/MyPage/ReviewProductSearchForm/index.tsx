@@ -1,5 +1,5 @@
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./ReviewProductSearchForm.module.scss";
 
 interface ReviewProductSearchFormProps {
   onSearch: (query: string) => void;

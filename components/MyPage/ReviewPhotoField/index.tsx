@@ -6,7 +6,7 @@ import { ImageIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import { REVIEW_MAX_PHOTO_SIZE, REVIEW_ACCEPTED_PHOTO_TYPES } from "@/constants/myReview";
 import type { ReviewPhoto } from "@/types/myReview";
-import styles from "./index.module.scss";
+import styles from "./ReviewPhotoField.module.scss";
 
 interface ReviewPhotoFieldProps {
   photo: ReviewPhoto | null;

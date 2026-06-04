@@ -1,5 +1,5 @@
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./ActivityDashboardLink.module.scss";
 
 const ActivityDashboardLink = () => (
   <button type="button" className={styles.btn} disabled aria-disabled="true">

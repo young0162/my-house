@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SearchIcon, ChevronDownIcon } from "@/components/Common/Icon";
 import { PERIOD_OPTIONS, ORDER_STATUS_OPTIONS } from "@/constants/mypage";
 import type { PeriodOption, OrderStatusOption } from "@/types/mypage";
-import styles from "./index.module.scss";
+import styles from "./OrderFilter.module.scss";
 
 const OrderFilter = () => {
   const [period, setPeriod] = useState<PeriodOption>("전체(최대 5년)");

@@ -8,7 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 import Text from "@/components/Common/Text";
 import { SearchIcon, HeartIcon, CartIcon, BellIcon } from "@/components/Common/Icon";
 import { HOME_NAV_ITEMS } from "@/constants/home";
-import styles from "./index.module.scss";
+import styles from "./Header.module.scss";
 import { LogoIcon } from "../Icon/LogoIcon";
 
 const NAV_ITEMS = [

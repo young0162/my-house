@@ -1,6 +1,6 @@
 import type { ChangeEventHandler, HTMLInputAutoCompleteAttribute, HTMLInputTypeAttribute } from "react";
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./SettingsTextField.module.scss";
 
 interface SettingsTextFieldProps {
   id: string;

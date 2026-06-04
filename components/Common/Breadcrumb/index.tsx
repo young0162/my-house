@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChevronDownIcon } from "@/components/Common/Icon";
-import styles from "./index.module.scss";
+import styles from "./Breadcrumb.module.scss";
 
 export interface BreadcrumbItem {
   label: string;

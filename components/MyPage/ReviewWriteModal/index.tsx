@@ -12,7 +12,7 @@ import ReviewPolicyAgreement from "@/components/MyPage/ReviewPolicyAgreement";
 import ReviewDiscardConfirm from "@/components/MyPage/ReviewDiscardConfirm";
 import { REVIEW_MIN_LENGTH } from "@/constants/myReview";
 import type { ReviewWriteModalProps, ReviewPhoto, ReviewDraftErrors } from "@/types/myReview";
-import styles from "./index.module.scss";
+import styles from "./ReviewWriteModal.module.scss";
 
 const ReviewWriteModal = ({ product, onClose, onSubmit }: ReviewWriteModalProps) => {
   const [mounted, setMounted] = useState(false);

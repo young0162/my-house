@@ -2,7 +2,7 @@ import Link from "next/link";
 import { HomeQuickMenuIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import { HOME_QUICK_MENU_ITEMS } from "@/constants/home";
-import styles from "./index.module.scss";
+import styles from "./HomeQuickMenu.module.scss";
 
 const HomeQuickMenu = () => (
   <nav aria-label="빠른 메뉴">

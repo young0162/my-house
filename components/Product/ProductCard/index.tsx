@@ -6,7 +6,7 @@ import { HeartIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import { ProductCardProps } from "@/app/types/product";
 import { formatPrice } from "@/app/utils/format";
-import styles from "./index.module.scss";
+import styles from "./ProductCard.module.scss";
 
 const ProductCard = ({
   image,

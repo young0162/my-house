@@ -1,7 +1,7 @@
 import Text from "@/components/Common/Text";
 import { MY_REVIEW_TABS } from "@/constants/myReview";
 import type { MyReviewTab } from "@/types/myReview";
-import styles from "./index.module.scss";
+import styles from "./MyReviewTabs.module.scss";
 
 interface MyReviewTabsProps {
   activeTab: MyReviewTab;

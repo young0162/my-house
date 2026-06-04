@@ -1,7 +1,7 @@
 import Text from "@/components/Common/Text";
 import { StarIcon } from "@/components/Common/Icon";
 import { ReviewSummary } from "@/app/types/review";
-import styles from "./index.module.scss";
+import styles from "./ReviewRatingSummary.module.scss";
 
 interface ReviewRatingSummaryProps {
   summary: ReviewSummary;

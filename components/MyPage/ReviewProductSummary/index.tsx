@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Text from "@/components/Common/Text";
 import type { ReviewableProduct } from "@/types/myReview";
-import styles from "./index.module.scss";
+import styles from "./ReviewProductSummary.module.scss";
 
 interface ReviewProductSummaryProps {
   product: ReviewableProduct;

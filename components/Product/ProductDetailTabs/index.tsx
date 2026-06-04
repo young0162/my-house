@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Text from "@/components/Common/Text";
 import ReviewSection from "@/components/Review/ReviewSection";
-import styles from "./index.module.scss";
+import styles from "./ProductDetailTabs.module.scss";
 
 interface Tab {
   id: string;

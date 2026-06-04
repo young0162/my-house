@@ -4,7 +4,7 @@ import { ShareIcon, ProfilePlaceholderIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import ProfileStats from "@/components/MyPage/ProfileStats";
 import type { ProfileSummary } from "@/types/mypage";
-import styles from "./index.module.scss";
+import styles from "./ProfileSummaryCard.module.scss";
 
 interface ProfileSummaryCardProps {
   profile: ProfileSummary;

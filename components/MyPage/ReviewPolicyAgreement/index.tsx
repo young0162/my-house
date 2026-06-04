@@ -6,7 +6,7 @@ import {
   REVIEW_POLICY_CONTENT,
   REVIEW_POLICY_NOTICE,
 } from "@/constants/myReview";
-import styles from "./index.module.scss";
+import styles from "./ReviewPolicyAgreement.module.scss";
 
 interface ReviewPolicyAgreementProps {
   agreed: boolean;

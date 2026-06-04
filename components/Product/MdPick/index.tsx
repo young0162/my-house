@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { ChevronDownIcon } from "@/components/Common/Icon";
 import MdPickCard from "@/components/Product/MdPickCard";
 import { MD_PICK_ITEMS } from "@/constants/product";
-import styles from "./index.module.scss";
+import styles from "./MdPick.module.scss";
 
 const MdPick = () => {
   const scrollRef = useRef<HTMLUListElement>(null);

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PRODUCT_SORT_OPTIONS } from "@/constants/product";
 import { SortOption } from "@/app/types/product";
 import { ChevronDownIcon, ChevronUpIcon } from "@/components/Common/Icon";
-import styles from "./index.module.scss";
+import styles from "./SortDropdown.module.scss";
 
 interface SortDropdownProps {
   value: SortOption;

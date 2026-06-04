@@ -1,7 +1,7 @@
 import Text from "@/components/Common/Text";
 import { PROFILE_ACTIVITY_TABS } from "@/constants/mypage";
 import type { ProfileActivityTab } from "@/types/mypage";
-import styles from "./index.module.scss";
+import styles from "./ProfileActivityTabs.module.scss";
 
 interface ProfileActivityTabsProps {
   activeTab: ProfileActivityTab;

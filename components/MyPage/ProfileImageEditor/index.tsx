@@ -5,7 +5,7 @@ import Image from "next/image";
 import { CameraIcon, ProfileSmileIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import { PROFILE_IMAGE_ACCEPTED_TYPES, PROFILE_IMAGE_MAX_SIZE } from "@/constants/memberSettings";
-import styles from "./index.module.scss";
+import styles from "./ProfileImageEditor.module.scss";
 
 interface ProfileImageEditorProps {
   imageUrl: string | null;

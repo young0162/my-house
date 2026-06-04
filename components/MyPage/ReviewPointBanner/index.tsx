@@ -1,6 +1,6 @@
 import { ExclamationCircleIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./ReviewPointBanner.module.scss";
 
 const ReviewPointBanner = () => (
   <div className={styles.root}>

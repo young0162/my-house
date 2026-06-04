@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Text from "@/components/Common/Text";
 import type { HomeMainFeatureItem } from "@/types/home";
-import styles from "./index.module.scss";
+import styles from "./HomeMainFeature.module.scss";
 
 const HomeMainFeature = ({ item }: { item: HomeMainFeatureItem }) => (
   <Link href={item.href} className={styles.root}>

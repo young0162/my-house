@@ -4,7 +4,7 @@ import Text from "@/components/Common/Text";
 import { ChevronDownIcon } from "@/components/Common/Icon";
 import { ReviewSortType } from "@/app/types/review";
 import { REVIEW_SORT_OPTIONS } from "@/constants/review";
-import styles from "./index.module.scss";
+import styles from "./ReviewSortBar.module.scss";
 
 interface ReviewSortBarProps {
   sortType: ReviewSortType;

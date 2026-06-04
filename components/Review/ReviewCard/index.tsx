@@ -5,7 +5,7 @@ import Image from "next/image";
 import Text from "@/components/Common/Text";
 import { StarIcon, ThumbUpIcon } from "@/components/Common/Icon";
 import { ReviewItem } from "@/app/types/review";
-import styles from "./index.module.scss";
+import styles from "./ReviewCard.module.scss";
 
 interface ReviewCardProps {
   review: ReviewItem;

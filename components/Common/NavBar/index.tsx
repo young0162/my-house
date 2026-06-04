@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Text from "@/components/Common/Text";
-import styles from "./index.module.scss";
+import styles from "./NavBar.module.scss";
 
 const NAV_ITEMS = [
   { label: "쇼핑홈", href: "/store" },
