@@ -51,23 +51,55 @@ export const SNB_TREE: Record<string, SnbGroup[]> = {
             { id: "l-normal", label: "일반침대" },
             { id: "l-storage", label: "수납침대" },
             { id: "l-low", label: "저상형침대" },
-            { id: "l-family", label: "패밀리침대" },
-            { id: "l-bunk", label: "이층·벙커침대" },
-            { id: "l-foundation", label: "하단매트리스·파운데이션" },
-            { id: "l-motion", label: "모션베드" },
-            { id: "l-stone", label: "돌침대·흙침대" },
-            { id: "l-fold", label: "접이식침대" },
           ],
         },
         { id: "s-bed-mattress", label: "침대+매트리스" },
         { id: "s-bed-acc", label: "침대부속가구" },
       ],
     },
-    { id: "g-mattress", label: "매트리스·토퍼", children: [] },
-    { id: "g-table", label: "테이블·식탁·책상", children: [] },
-    { id: "g-sofa", label: "소파", children: [] },
-    { id: "g-drawer", label: "서랍·수납장", children: [] },
-    { id: "g-tv", label: "거실장·TV장", children: [] },
+    {
+      id: "g-mattress",
+      label: "매트리스·토퍼",
+      children: [
+        { id: "s-mattress", label: "매트리스" },
+        { id: "s-topper", label: "토퍼" },
+      ],
+    },
+    {
+      id: "g-table",
+      label: "테이블·식탁·책상",
+      children: [
+        { id: "s-sofa-table", label: "거실·소파테이블" },
+        { id: "s-side-table", label: "사이드테이블" },
+        { id: "s-dining-table", label: "식탁" },
+      ],
+    },
+    {
+      id: "g-sofa",
+      label: "소파",
+      children: [
+        { id: "s-sofa-normal", label: "일반소파" },
+        { id: "s-recliner", label: "리클라이너" },
+        { id: "s-sofa-bed", label: "소파베드" },
+      ],
+    },
+    {
+      id: "g-drawer",
+      label: "서랍·수납장",
+      children: [
+        { id: "s-drawer", label: "서랍장" },
+        { id: "s-storage", label: "수납장" },
+      ],
+    },
+    {
+      id: "g-tv",
+      label: "거실장·TV장",
+      children: [
+        { id: "s-tv-normal", label: "일반거실장" },
+        { id: "s-tv-tall", label: "높은거실장·사이드보드" },
+        { id: "s-tv-stand", label: "TV스탠드" },
+      ],
+    },
   ],
   "002": [
     { id: "g-bedding", label: "이불·베개", children: [] },
@@ -95,18 +127,9 @@ export const SNB_TREE: Record<string, SnbGroup[]> = {
     { id: "g-bath", label: "욕실소품", children: [] },
     { id: "g-clean", label: "청소용품", children: [] },
   ],
-  "007": [
-    { id: "g-deco", label: "인테리어 소품", children: [] },
-    { id: "g-plant", label: "식물·화분", children: [] },
-    { id: "g-poster", label: "액자·포스터", children: [] },
-  ],
   "008": [
     { id: "g-appliance", label: "생활가전", children: [] },
     { id: "g-digital", label: "디지털기기", children: [] },
-  ],
-  "009": [
-    { id: "g-acc", label: "인테리어 액세서리", children: [] },
-    { id: "g-mirror", label: "거울", children: [] },
   ],
   "010": [
     { id: "g-outdoor-furniture", label: "아웃도어 가구", children: [] },
