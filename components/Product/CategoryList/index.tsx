@@ -1,22 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { CATEGORIES, SNB_TREE, SnbGroup, SnbSub } from "@/constants/category";
+import type { CategoryTreeItem } from "@/app/types/category";
 import { ChevronDownIcon, ChevronUpIcon } from "@/components/Common/Icon";
+import Text from "@/components/Common/Text";
 import styles from "./CategoryList.module.scss";
 
 interface CategoryListProps {
-  activeCategoryId: string;
+  groups: CategoryTreeItem[];
 }
 
-const CategoryList = ({ activeCategoryId }: CategoryListProps) => {
-  const groups: SnbGroup[] = SNB_TREE[activeCategoryId] ?? [];
-  const currentCategory = CATEGORIES.find((c) => c.id === activeCategoryId);
-
-  const defaultOpenGroup = groups.find((g) => g.children && g.children.length > 0)?.id ?? null;
-  const defaultOpenSub = groups
-    .flatMap((g) => g.children ?? [])
-    .find((s) => s.children && s.children.length > 0)?.id ?? null;
+const CategoryList = ({ groups }: CategoryListProps) => {
+  const defaultOpenGroup = groups.find((group) => group.children && group.children.length > 0)?.id ?? null;
+  const defaultGroup = groups.find((group) => group.id === defaultOpenGroup);
+  const defaultOpenSub = defaultGroup?.children?.find((sub) => sub.children && sub.children.length > 0)?.id ?? null;
 
   const [openGroupId, setOpenGroupId] = useState<string | null>(defaultOpenGroup);
   const [openSubId, setOpenSubId] = useState<string | null>(defaultOpenSub);
@@ -29,16 +26,30 @@ const CategoryList = ({ activeCategoryId }: CategoryListProps) => {
     setActiveLeafId(null);
   };
 
-  const toggleSub = (sub: SnbSub) => {
+  const toggleSub = (sub: CategoryTreeItem) => {
     if (!sub.children || sub.children.length === 0) return;
     setOpenSubId((prev) => (prev === sub.id ? null : sub.id));
     setActiveLeafId(null);
   };
 
+  const renderLeafChildren = (children: CategoryTreeItem[]) => (
+    <ul className={styles.nestedLeafList}>
+      {children.map((child) => (
+        <li key={child.id}>
+          <button
+            type="button"
+            className={`${styles.leafItem} ${styles.leafItemNested} ${activeLeafId === child.id ? styles.leafItemActive : ""}`}
+            onClick={() => setActiveLeafId(child.id)}
+          >
+            <Text tag="span">{child.label}</Text>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
     <aside className={styles.root}>
-      <div className={styles.categoryTitle}>{currentCategory?.label}</div>
-
       <nav>
         <ul className={styles.groupList}>
           {groups.map((group) => {
@@ -49,10 +60,10 @@ const CategoryList = ({ activeCategoryId }: CategoryListProps) => {
               <li key={group.id}>
                 <button
                   type="button"
-                  className={`${styles.groupItem} ${group.noChevron ? styles.groupItemPlain : ""}`}
+                  className={`${styles.rootCategoryItem} ${isGroupOpen ? styles.rootCategoryItemActive : ""}`}
                   onClick={() => toggleGroup(group.id, hasChildren)}
                 >
-                  <span>{group.label}</span>
+                  <Text tag="span">{group.label}</Text>
                   {hasChildren && (isGroupOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
                 </button>
 
@@ -70,7 +81,7 @@ const CategoryList = ({ activeCategoryId }: CategoryListProps) => {
                               className={`${styles.subItem} ${isSubOpen ? styles.subItemActive : ""}`}
                               onClick={() => toggleSub(sub)}
                             >
-                              <span>{sub.label}</span>
+                              <Text tag="span">{sub.label}</Text>
                               {hasLeaves && (isSubOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
                             </button>
 
@@ -84,8 +95,9 @@ const CategoryList = ({ activeCategoryId }: CategoryListProps) => {
                                         className={`${styles.leafItem} ${activeLeafId === leaf.id ? styles.leafItemActive : ""}`}
                                         onClick={() => setActiveLeafId(leaf.id)}
                                       >
-                                        {leaf.label}
+                                        <Text tag="span">{leaf.label}</Text>
                                       </button>
+                                      {leaf.children && leaf.children.length > 0 ? renderLeafChildren(leaf.children) : null}
                                     </li>
                                   ))}
                                 </ul>

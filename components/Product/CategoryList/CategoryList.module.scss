@@ -6,17 +6,50 @@
 
 /* ── Category Title ── */
 .categoryTitle {
+  display: block;
   font-size: 24px;
   font-weight: 700;
   color: $color-text-primary;
   letter-spacing: -0.5px;
   margin-bottom: 24px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-primary;
+  }
 }
 
 /* ── Group (1단계) ── */
 .groupList {
   list-style: none;
-  max-width: 160px;
+  max-width: 220px;
+}
+
+.rootCategoryItem {
+  @extend .categoryTitle;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  text-align: left;
+
+  svg {
+    color: $color-text-tertiary;
+    flex-shrink: 0;
+  }
+
+  &Active {
+    color: $color-primary;
+
+    svg {
+      color: $color-primary;
+    }
+  }
 }
 
 .groupItem {
@@ -114,6 +147,11 @@
   padding: 2px 0 4px;
 }
 
+.nestedLeafList {
+  list-style: none;
+  padding: 0;
+}
+
 .leafItem {
   display: block;
   width: 100%;
@@ -134,5 +172,9 @@
   &Active {
     color: $color-text-primary;
     font-weight: 500;
+  }
+
+  &Nested {
+    padding-left: 36px;
   }
 }
