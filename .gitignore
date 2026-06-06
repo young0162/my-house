@@ -50,3 +50,6 @@ package-lock.json
 
 # plan documents
 /docs/plan
+
+# local category source files
+/category_text/
