@@ -36,8 +36,34 @@ model Product {
   reviewCount    Int        @default(0)
   isFreeShipping Boolean    @default(false)
   badge          BadgeType?
+  categoryId     Int?
+  category       Category?  @relation(fields: [categoryId], references: [id])
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
+
+  @@index([categoryId])
+}
+
+model Category {
+  id        Int     @id @default(autoincrement())
+  name      String
+  slug      String?
+  depth     Int
+  sortOrder Int     @default(0)
+  isActive  Boolean @default(true)
+
+  parentId Int?
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children Category[] @relation("CategoryHierarchy")
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([parentId])
+  @@index([depth])
+  @@index([isActive, sortOrder])
 }
 
 model User {
