@@ -62,3 +62,16 @@ test("buildCategoryTree falls back to the first root when selected id is missing
   assert.equal(result.currentCategory?.id, "1");
   assert.equal(result.activeCategoryId, "1");
 });
+
+test("buildCategoryTree returns selected category path from root to selected category", () => {
+  const result = buildCategoryTree(rows, 4);
+
+  assert.equal(result.currentCategory?.id, "4");
+  assert.equal(result.activeCategoryId, "1");
+  assert.deepEqual(result.selectedPath, [
+    { id: "1", label: "가구" },
+    { id: "2", label: "침대" },
+    { id: "3", label: "침대프레임" },
+    { id: "4", label: "일반침대" },
+  ]);
+});

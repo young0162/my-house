@@ -18,6 +18,7 @@ export interface CategoryTreeItem extends CategoryItem {
 export interface CategoryTreeResult {
   activeCategoryId: string;
   currentCategory: CategoryItem | null;
+  selectedPath: CategoryItem[];
   groups: CategoryTreeItem[];
 }
 
@@ -41,6 +42,18 @@ const toTreeItems = (children: CategoryNode[]): CategoryTreeItem[] =>
     }),
   }));
 
+const getCategoryPath = (category: CategoryNode | undefined, nodes: Map<number, CategoryNode>) => {
+  const path: CategoryItem[] = [];
+  let current = category;
+
+  while (current) {
+    path.unshift(toItem(current));
+    current = current.parentId === null ? undefined : nodes.get(current.parentId);
+  }
+
+  return path;
+};
+
 export const buildCategoryTree = (categories: CategoryRow[], selectedCategoryId: number): CategoryTreeResult => {
   const nodes = new Map<number, CategoryNode>();
 
@@ -56,12 +69,14 @@ export const buildCategoryTree = (categories: CategoryRow[], selectedCategoryId:
   });
 
   const roots = sortCategories([...nodes.values()].filter((category) => category.parentId === null));
-  const selectedRoot = nodes.get(selectedCategoryId);
-  const root = selectedRoot?.parentId === null ? selectedRoot : roots[0];
+  const selectedCategory = nodes.get(selectedCategoryId) ?? roots[0];
+  const selectedPath = getCategoryPath(selectedCategory, nodes);
+  const root = selectedPath.length > 0 ? nodes.get(Number(selectedPath[0].id)) : undefined;
 
   return {
     activeCategoryId: root ? String(root.id) : "",
-    currentCategory: root ? toItem(root) : null,
+    currentCategory: selectedCategory ? toItem(selectedCategory) : null,
+    selectedPath,
     groups: toTreeItems(roots),
   };
 };
