@@ -18,5 +18,6 @@ export interface CategoryTreeItem extends CategoryItem {
 export interface CategoryTreeResult {
   activeCategoryId: string;
   currentCategory: CategoryItem | null;
+  selectedPath: CategoryItem[];
   groups: CategoryTreeItem[];
 }

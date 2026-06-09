@@ -21,7 +21,10 @@ interface CategoryPageContentProps {
 const CategoryPageContent = ({ categoryTree }: CategoryPageContentProps) => {
   const [sortBy, setSortBy] = useState<SortOption>("recommended");
   const [products, setProducts] = useState<ProductCardProps[]>([]);
-
+  const breadcrumbItems = categoryTree.selectedPath.map((category) => ({
+    label: category.label,
+    href: `/store/category?category_id=${category.id}`,
+  }));
 
   useEffect(() => {
     fetch(`/api/products?sortBy=${sortBy}`)
@@ -38,13 +41,12 @@ const CategoryPageContent = ({ categoryTree }: CategoryPageContentProps) => {
             <CategoryList
               key={categoryTree.activeCategoryId}
               groups={categoryTree.groups}
+              selectedPath={categoryTree.selectedPath}
             />
 
             <div className={styles.content}>
               <div className={styles.breadcrumbRow}>
-                <Breadcrumb
-                  items={[{ label: "스토어", href: "/store" }, { label: categoryTree.currentCategory?.label ?? "카테고리" }]}
-                />
+                <Breadcrumb items={breadcrumbItems} />
               </div>
 
               <Divider height={25} />

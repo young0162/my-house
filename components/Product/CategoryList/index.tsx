@@ -1,23 +1,28 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import type { CategoryTreeItem } from "@/app/types/category";
+import type { CategoryItem, CategoryTreeItem } from "@/app/types/category";
 import { ChevronDownIcon, ChevronUpIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import styles from "./CategoryList.module.scss";
 
 interface CategoryListProps {
   groups: CategoryTreeItem[];
+  selectedPath: CategoryItem[];
 }
 
-const CategoryList = ({ groups }: CategoryListProps) => {
-  const defaultOpenGroup = groups.find((group) => group.children && group.children.length > 0)?.id ?? null;
-  const defaultGroup = groups.find((group) => group.id === defaultOpenGroup);
-  const defaultOpenSub = defaultGroup?.children?.find((sub) => sub.children && sub.children.length > 0)?.id ?? null;
+const getCategoryHref = (id: string) => `/store/category?category_id=${id}`;
+
+const CategoryList = ({ groups, selectedPath }: CategoryListProps) => {
+  const defaultOpenGroup = selectedPath[0]?.id ?? groups.find((group) => group.children && group.children.length > 0)?.id ?? null;
+  const defaultOpenSub = selectedPath.length > 2 ? selectedPath[1]?.id ?? null : null;
+  const defaultActiveLeaf = selectedPath.length > 2 ? selectedPath[selectedPath.length - 1]?.id ?? null : null;
+  const selectedCategoryId = selectedPath[selectedPath.length - 1]?.id ?? null;
 
   const [openGroupId, setOpenGroupId] = useState<string | null>(defaultOpenGroup);
   const [openSubId, setOpenSubId] = useState<string | null>(defaultOpenSub);
-  const [activeLeafId, setActiveLeafId] = useState<string | null>(null);
+  const [activeLeafId, setActiveLeafId] = useState<string | null>(defaultActiveLeaf);
 
   const toggleGroup = (id: string, hasChildren: boolean) => {
     if (!hasChildren) return;
@@ -36,13 +41,13 @@ const CategoryList = ({ groups }: CategoryListProps) => {
     <ul className={styles.nestedLeafList}>
       {children.map((child) => (
         <li key={child.id}>
-          <button
-            type="button"
+          <Link
+            href={getCategoryHref(child.id)}
             className={`${styles.leafItem} ${styles.leafItemNested} ${activeLeafId === child.id ? styles.leafItemActive : ""}`}
             onClick={() => setActiveLeafId(child.id)}
           >
             <Text tag="span">{child.label}</Text>
-          </button>
+          </Link>
         </li>
       ))}
     </ul>
@@ -58,14 +63,14 @@ const CategoryList = ({ groups }: CategoryListProps) => {
 
             return (
               <li key={group.id}>
-                <button
-                  type="button"
+                <Link
+                  href={getCategoryHref(group.id)}
                   className={`${styles.rootCategoryItem} ${isGroupOpen ? styles.rootCategoryItemActive : ""}`}
                   onClick={() => toggleGroup(group.id, hasChildren)}
                 >
                   <Text tag="span">{group.label}</Text>
                   {hasChildren && (isGroupOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
-                </button>
+                </Link>
 
                 <div className={`${styles.collapseWrapper} ${isGroupOpen ? styles.open : ""}`}>
                   <div className={styles.collapseInner}>
@@ -73,30 +78,31 @@ const CategoryList = ({ groups }: CategoryListProps) => {
                       {(group.children ?? []).map((sub) => {
                         const hasLeaves = !!sub.children && sub.children.length > 0;
                         const isSubOpen = openSubId === sub.id;
+                        const isSubActive = isSubOpen || selectedCategoryId === sub.id;
 
                         return (
                           <li key={sub.id}>
-                            <button
-                              type="button"
-                              className={`${styles.subItem} ${isSubOpen ? styles.subItemActive : ""}`}
+                            <Link
+                              href={getCategoryHref(sub.id)}
+                              className={`${styles.subItem} ${isSubActive ? styles.subItemActive : ""}`}
                               onClick={() => toggleSub(sub)}
                             >
                               <Text tag="span">{sub.label}</Text>
                               {hasLeaves && (isSubOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
-                            </button>
+                            </Link>
 
                             <div className={`${styles.collapseWrapper} ${isSubOpen ? styles.open : ""}`}>
                               <div className={styles.collapseInner}>
                                 <ul className={styles.leafList}>
                                   {(sub.children ?? []).map((leaf) => (
                                     <li key={leaf.id}>
-                                      <button
-                                        type="button"
+                                      <Link
+                                        href={getCategoryHref(leaf.id)}
                                         className={`${styles.leafItem} ${activeLeafId === leaf.id ? styles.leafItemActive : ""}`}
                                         onClick={() => setActiveLeafId(leaf.id)}
                                       >
                                         <Text tag="span">{leaf.label}</Text>
-                                      </button>
+                                      </Link>
                                       {leaf.children && leaf.children.length > 0 ? renderLeafChildren(leaf.children) : null}
                                     </li>
                                   ))}

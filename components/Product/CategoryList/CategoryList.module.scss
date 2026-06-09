@@ -119,6 +119,7 @@
   border: none;
   cursor: pointer;
   text-align: left;
+  text-decoration: none;
   gap: 8px;
 
   svg {
@@ -163,6 +164,7 @@
   border: none;
   cursor: pointer;
   text-align: left;
+  text-decoration: none;
   transition: color 0.12s;
 
   &:hover {
