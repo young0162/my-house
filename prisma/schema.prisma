@@ -44,6 +44,7 @@ model Product {
 
   productOptions ProductOption[]
   reviews        Review[]
+  productCoupons ProductCoupon[]
 
   @@index([brandId])
   @@index([categoryId])
@@ -135,6 +136,34 @@ model Review {
   @@index([productId])
   @@index([createdAt])
   @@map("review")
+}
+
+model Coupon {
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(100)
+  createdAt       DateTime @default(now()) @map("created_at")
+  useStartAt      DateTime @map("use_start_at")
+  useEndAt        DateTime @map("use_end_at")
+  discountPercent Int      @map("discount_percent")
+
+  productCoupons ProductCoupon[]
+
+  @@index([useStartAt, useEndAt])
+  @@map("coupon")
+}
+
+model ProductCoupon {
+  id        Int @id @default(autoincrement())
+  productId Int @map("product_id")
+  couponId  Int @map("coupon_id")
+
+  product Product @relation(fields: [productId], references: [id])
+  coupon  Coupon  @relation(fields: [couponId], references: [id])
+
+  @@unique([productId, couponId])
+  @@index([productId])
+  @@index([couponId])
+  @@map("product_coupon")
 }
 
 model User {
