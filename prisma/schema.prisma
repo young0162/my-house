@@ -43,6 +43,7 @@ model Product {
   updatedAt      DateTime   @updatedAt @map("updated_at")
 
   productOptions ProductOption[]
+  reviews        Review[]
 
   @@index([brandId])
   @@index([categoryId])
@@ -119,6 +120,21 @@ model OptionValue {
   @@unique([typeId, value])
   @@index([typeId])
   @@map("option_value")
+}
+
+model Review {
+  id          Int       @id @default(autoincrement())
+  name        String
+  image       String?
+  productId   Int       @map("product_id")
+  product     Product   @relation(fields: [productId], references: [id])
+  createdAt   DateTime  @default(now()) @map("created_at")
+  answeredAt  DateTime? @map("answered_at")
+  description String    @db.Text
+
+  @@index([productId])
+  @@index([createdAt])
+  @@map("review")
 }
 
 model User {
