@@ -30,12 +30,12 @@ model Product {
   brandId        Int        @map("brand_id")
   brand          Brand      @relation(fields: [brandId], references: [id])
   name           String
+  description    String?    @db.Text
   price          Int
   originalPrice  Int?       @map("original_price")
-  discountRate   Int?       @map("discount_rate")
-  rating         Float?
-  reviewCount    Int        @default(0) @map("review_count")
   isFreeShipping Boolean    @default(false) @map("is_free_shipping")
+  isActive       Boolean    @default(true) @map("is_active")
+  stock          Int        @default(0)
   badge          BadgeType?
   categoryId     Int?       @map("category_id")
   category       Category?  @relation(fields: [categoryId], references: [id])
@@ -130,6 +130,7 @@ model Review {
   image       String?
   productId   Int       @map("product_id")
   product     Product   @relation(fields: [productId], references: [id])
+  rating      Int
   createdAt   DateTime  @default(now()) @map("created_at")
   answeredAt  DateTime? @map("answered_at")
   description String    @db.Text
