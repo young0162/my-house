@@ -42,6 +42,8 @@ model Product {
   createdAt      DateTime   @default(now()) @map("created_at")
   updatedAt      DateTime   @updatedAt @map("updated_at")
 
+  productOptions ProductOption[]
+
   @@index([brandId])
   @@index([categoryId])
   @@map("product")
@@ -79,6 +81,44 @@ model Brand {
 
   @@index([visible])
   @@map("brand")
+}
+
+model ProductOption {
+  id           Int @id @default(autoincrement())
+  optionTypeId Int @map("option_type_id")
+  productId    Int @map("product_id")
+
+  optionType OptionType @relation(fields: [optionTypeId], references: [id])
+  product    Product    @relation(fields: [productId], references: [id])
+
+  @@unique([productId, optionTypeId])
+  @@index([productId])
+  @@index([optionTypeId])
+  @@map("product_option")
+}
+
+model OptionType {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(100)
+
+  productOptions ProductOption[]
+  optionValues   OptionValue[]
+
+  @@unique([name])
+  @@index([name])
+  @@map("option_type")
+}
+
+model OptionValue {
+  id     Int    @id @default(autoincrement())
+  value  String @db.VarChar(100)
+  typeId Int    @map("type_id")
+
+  type OptionType @relation(fields: [typeId], references: [id])
+
+  @@unique([typeId, value])
+  @@index([typeId])
+  @@map("option_value")
 }
 
 model User {
