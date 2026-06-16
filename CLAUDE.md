@@ -100,3 +100,8 @@ If gstack skills aren't working, run `cd .claude/skills/gstack && ./setup` to bu
 - 컴포넌트의 폴더구조는 해당 기능의 PascalCase로 폴더를 만들고 그 폴더 내부에 index.tsx로 컴포넌트 파일을 만들것
 - scss 파일은 사용하고 있는 .tsx에 파일명을 따를것 예를들어서 normal.tsx 에서는 normal.module.scss 라고 명명 지어서 사용할것
 - 실행할 작업들을 순서별로 보여주고 더 추가할 코멘트나 수정사항은 없는지 한번더 물어봐줘
+
+
+# DB 명명 규칙
+- DB Column 명은 snake_case를 사용할것
+- schema.prisma 에서는 snake_case를 변환해서 camelCase로 사용할것 
