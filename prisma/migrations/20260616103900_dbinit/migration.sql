@@ -1,4 +1,43 @@
 -- CreateTable
+CREATE TABLE `Product` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `image` VARCHAR(191) NOT NULL,
+    `brand` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `price` INTEGER NOT NULL,
+    `originalPrice` INTEGER NULL,
+    `discountRate` INTEGER NULL,
+    `rating` DOUBLE NULL,
+    `reviewCount` INTEGER NOT NULL DEFAULT 0,
+    `isFreeShipping` BOOLEAN NOT NULL DEFAULT false,
+    `badge` ENUM('BEST', 'NEW') NULL,
+    `categoryId` INTEGER NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `Product_categoryId_idx`(`categoryId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Category` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `slug` VARCHAR(191) NULL,
+    `depth` INTEGER NOT NULL,
+    `sortOrder` INTEGER NOT NULL DEFAULT 0,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
+    `parentId` INTEGER NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `Category_parentId_idx`(`parentId`),
+    INDEX `Category_depth_idx`(`depth`),
+    INDEX `Category_isActive_sortOrder_idx`(`isActive`, `sortOrder`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `users` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
@@ -57,6 +96,12 @@ CREATE TABLE `verification_tokens` (
 
     UNIQUE INDEX `verification_tokens_identifier_token_key`(`identifier`, `token`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Product` ADD CONSTRAINT `Product_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Category` ADD CONSTRAINT `Category_parentId_fkey` FOREIGN KEY (`parentId`) REFERENCES `Category`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `accounts` ADD CONSTRAINT `accounts_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
