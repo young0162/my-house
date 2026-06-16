@@ -27,23 +27,24 @@ enum UserRole {
 model Product {
   id             Int        @id @default(autoincrement())
   image          String
-  brandId        Int
+  brandId        Int        @map("brand_id")
   brand          Brand      @relation(fields: [brandId], references: [id])
   name           String
   price          Int
-  originalPrice  Int?
-  discountRate   Int?
+  originalPrice  Int?       @map("original_price")
+  discountRate   Int?       @map("discount_rate")
   rating         Float?
-  reviewCount    Int        @default(0)
-  isFreeShipping Boolean    @default(false)
+  reviewCount    Int        @default(0) @map("review_count")
+  isFreeShipping Boolean    @default(false) @map("is_free_shipping")
   badge          BadgeType?
-  categoryId     Int?
+  categoryId     Int?       @map("category_id")
   category       Category?  @relation(fields: [categoryId], references: [id])
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  createdAt      DateTime   @default(now()) @map("created_at")
+  updatedAt      DateTime   @updatedAt @map("updated_at")
 
   @@index([brandId])
   @@index([categoryId])
+  @@map("product")
 }
 
 model Category {
@@ -51,21 +52,22 @@ model Category {
   name      String
   slug      String?
   depth     Int
-  sortOrder Int     @default(0)
-  isActive  Boolean @default(true)
+  sortOrder Int     @default(0) @map("sort_order")
+  isActive  Boolean @default(true) @map("is_active")
 
-  parentId Int?
+  parentId Int?       @map("parent_id")
   parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
   children Category[] @relation("CategoryHierarchy")
 
   products Product[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([parentId])
   @@index([depth])
   @@index([isActive, sortOrder])
+  @@map("category")
 }
 
 model Brand {
@@ -76,6 +78,7 @@ model Brand {
   products Product[]
 
   @@index([visible])
+  @@map("brand")
 }
 
 model User {
@@ -103,13 +106,13 @@ model Account {
   type              String
   provider          String
   providerAccountId String  @map("provider_account_id")
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
+  refreshToken      String? @map("refresh_token") @db.Text
+  accessToken       String? @map("access_token") @db.Text
+  expiresAt         Int?    @map("expires_at")
+  tokenType         String? @map("token_type")
   scope             String?
-  id_token          String? @db.Text
-  session_state     String?
+  idToken           String? @map("id_token") @db.Text
+  sessionState      String? @map("session_state")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

@@ -1,39 +1,52 @@
 -- CreateTable
-CREATE TABLE `Product` (
+CREATE TABLE `product` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `image` VARCHAR(191) NOT NULL,
-    `brand` VARCHAR(191) NOT NULL,
+    `brand_id` INTEGER NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `price` INTEGER NOT NULL,
-    `originalPrice` INTEGER NULL,
-    `discountRate` INTEGER NULL,
+    `original_price` INTEGER NULL,
+    `discount_rate` INTEGER NULL,
     `rating` DOUBLE NULL,
-    `reviewCount` INTEGER NOT NULL DEFAULT 0,
-    `isFreeShipping` BOOLEAN NOT NULL DEFAULT false,
+    `review_count` INTEGER NOT NULL DEFAULT 0,
+    `is_free_shipping` BOOLEAN NOT NULL DEFAULT false,
     `badge` ENUM('BEST', 'NEW') NULL,
-    `categoryId` INTEGER NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
+    `category_id` INTEGER NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
 
-    INDEX `Product_categoryId_idx`(`categoryId`),
+    INDEX `product_brand_id_idx`(`brand_id`),
+    INDEX `product_category_id_idx`(`category_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Category` (
+CREATE TABLE `category` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `slug` VARCHAR(191) NULL,
     `depth` INTEGER NOT NULL,
-    `sortOrder` INTEGER NOT NULL DEFAULT 0,
-    `isActive` BOOLEAN NOT NULL DEFAULT true,
-    `parentId` INTEGER NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
+    `sort_order` INTEGER NOT NULL DEFAULT 0,
+    `is_active` BOOLEAN NOT NULL DEFAULT true,
+    `parent_id` INTEGER NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
 
-    INDEX `Category_parentId_idx`(`parentId`),
-    INDEX `Category_depth_idx`(`depth`),
-    INDEX `Category_isActive_sortOrder_idx`(`isActive`, `sortOrder`),
+    INDEX `category_parent_id_idx`(`parent_id`),
+    INDEX `category_depth_idx`(`depth`),
+    INDEX `category_is_active_sort_order_idx`(`is_active`, `sort_order`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `brand` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `logo` VARCHAR(191) NULL,
+    `visible` BOOLEAN NOT NULL DEFAULT true,
+
+    UNIQUE INDEX `brand_name_key`(`name`),
+    INDEX `brand_visible_idx`(`visible`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -98,10 +111,13 @@ CREATE TABLE `verification_tokens` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Product` ADD CONSTRAINT `Product_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `product` ADD CONSTRAINT `product_brand_id_fkey` FOREIGN KEY (`brand_id`) REFERENCES `brand`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Category` ADD CONSTRAINT `Category_parentId_fkey` FOREIGN KEY (`parentId`) REFERENCES `Category`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `product` ADD CONSTRAINT `product_category_id_fkey` FOREIGN KEY (`category_id`) REFERENCES `category`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `category` ADD CONSTRAINT `category_parent_id_fkey` FOREIGN KEY (`parent_id`) REFERENCES `category`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `accounts` ADD CONSTRAINT `accounts_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
