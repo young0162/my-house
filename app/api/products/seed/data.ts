@@ -1,9 +1,13 @@
 import { BadgeType, Prisma } from "@/app/generated/prisma";
 
-export const PRODUCT_SEED_DATA: Prisma.ProductCreateManyInput[] = [
+export type ProductSeedItem = Omit<Prisma.ProductCreateManyInput, "brandId"> & {
+  brandName: string;
+};
+
+export const PRODUCT_SEED_DATA: ProductSeedItem[] = [
   {
     image: "https://picsum.photos/seed/seed-product-1/400/400",
-    brand: "까사미아",
+    brandName: "까사미아",
     name: "모던 패브릭 2인 소파 그레이",
     price: 189000,
     originalPrice: 270000,
@@ -15,7 +19,7 @@ export const PRODUCT_SEED_DATA: Prisma.ProductCreateManyInput[] = [
   },
   {
     image: "https://picsum.photos/seed/seed-product-2/400/400",
-    brand: "데일리홈",
+    brandName: "데일리홈",
     name: "북유럽 원목 커피 테이블",
     price: 129000,
     originalPrice: 152000,
@@ -27,7 +31,7 @@ export const PRODUCT_SEED_DATA: Prisma.ProductCreateManyInput[] = [
   },
   {
     image: "https://picsum.photos/seed/seed-product-3/400/400",
-    brand: "한샘",
+    brandName: "한샘",
     name: "슬림 수납 책상 의자 세트",
     price: 215000,
     originalPrice: 287000,
@@ -38,7 +42,7 @@ export const PRODUCT_SEED_DATA: Prisma.ProductCreateManyInput[] = [
   },
   {
     image: "https://picsum.photos/seed/seed-product-4/400/400",
-    brand: "무인양품",
+    brandName: "무인양품",
     name: "스탠드 조명 테이블 침실 간접조명",
     price: 68000,
     originalPrice: 85000,
@@ -49,7 +53,7 @@ export const PRODUCT_SEED_DATA: Prisma.ProductCreateManyInput[] = [
   },
   {
     image: "https://picsum.photos/seed/seed-product-5/400/400",
-    brand: "오늘의집",
+    brandName: "오늘의집",
     name: "라탄 수납 바구니 세트",
     price: 32000,
     originalPrice: 35000,

@@ -44,7 +44,11 @@ export async function GET(request: NextRequest) {
     select: {
       id: true,
       image: true,
-      brand: true,
+      brand: {
+        select: {
+          name: true,
+        },
+      },
       name: true,
       discountRate: true,
       price: true,
@@ -59,7 +63,7 @@ export async function GET(request: NextRequest) {
   const response = products.map((product) => ({
     id: product.id,
     image: product.image,
-    brand: product.brand,
+    brand: product.brand.name,
     name: product.name,
     discountRate: product.discountRate ?? undefined,
     price: product.price,

@@ -27,7 +27,8 @@ enum UserRole {
 model Product {
   id             Int        @id @default(autoincrement())
   image          String
-  brand          String
+  brandId        Int
+  brand          Brand      @relation(fields: [brandId], references: [id])
   name           String
   price          Int
   originalPrice  Int?
@@ -41,6 +42,7 @@ model Product {
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 
+  @@index([brandId])
   @@index([categoryId])
 }
 
@@ -64,6 +66,16 @@ model Category {
   @@index([parentId])
   @@index([depth])
   @@index([isActive, sortOrder])
+}
+
+model Brand {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  logo     String?
+  visible  Boolean   @default(true)
+  products Product[]
+
+  @@index([visible])
 }
 
 model User {

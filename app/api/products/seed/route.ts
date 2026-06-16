@@ -15,8 +15,23 @@ export async function POST() {
     },
   });
 
+  const brandNames = [...new Set(PRODUCT_SEED_DATA.map((product) => product.brandName))];
+  const brands = await prisma.$transaction(
+    brandNames.map((name) =>
+      prisma.brand.upsert({
+        where: { name },
+        update: { visible: true },
+        create: { name },
+      }),
+    ),
+  );
+  const brandIdByName = new Map(brands.map((brand) => [brand.name, brand.id]));
+
   const result = await prisma.product.createMany({
-    data: PRODUCT_SEED_DATA,
+    data: PRODUCT_SEED_DATA.map(({ brandName, ...product }) => ({
+      ...product,
+      brandId: brandIdByName.get(brandName)!,
+    })),
   });
 
   return NextResponse.json({
