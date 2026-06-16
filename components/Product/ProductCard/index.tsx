@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { HeartIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
@@ -9,6 +10,7 @@ import { formatPrice } from "@/app/utils/format";
 import styles from "./ProductCard.module.scss";
 
 const ProductCard = ({
+  id,
   image,
   brand,
   name,
@@ -24,6 +26,7 @@ const ProductCard = ({
   const [liked, setLiked] = useState(isLiked);
 
   return (
+    <Link href={`/product/${id}`} className={styles.link}>
     <article className={styles.card}>
       <div className={styles.imageWrap}>
         <Image src={image} alt={name} fill sizes="(max-width: 768px) 50vw, 25vw" className={styles.image} />
@@ -36,7 +39,7 @@ const ProductCard = ({
           type="button"
           className={`${styles.likeBtn} ${liked ? styles["likeBtn--active"] : ""}`}
           aria-label={liked ? "좋아요 취소" : "좋아요"}
-          onClick={() => setLiked((prev) => !prev)}
+          onClick={(e) => { e.stopPropagation(); e.preventDefault(); setLiked((prev) => !prev); }}
         >
           <HeartIcon />
         </button>
@@ -85,6 +88,7 @@ const ProductCard = ({
         </div>
       </div>
     </article>
+    </Link>
   );
 };
 
