@@ -91,8 +91,9 @@ model ProductOption {
   optionTypeId Int @map("option_type_id")
   productId    Int @map("product_id")
 
-  optionType OptionType @relation(fields: [optionTypeId], references: [id])
-  product    Product    @relation(fields: [productId], references: [id])
+  optionType          OptionType           @relation(fields: [optionTypeId], references: [id])
+  product             Product              @relation(fields: [productId], references: [id])
+  productOptionValues ProductOptionValue[]
 
   @@unique([productId, optionTypeId])
   @@index([productId])
@@ -117,11 +118,26 @@ model OptionValue {
   value  String @db.VarChar(100)
   typeId Int    @map("type_id")
 
-  type OptionType @relation(fields: [typeId], references: [id])
+  type                OptionType           @relation(fields: [typeId], references: [id])
+  productOptionValues ProductOptionValue[]
 
   @@unique([typeId, value])
   @@index([typeId])
   @@map("option_value")
+}
+
+model ProductOptionValue {
+  id              Int @id @default(autoincrement())
+  productOptionId Int @map("product_option_id")
+  optionValueId   Int @map("option_value_id")
+
+  productOption ProductOption @relation(fields: [productOptionId], references: [id])
+  optionValue   OptionValue   @relation(fields: [optionValueId], references: [id])
+
+  @@unique([productOptionId, optionValueId])
+  @@index([productOptionId])
+  @@index([optionValueId])
+  @@map("product_option_value")
 }
 
 model Review {
