@@ -45,6 +45,7 @@ model Product {
   productOptions ProductOption[]
   reviews        Review[]
   productCoupons ProductCoupon[]
+  carts          Cart[]
 
   @@index([brandId])
   @@index([categoryId])
@@ -166,6 +167,22 @@ model ProductCoupon {
   @@map("product_coupon")
 }
 
+model Cart {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  productId Int      @map("product_id")
+  count     Int      @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+  @@map("cart")
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -176,6 +193,7 @@ model User {
   role          UserRole  @default(USER)
   accounts      Account[]
   sessions      Session[]
+  carts         Cart[]
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
