@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "tunnel": "ssh -N -L 3307:127.0.0.1:3306 hp-server",
+    "tunnel-check": "nc -zv 127.0.0.1 3307"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.2",
