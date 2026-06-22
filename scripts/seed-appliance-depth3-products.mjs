@@ -1,9 +1,15 @@
 import { readFileSync } from "node:fs";
+import { basename } from "node:path";
 import vm from "node:vm";
 import { BadgeType } from "../app/generated/prisma/index.js";
+import {
+  replaceProductImages,
+  validateApplianceCategories,
+} from "./lib/seed-product-images.mjs";
 import { runSeed } from "./lib/seed-runner.mjs";
 
-const PRODUCT_SEED_DOC = "docs/db_seed/product/2026-06-22_appliance_depth3_product_seed_plan.md";
+const PRODUCT_SEED_DOC = "docs/db_seed/product/2026-06-23_appliance_depth3_product_seed_plan.md";
+const APPLIANCE_CATEGORY_IDS = [34, 35, 36, 37, 38];
 
 const parseProductCandidates = (filePath) => {
   const content = readFileSync(filePath, "utf8");
@@ -11,29 +17,19 @@ const parseProductCandidates = (filePath) => {
 
   if (!match) throw new Error(`applianceProductSeedCandidates block not found in ${filePath}`);
 
-  const sandbox = {};
+  const IMAGE_BASE_URL = process.env.PRODUCT_IMAGE_BASE_URL ?? "/image/products";
+  const sandbox = { IMAGE_BASE_URL };
   vm.createContext(sandbox);
   vm.runInContext(
     `const applianceProductSeedCandidates = [${match[1]}]; this.applianceProductSeedCandidates = applianceProductSeedCandidates;`,
     sandbox,
   );
 
-  return sandbox.applianceProductSeedCandidates;
-};
-
-const findCategoryByPath = async (tx, categoryPath) => {
-  let parentId = null;
-  let category = null;
-
-  for (const name of categoryPath) {
-    category = await tx.category.findFirst({ where: { name, parentId } });
-
-    if (!category) throw new Error(`Category path not found: ${categoryPath.join(" > ")}`);
-
-    parentId = category.id;
-  }
-
-  return category;
+  return sandbox.applianceProductSeedCandidates.map((candidate) => ({
+    ...candidate,
+    image: basename(candidate.image),
+    additionalImages: candidate.additionalImages.map((url) => basename(url)),
+  }));
 };
 
 const toBadgeType = (badge) => {
@@ -45,15 +41,22 @@ const toBadgeType = (badge) => {
 
 runSeed(async (prisma) => {
   const candidates = parseProductCandidates(PRODUCT_SEED_DOC);
+  const categories = await prisma.category.findMany({
+    where: { id: { in: APPLIANCE_CATEGORY_IDS } },
+    select: { id: true, name: true, depth: true, parentId: true },
+  });
+  validateApplianceCategories(categories);
+
+  const categoryById = new Map(categories.map((category) => [category.id, category]));
   const before = {
     brands: await prisma.brand.count(),
     products: await prisma.product.count(),
+    productImages: await prisma.productImage.count(),
   };
 
   const results = await prisma.$transaction(async (tx) => {
     const seeded = [];
     const brandCache = new Map();
-    const categoryCache = new Map();
 
     for (const candidate of candidates) {
       let brand = brandCache.get(candidate.brandLookupName);
@@ -67,12 +70,9 @@ runSeed(async (prisma) => {
         brandCache.set(candidate.brandLookupName, brand);
       }
 
-      const categoryKey = candidate.categoryPath.join(" > ");
-      let category = categoryCache.get(categoryKey);
-
-      if (!category) {
-        category = await findCategoryByPath(tx, candidate.categoryPath);
-        categoryCache.set(categoryKey, category);
+      const category = categoryById.get(candidate.categoryId);
+      if (!category || category.depth !== 3) {
+        throw new Error(`Unsupported product category: ${candidate.categoryId}`);
       }
 
       const existing = await tx.product.findFirst({ where: { name: candidate.name } });
@@ -87,7 +87,7 @@ runSeed(async (prisma) => {
         isActive: candidate.isActive,
         stock: candidate.stock,
         badge: toBadgeType(candidate.badge),
-        categoryId: category.id,
+        categoryId: candidate.categoryId,
       };
 
       const product =
@@ -95,11 +95,15 @@ runSeed(async (prisma) => {
           ? await tx.product.create({ data })
           : await tx.product.update({ where: { id: existing.id }, data });
 
+      const imageCount = await replaceProductImages(tx, product.id, candidate);
+
       seeded.push({
         id: product.id,
         name: product.name,
         brand: brand.name,
-        categoryPath: categoryKey,
+        categoryId: category.id,
+        categoryName: category.name,
+        imageCount,
         action: existing === null ? "created" : "updated",
       });
     }
@@ -110,6 +114,7 @@ runSeed(async (prisma) => {
   const after = {
     brands: await prisma.brand.count(),
     products: await prisma.product.count(),
+    productImages: await prisma.productImage.count(),
   };
 
   console.log(
