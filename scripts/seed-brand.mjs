@@ -1,20 +1,7 @@
-import "dotenv/config";
 import { readFileSync } from "node:fs";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "../app/generated/prisma/index.js";
+import { runSeed } from "./lib/seed-runner.mjs";
 
 const BRAND_SEED_DOC = "docs/db_seed/brand/2026-06-16_brand_seed_plan.md";
-
-const adapter = new PrismaMariaDb({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
-  port: Number(process.env.DATABASE_PORT),
-  connectionLimit: 5,
-});
-
-const prisma = new PrismaClient({ adapter });
 
 const parseBrandNames = (filePath) => {
   const content = readFileSync(filePath, "utf8");
@@ -29,7 +16,7 @@ const parseBrandNames = (filePath) => {
     .filter(Boolean);
 };
 
-try {
+runSeed(async (prisma) => {
   const brandNames = parseBrandNames(BRAND_SEED_DOC);
   const before = await prisma.brand.count();
 
@@ -37,20 +24,11 @@ try {
     const seeded = [];
 
     for (const name of brandNames) {
-      const existing = await tx.brand.findUnique({
-        where: { name },
-      });
-
+      const existing = await tx.brand.findUnique({ where: { name } });
       const brand = await tx.brand.upsert({
         where: { name },
-        create: {
-          name,
-          logo: null,
-          visible: true,
-        },
-        update: {
-          visible: true,
-        },
+        create: { name, logo: null, visible: true },
+        update: { visible: true },
       });
 
       seeded.push({
@@ -71,15 +49,13 @@ try {
         before,
         after,
         parsed: brandNames.length,
-        created: results.filter((result) => result.action === "created").length,
-        reused: results.filter((result) => result.action === "reused").length,
-        updated: results.filter((result) => result.action === "updated").length,
+        created: results.filter((r) => r.action === "created").length,
+        reused: results.filter((r) => r.action === "reused").length,
+        updated: results.filter((r) => r.action === "updated").length,
         results,
       },
       null,
       2,
     ),
   );
-} finally {
-  await prisma.$disconnect();
-}
+});

@@ -1,31 +1,15 @@
-import "dotenv/config";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { BadgeType, PrismaClient } from "../app/generated/prisma/index.js";
+import { BadgeType } from "../app/generated/prisma/index.js";
+import { runSeed } from "./lib/seed-runner.mjs";
 
 const PRODUCT_SEED_DOC = "docs/db_seed/product/2026-06-22_appliance_depth3_product_seed_plan.md";
 
-const adapter = new PrismaMariaDb({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
-  port: Number(process.env.DATABASE_PORT),
-  connectionLimit: 5,
-});
-
-const prisma = new PrismaClient({ adapter });
-
 const parseProductCandidates = (filePath) => {
   const content = readFileSync(filePath, "utf8");
-  const match = content.match(
-    /const applianceProductSeedCandidates = \[([\s\S]*?)\];/,
-  );
+  const match = content.match(/const applianceProductSeedCandidates = \[([\s\S]*?)\];/);
 
-  if (!match) {
-    throw new Error(`applianceProductSeedCandidates block not found in ${filePath}`);
-  }
+  if (!match) throw new Error(`applianceProductSeedCandidates block not found in ${filePath}`);
 
   const sandbox = {};
   vm.createContext(sandbox);
@@ -42,16 +26,9 @@ const findCategoryByPath = async (tx, categoryPath) => {
   let category = null;
 
   for (const name of categoryPath) {
-    category = await tx.category.findFirst({
-      where: {
-        name,
-        parentId,
-      },
-    });
+    category = await tx.category.findFirst({ where: { name, parentId } });
 
-    if (!category) {
-      throw new Error(`Category path not found: ${categoryPath.join(" > ")}`);
-    }
+    if (!category) throw new Error(`Category path not found: ${categoryPath.join(" > ")}`);
 
     parentId = category.id;
   }
@@ -66,7 +43,7 @@ const toBadgeType = (badge) => {
   throw new Error(`Unsupported badge value: ${badge}`);
 };
 
-try {
+runSeed(async (prisma) => {
   const candidates = parseProductCandidates(PRODUCT_SEED_DOC);
   const before = {
     brands: await prisma.brand.count(),
@@ -84,14 +61,8 @@ try {
       if (!brand) {
         brand = await tx.brand.upsert({
           where: { name: candidate.brandLookupName },
-          create: {
-            name: candidate.brandLookupName,
-            logo: null,
-            visible: true,
-          },
-          update: {
-            visible: true,
-          },
+          create: { name: candidate.brandLookupName, logo: null, visible: true },
+          update: { visible: true },
         });
         brandCache.set(candidate.brandLookupName, brand);
       }
@@ -104,10 +75,7 @@ try {
         categoryCache.set(categoryKey, category);
       }
 
-      const existing = await tx.product.findFirst({
-        where: { name: candidate.name },
-      });
-
+      const existing = await tx.product.findFirst({ where: { name: candidate.name } });
       const data = {
         image: candidate.image,
         brandId: brand.id,
@@ -125,10 +93,7 @@ try {
       const product =
         existing === null
           ? await tx.product.create({ data })
-          : await tx.product.update({
-              where: { id: existing.id },
-              data,
-            });
+          : await tx.product.update({ where: { id: existing.id }, data });
 
       seeded.push({
         id: product.id,
@@ -153,14 +118,12 @@ try {
         before,
         after,
         parsed: candidates.length,
-        created: results.filter((result) => result.action === "created").length,
-        updated: results.filter((result) => result.action === "updated").length,
+        created: results.filter((r) => r.action === "created").length,
+        updated: results.filter((r) => r.action === "updated").length,
         results,
       },
       null,
       2,
     ),
   );
-} finally {
-  await prisma.$disconnect();
-}
+});
