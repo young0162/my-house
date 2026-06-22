@@ -24,6 +24,12 @@ enum UserRole {
   ADMIN
 }
 
+enum ProductImageType {
+  THUMBNAIL
+  GALLERY
+  DETAIL
+}
+
 model Product {
   id             Int        @id @default(autoincrement())
   image          String
@@ -46,10 +52,26 @@ model Product {
   reviews        Review[]
   productCoupons ProductCoupon[]
   carts          Cart[]
+  productImages  ProductImage[]
 
   @@index([brandId])
   @@index([categoryId])
   @@map("product")
+}
+
+model ProductImage {
+  id        Int              @id @default(autoincrement())
+  productId Int              @map("product_id")
+  product   Product          @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  url       String
+  type      ProductImageType
+  sortOrder Int              @default(0) @map("sort_order")
+  alt       String?
+
+  @@index([productId])
+  @@index([type])
+  @@map("product_image")
 }
 
 model Category {
