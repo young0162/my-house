@@ -37,11 +37,38 @@ const getSortOrder = (sortBy: SortOption) => {
 
 const imageBaseUrl = process.env.PRODUCT_IMAGE_BASE_URL ?? "";
 
+const getDescendantCategoryIds = async (categoryId: number): Promise<number[]> => {
+  const all = await prisma.category.findMany({ select: { id: true, parentId: true } });
+  const result: number[] = [categoryId];
+  const queue = [categoryId];
+
+  while (queue.length > 0) {
+    const current = queue.shift()!;
+    for (const c of all) {
+      if (c.parentId === current) {
+        result.push(c.id);
+        queue.push(c.id);
+      }
+    }
+  }
+
+  return result;
+};
+
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const sortBy = parseSortBy(searchParams.get("sortBy"));
 
+  const categoryIdParam = searchParams.get("categoryId");
+  const categoryId = categoryIdParam ? Number(categoryIdParam) : null;
+
+  const categoryFilter =
+    categoryId
+      ? { categoryId: { in: await getDescendantCategoryIds(categoryId) } }
+      : {};
+
   const products = await prisma.product.findMany({
+    where: { isActive: true, ...categoryFilter },
     orderBy: getSortOrder(sortBy),
     select: {
       id: true,

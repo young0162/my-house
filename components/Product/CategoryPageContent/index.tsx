@@ -27,10 +27,14 @@ const CategoryPageContent = ({ categoryTree }: CategoryPageContentProps) => {
   }));
 
   useEffect(() => {
-    fetch(`/api/products?sortBy=${sortBy}`)
+    const params = new URLSearchParams({ sortBy });
+    const categoryId = categoryTree.currentCategory?.id;
+    if (categoryId) params.set("categoryId", categoryId);
+
+    fetch(`/api/products?${params}`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, [sortBy]);
+  }, [sortBy, categoryTree.currentCategory?.id]);
 
   return (
     <>
