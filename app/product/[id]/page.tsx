@@ -3,7 +3,7 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import ProductImageGallery from "@/components/Product/ProductImageGallery";
 import ProductInfoPanel from "@/components/Product/ProductInfoPanel";
 import ProductDetailTabs from "@/components/Product/ProductDetailTabs";
-import { MOCK_PRODUCT_DETAILS } from "@/constants/productDetail";
+import type { ProductDetail } from "@/app/types/productDetail";
 import styles from "./page.module.scss";
 
 interface ProductDetailPageProps {
@@ -12,9 +12,12 @@ interface ProductDetailPageProps {
 
 const ProductDetailPage = async ({ params }: ProductDetailPageProps) => {
   const { id } = await params;
-  const product = MOCK_PRODUCT_DETAILS.find((p) => p.id === Number(id));
+  const baseUrl = process.env.AUTH_URL ?? "http://localhost:3000";
+  const res = await fetch(`${baseUrl}/api/products/${id}`, { cache: "no-store" });
 
-  if (!product) notFound();
+  if (!res.ok) notFound();
+
+  const product: ProductDetail = await res.json();
 
   return (
     <main className={styles.page}>
