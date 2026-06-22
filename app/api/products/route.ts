@@ -26,7 +26,7 @@ const getSortOrder = (sortBy: SortOption) => {
     case "price_desc":
       return { price: "desc" as const };
     case "review":
-      return { reviewCount: "desc" as const };
+      return { reviews: { _count: "desc" as const } };
     case "sales":
     case "user_photo":
     case "recommended":
@@ -34,6 +34,8 @@ const getSortOrder = (sortBy: SortOption) => {
       return { id: "asc" as const };
   }
 };
+
+const imageBaseUrl = process.env.PRODUCT_IMAGE_BASE_URL ?? "";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -50,29 +52,42 @@ export async function GET(request: NextRequest) {
         },
       },
       name: true,
-      discountRate: true,
       price: true,
       originalPrice: true,
-      rating: true,
-      reviewCount: true,
       isFreeShipping: true,
       badge: true,
+      reviews: {
+        select: {
+          rating: true,
+        },
+      },
     },
   });
 
-  const response = products.map((product) => ({
-    id: product.id,
-    image: product.image,
-    brand: product.brand.name,
-    name: product.name,
-    discountRate: product.discountRate ?? undefined,
-    price: product.price,
-    originalPrice: product.originalPrice ?? undefined,
-    rating: product.rating ?? undefined,
-    reviewCount: product.reviewCount,
-    isFreeShipping: product.isFreeShipping,
-    badge: product.badge ?? undefined,
-  }));
+  const response = products.map((product) => {
+    const reviewCount = product.reviews.length;
+    const rating =
+      reviewCount > 0
+        ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount
+        : undefined;
+    const discountRate = product.originalPrice
+      ? Math.round((1 - product.price / product.originalPrice) * 100)
+      : undefined;
+
+    return {
+      id: product.id,
+      image: imageBaseUrl ? `${imageBaseUrl}/${product.image}` : product.image,
+      brand: product.brand.name,
+      name: product.name,
+      discountRate,
+      price: product.price,
+      originalPrice: product.originalPrice ?? undefined,
+      rating,
+      reviewCount: reviewCount > 0 ? reviewCount : undefined,
+      isFreeShipping: product.isFreeShipping,
+      badge: product.badge ?? undefined,
+    };
+  });
 
   return NextResponse.json(response);
 }
