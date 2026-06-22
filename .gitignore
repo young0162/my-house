@@ -53,3 +53,12 @@ package-lock.json
 
 # local category source files
 /category_text/
+
+# local seed images
+/public/image/products/
+
+# superpowers internal files
+/docs/superpowers/
+
+# seed scripts
+/scripts/
