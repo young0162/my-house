@@ -1,0 +1,26 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid $color-border;
+}
+
+.title {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+}
+
+.item {
+  min-width: 0;
+}

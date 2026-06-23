@@ -1,0 +1,213 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  list-style: none;
+  padding: 20px 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+/* ── Top row: checkbox + image + info ── */
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.checkbox {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: $color-text-primary;
+}
+
+.imageWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: $color-bg-gray;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nameRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.name {
+  flex: 1;
+  line-height: 1.45;
+  color: $color-text-primary;
+}
+
+.removeBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-tertiary;
+  padding: 2px;
+
+  &:hover {
+    color: $color-text-primary;
+  }
+}
+
+.deliveryRow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.deliveryDate {
+  color: $color-text-secondary;
+}
+
+.deliveryMethod {
+  color: $color-text-tertiary;
+}
+
+/* ── Option row ── */
+.optionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 8px 12px;
+  background-color: $color-bg-light;
+  border-radius: 6px;
+}
+
+.optionLabel {
+  color: $color-text-secondary;
+}
+
+.optionRemoveBtn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-tertiary;
+  padding: 0;
+
+  &:hover {
+    color: $color-text-primary;
+  }
+}
+
+/* ── Quantity row ── */
+.quantityRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.qtyBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-primary;
+
+  &:hover {
+    background-color: $color-bg-gray;
+  }
+}
+
+.qtyValue {
+  min-width: 32px;
+  text-align: center;
+  color: $color-text-primary;
+}
+
+.itemPrice {
+  color: $color-text-primary;
+}
+
+/* ── Action row ── */
+.actionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.actionBtns {
+  display: flex;
+  gap: 6px;
+}
+
+.actionBtn {
+  padding: 6px 14px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  color: $color-text-secondary;
+
+  &:hover {
+    border-color: $color-text-primary;
+    color: $color-text-primary;
+  }
+}
+
+.buyBtn {
+  background-color: $color-text-primary;
+  border-color: $color-text-primary;
+
+  &:hover {
+    background-color: $color-text-secondary;
+    border-color: $color-text-secondary;
+  }
+}
+
+.actionRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.freeShippingBadge {
+  color: $color-primary;
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-weight: 600;
+}

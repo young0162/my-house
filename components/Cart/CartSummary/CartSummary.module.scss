@@ -1,0 +1,56 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  position: sticky;
+  top: 80px;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.header {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.totalPrice {
+  line-height: 1.2;
+}
+
+.hint {
+  color: $color-primary;
+  font-size: 13px;
+  line-height: 1.5;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.checkoutBtn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background-color: $color-text-primary;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.15s;
+
+  &:hover:not(.disabled) {
+    background-color: $color-text-secondary;
+  }
+
+  &.disabled {
+    background-color: $color-border;
+    cursor: default;
+  }
+}
