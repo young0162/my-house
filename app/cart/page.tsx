@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/cartStore";
 import Text from "@/components/Common/Text";
 import CartTabs from "@/components/Cart/CartTabs";
 import CartSection from "@/components/Cart/CartSection";
@@ -15,6 +16,8 @@ const CartPage = () => {
   const [sections, setSections] = useState<CartSectionType[]>([]);
   const [checkedIds, setCheckedIds] = useState<Set<number>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
+  const quantityTimers = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
+  const decrement = useCartStore((s) => s.decrement);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -70,9 +73,13 @@ const CartPage = () => {
       next.delete(id);
       return next;
     });
+    decrement();
   };
 
   const handleDeleteSelected = (sectionId: string) => {
+    const section = sections.find((s) => s.id === sectionId);
+    const deletedCount = section?.items.filter((item) => checkedIds.has(item.id)).length ?? 0;
+
     setSections((prev) =>
       prev
         .map((s) =>
@@ -84,11 +91,10 @@ const CartPage = () => {
     );
     setCheckedIds((prev) => {
       const next = new Set(prev);
-      sections
-        .find((s) => s.id === sectionId)
-        ?.items.forEach((item) => next.delete(item.id));
+      section?.items.forEach((item) => next.delete(item.id));
       return next;
     });
+    decrement(deletedCount);
   };
 
   const handleQuantityChange = (id: number, quantity: number) => {
@@ -98,6 +104,20 @@ const CartPage = () => {
         items: s.items.map((item) => (item.id === id ? { ...item, quantity } : item)),
       })),
     );
+
+    const existing = quantityTimers.current.get(id);
+    if (existing) clearTimeout(existing);
+
+    const timer = setTimeout(() => {
+      fetch(`/api/cart/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ count: quantity }),
+      });
+      quantityTimers.current.delete(id);
+    }, 300);
+
+    quantityTimers.current.set(id, timer);
   };
 
   const totalPrice = allItems
