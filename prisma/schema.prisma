@@ -142,6 +142,7 @@ model OptionValue {
 
   type                OptionType           @relation(fields: [typeId], references: [id])
   productOptionValues ProductOptionValue[]
+  cartOptions         CartOption[]
 
   @@unique([typeId, value])
   @@index([typeId])
@@ -213,13 +214,27 @@ model Cart {
   count     Int      @default(1)
   createdAt DateTime @default(now()) @map("created_at")
 
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id])
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product     Product      @relation(fields: [productId], references: [id])
+  cartOptions CartOption[]
 
-  @@unique([userId, productId])
   @@index([userId])
   @@index([productId])
   @@map("cart")
+}
+
+model CartOption {
+  id            Int @id @default(autoincrement())
+  cartId        Int @map("cart_id")
+  optionValueId Int @map("option_value_id")
+
+  cart        Cart        @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  optionValue OptionValue @relation(fields: [optionValueId], references: [id])
+
+  @@unique([cartId, optionValueId])
+  @@index([cartId])
+  @@index([optionValueId])
+  @@map("cart_option")
 }
 
 model User {
