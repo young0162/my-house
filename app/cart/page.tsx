@@ -38,6 +38,15 @@ const CartPage = () => {
   }, [router]);
 
   const allItems = sections.flatMap((s) => s.items);
+  const allChecked = allItems.length > 0 && allItems.every((item) => checkedIds.has(item.id));
+
+  const handleCheckAll = () => {
+    if (allChecked) {
+      setCheckedIds(new Set());
+    } else {
+      setCheckedIds(new Set(allItems.map((item) => item.id)));
+    }
+  };
 
   const handleCheck = (id: number) => {
     setCheckedIds((prev) => {
@@ -47,17 +56,6 @@ const CartPage = () => {
       } else {
         next.add(id);
       }
-      return next;
-    });
-  };
-
-  const handleCheckAll = (sectionId: string, ids: number[]) => {
-    const section = sections.find((s) => s.id === sectionId);
-    if (!section) return;
-    const allChecked = ids.every((id) => checkedIds.has(id));
-    setCheckedIds((prev) => {
-      const next = new Set(prev);
-      ids.forEach((id) => (allChecked ? next.delete(id) : next.add(id)));
       return next;
     });
   };
@@ -132,6 +130,19 @@ const CartPage = () => {
 
       <CartTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
+      <div className={styles.selectBar}>
+        <label className={styles.selectAllLabel}>
+          <input
+            type="checkbox"
+            className={styles.selectAllCheckbox}
+            checked={allChecked}
+            onChange={handleCheckAll}
+            aria-label="전체 선택"
+          />
+          <Text tag="span" fontSize={14}>모두선택</Text>
+        </label>
+      </div>
+
       <div className={styles.layout}>
         <div className={styles.main}>
           {isLoading ? (
@@ -153,7 +164,6 @@ const CartPage = () => {
                 section={section}
                 checkedIds={checkedIds}
                 onCheck={handleCheck}
-                onCheckAll={handleCheckAll}
                 onRemove={handleRemove}
                 onQuantityChange={handleQuantityChange}
                 onDeleteSelected={handleDeleteSelected}
