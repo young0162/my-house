@@ -18,3 +18,7 @@ export interface CartSectionType {
   count: number;
   items: CartItemType[];
 }
+
+export interface CartApiResponse {
+  sections: CartSectionType[];
+}

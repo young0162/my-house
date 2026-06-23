@@ -1,6 +1,97 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { CartSectionType } from "@/types/cart";
+
+const imageBaseUrl = process.env.PRODUCT_IMAGE_BASE_URL ?? "";
+const buildImageUrl = (filename: string) =>
+  imageBaseUrl ? `${imageBaseUrl}/${filename}` : filename;
+
+export async function GET() {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  const carts = await prisma.cart.findMany({
+    where: {
+      userId: session.user.id,
+      product: { isActive: true },
+    },
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      productId: true,
+      count: true,
+      product: {
+        select: {
+          id: true,
+          image: true,
+          name: true,
+          price: true,
+          isFreeShipping: true,
+          brand: { select: { id: true, name: true } },
+          productImages: {
+            where: { type: "THUMBNAIL" },
+            orderBy: { sortOrder: "asc" },
+            take: 1,
+            select: { url: true },
+          },
+        },
+      },
+      cartOptions: {
+        orderBy: { id: "asc" },
+        select: {
+          optionValue: {
+            select: {
+              value: true,
+              type: { select: { name: true } },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const sectionMap = new Map<number, CartSectionType>();
+
+  for (const cart of carts) {
+    const { brand, productImages, image, name, price, isFreeShipping } = cart.product;
+    const thumbnail = productImages[0]?.url ?? image;
+    const optionLabel = cart.cartOptions
+      .map((co) => `${co.optionValue.type.name}: ${co.optionValue.value}`)
+      .join(" / ");
+
+    const item = {
+      id: cart.id,
+      productId: cart.productId,
+      image: buildImageUrl(thumbnail),
+      brand: brand.name,
+      name,
+      optionLabel,
+      price,
+      quantity: cart.count,
+      isFreeShipping,
+      deliveryDate: "주문 후 3~5일 이내 출고",
+      deliveryMethod: isFreeShipping ? "무료배송" : "일반배송",
+    };
+
+    if (sectionMap.has(brand.id)) {
+      const section = sectionMap.get(brand.id)!;
+      section.items.push(item);
+      section.count = section.items.length;
+    } else {
+      sectionMap.set(brand.id, {
+        id: `brand-${brand.id}`,
+        label: brand.name,
+        count: 1,
+        items: [item],
+      });
+    }
+  }
+
+  return NextResponse.json({ sections: [...sectionMap.values()] });
+}
 
 export async function POST(request: NextRequest) {
   const session = await auth();
