@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -8,6 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 import Text from "@/components/Common/Text";
 import { SearchIcon, HeartIcon, CartIcon, BellIcon } from "@/components/Common/Icon";
 import { HOME_NAV_ITEMS } from "@/constants/home";
+import { useCartStore } from "@/store/cartStore";
 import styles from "./Header.module.scss";
 import { LogoIcon } from "../Icon/LogoIcon";
 
@@ -21,7 +22,16 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const { status } = useSession();
+  const { count: cartCount, setCount } = useCartStore();
   const isHomeCategoryPath = HOME_NAV_ITEMS.some(({ href }) => href !== "#" && pathname === href);
+
+  useEffect(() => {
+    if (status !== "authenticated") return;
+    fetch("/api/cart/count")
+      .then((res) => res.json())
+      .then((data) => setCount(data.count ?? 0))
+      .catch(() => {});
+  }, [status, setCount]);
 
   return (
     <header className={styles.root}>
@@ -76,8 +86,13 @@ const Header = () => {
           <button type="button" className={styles.actionBtn} aria-label="좋아요 목록">
             <HeartIcon />
           </button>
-          <Link href="/cart" className={styles.actionBtn} aria-label="장바구니">
+          <Link href="/cart" className={`${styles.actionBtn} ${styles.cartBtn}`} aria-label="장바구니">
             <CartIcon />
+            {cartCount > 0 && (
+              <span className={styles.cartBadge}>
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
           </Link>
           <button type="button" className={styles.actionBtn} aria-label="알림">
             <BellIcon />

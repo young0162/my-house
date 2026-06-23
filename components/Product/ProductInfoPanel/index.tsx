@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/cartStore";
 import Link from "next/link";
 import Text from "@/components/Common/Text";
 import { ShareIcon, BookmarkIcon, StarIcon, ChevronRightIcon, InfoIcon } from "@/components/Common/Icon";
@@ -20,6 +21,7 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
   const [liked, setLiked] = useState(false);
   const [packageToggle, setPackageToggle] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
+  const increment = useCartStore((s) => s.increment);
 
   const handleOptionChange = (label: string, optionValueId: number) => {
     setSelectedOptions((prev) => ({ ...prev, [label]: optionValueId }));
@@ -55,6 +57,7 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
         return;
       }
 
+      increment();
       alert("장바구니에 담았습니다.");
     } finally {
       setCartLoading(false);
