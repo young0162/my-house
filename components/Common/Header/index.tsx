@@ -76,9 +76,9 @@ const Header = () => {
           <button type="button" className={styles.actionBtn} aria-label="좋아요 목록">
             <HeartIcon />
           </button>
-          <button type="button" className={styles.actionBtn} aria-label="장바구니">
+          <Link href="/cart" className={styles.actionBtn} aria-label="장바구니">
             <CartIcon />
-          </button>
+          </Link>
           <button type="button" className={styles.actionBtn} aria-label="알림">
             <BellIcon />
           </button>
