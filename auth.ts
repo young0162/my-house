@@ -1,12 +1,12 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Kakao from "next-auth/providers/kakao";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { createPrismaAdapter } from "@/lib/auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { verifyPassword } from "@/lib/auth/password";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: createPrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },
