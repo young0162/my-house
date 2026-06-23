@@ -70,7 +70,7 @@ export async function GET(
           productOptionValues: {
             select: {
               optionValue: {
-                select: { value: true },
+                select: { id: true, value: true },
               },
             },
           },
@@ -97,7 +97,10 @@ export async function GET(
 
   const options = product.productOptions.map((opt) => ({
     label: opt.optionType.name,
-    values: opt.productOptionValues.map((pov) => pov.optionValue.value),
+    values: opt.productOptionValues.map((pov) => ({
+      id: pov.optionValue.id,
+      value: pov.optionValue.value,
+    })),
   }));
 
   const breadcrumb = await buildBreadcrumb(product.categoryId);

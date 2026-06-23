@@ -1,6 +1,11 @@
+export interface ProductDetailOptionValue {
+  id: number;
+  value: string;
+}
+
 export interface ProductDetailOption {
   label: string;
-  values: string[];
+  values: ProductDetailOptionValue[];
 }
 
 export interface ProductDetailSavings {

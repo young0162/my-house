@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Text from "@/components/Common/Text";
 import { ShareIcon, BookmarkIcon, StarIcon, ChevronRightIcon, InfoIcon } from "@/components/Common/Icon";
@@ -13,16 +14,52 @@ interface ProductInfoPanelProps {
 }
 
 const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  const router = useRouter();
+  // key: option label, value: optionValueId
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, number>>({});
   const [liked, setLiked] = useState(false);
   const [packageToggle, setPackageToggle] = useState(false);
+  const [cartLoading, setCartLoading] = useState(false);
 
-  const handleOptionChange = (label: string, value: string) => {
-    setSelectedOptions((prev) => ({ ...prev, [label]: value }));
+  const handleOptionChange = (label: string, optionValueId: number) => {
+    setSelectedOptions((prev) => ({ ...prev, [label]: optionValueId }));
   };
 
-  const sizeOption = product.options.find((o) => o.label === "사이즈");
-  const orderAmount = sizeOption && selectedOptions[sizeOption.label] ? product.price : 0;
+  const allOptionsSelected =
+    product.options.length > 0 &&
+    product.options.every((o) => selectedOptions[o.label] !== undefined);
+
+  const orderAmount = allOptionsSelected ? product.price : 0;
+
+  const handleAddToCart = async () => {
+    if (!allOptionsSelected || cartLoading) return;
+
+    setCartLoading(true);
+    try {
+      const res = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: product.id,
+          optionValueIds: Object.values(selectedOptions),
+        }),
+      });
+
+      if (res.status === 401) {
+        router.push("/login");
+        return;
+      }
+
+      if (!res.ok) {
+        alert("장바구니 담기에 실패했습니다.");
+        return;
+      }
+
+      alert("장바구니에 담았습니다.");
+    } finally {
+      setCartLoading(false);
+    }
+  };
 
   return (
     <section className={styles.panel}>
@@ -195,15 +232,15 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
             <select
               className={styles.select}
               value={selectedOptions[option.label] ?? ""}
-              onChange={(e) => handleOptionChange(option.label, e.target.value)}
+              onChange={(e) => handleOptionChange(option.label, Number(e.target.value))}
               aria-label={option.label}
             >
               <option value="" disabled>
                 {option.label}
               </option>
               {option.values.map((val) => (
-                <option key={val} value={val}>
-                  {val}
+                <option key={val.id} value={val.id}>
+                  {val.value}
                 </option>
               ))}
             </select>
@@ -265,8 +302,13 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
           <span className={styles.btnPackageIcon} aria-hidden="true">📦</span>
           <Text tag="span">패키지 담기</Text>
         </button>
-        <button type="button" className={styles.btnCart}>
-          <Text tag="span">장바구니</Text>
+        <button
+          type="button"
+          className={styles.btnCart}
+          onClick={handleAddToCart}
+          disabled={!allOptionsSelected || cartLoading}
+        >
+          <Text tag="span">{cartLoading ? "담는 중..." : "장바구니"}</Text>
         </button>
         <button type="button" className={styles.btnBuy}>
           <Text tag="span">바로구매</Text>
