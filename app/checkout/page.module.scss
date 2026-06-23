@@ -1,0 +1,29 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.pageTitle {
+  display: block;
+  margin-bottom: 28px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.main {
+  min-width: 0;
+}
+
+.sidebar {
+  position: sticky;
+  top: 100px;
+  min-width: 0;
+}

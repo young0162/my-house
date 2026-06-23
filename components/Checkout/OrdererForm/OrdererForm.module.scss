@@ -1,0 +1,128 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  background: $color-bg-white;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.formBody {
+  padding: 0 20px;
+}
+
+.formRow {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 20px;
+  }
+}
+
+.formLabel {
+  width: 72px;
+  flex-shrink: 0;
+  color: $color-text-secondary;
+}
+
+.textInput {
+  flex: 1;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  font-size: 14px;
+  color: $color-text-primary;
+  background: $color-bg-white;
+  outline: none;
+  min-width: 0;
+
+  &::placeholder {
+    color: $color-text-disabled;
+  }
+
+  &:focus {
+    border-color: $color-text-primary;
+  }
+}
+
+.emailGroup {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.atSign {
+  flex-shrink: 0;
+  color: $color-text-secondary;
+}
+
+.phoneGroup {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.phoneInput {
+  flex: 1;
+}
+
+.selectWrapper {
+  position: relative;
+  flex-shrink: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid $color-text-tertiary;
+    pointer-events: none;
+  }
+}
+
+.select {
+  height: 36px;
+  padding: 0 28px 0 10px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  background: $color-bg-white;
+  font-size: 13px;
+  color: $color-text-primary;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+
+  &:focus {
+    border-color: $color-text-primary;
+  }
+}
+
+.selectDomain {
+  width: 130px;
+}
+
+.selectAreaCode {
+  width: 76px;
+}
