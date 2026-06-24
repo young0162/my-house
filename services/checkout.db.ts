@@ -41,6 +41,36 @@ export const checkoutDbService = {
       throw Object.assign(new Error("All options must be selected"), { status: 400 });
     }
 
+    const sortedOptionIds = [...optionValueIds].sort((a, b) => a - b);
+    const existingCheckouts = await prisma.checkout.findMany({
+      where: { userId, source: "PRODUCT_DETAIL", status: "PENDING" },
+      select: {
+        id: true,
+        items: {
+          select: {
+            productId: true,
+            quantity: true,
+            options: { select: { optionValueId: true } },
+          },
+        },
+      },
+    });
+
+    const reusable = existingCheckouts.find((co) => {
+      if (co.items.length !== 1) return false;
+      const item = co.items[0];
+      if (item.productId !== productId || item.quantity !== quantity) return false;
+      const existingOptionIds = item.options.map((o) => o.optionValueId).sort((a, b) => a - b);
+      return (
+        existingOptionIds.length === sortedOptionIds.length &&
+        existingOptionIds.every((id, i) => id === sortedOptionIds[i])
+      );
+    });
+
+    if (reusable) {
+      return { checkoutId: reusable.id, redirectUrl: `/checkout?checkoutId=${reusable.id}` };
+    }
+
     const checkout = await prisma.$transaction(async (tx) => {
       const created = await tx.checkout.create({ data: { userId, source: "PRODUCT_DETAIL" } });
       const item = await tx.checkoutItem.create({
@@ -75,6 +105,30 @@ export const checkoutDbService = {
 
     if (carts.length !== cartIds.length) {
       throw Object.assign(new Error("Some cart items not found"), { status: 400 });
+    }
+
+    const sortedCartIds = [...cartIds].sort((a, b) => a - b);
+    const existingCheckouts = await prisma.checkout.findMany({
+      where: { userId, source: "CART", status: "PENDING" },
+      select: {
+        id: true,
+        items: { select: { cartId: true } },
+      },
+    });
+
+    const reusable = existingCheckouts.find((co) => {
+      const existingCartIds = co.items
+        .map((i) => i.cartId)
+        .filter((id): id is number => id !== null)
+        .sort((a, b) => a - b);
+      return (
+        existingCartIds.length === sortedCartIds.length &&
+        existingCartIds.every((id, i) => id === sortedCartIds[i])
+      );
+    });
+
+    if (reusable) {
+      return { checkoutId: reusable.id, redirectUrl: `/checkout?checkoutId=${reusable.id}` };
     }
 
     const checkout = await prisma.$transaction(async (tx) => {
