@@ -8,6 +8,9 @@ import ShippingAddress from "@/components/Checkout/ShippingAddress";
 import OrdererForm from "@/components/Checkout/OrdererForm";
 import OrderItems from "@/components/Checkout/OrderItems";
 import PaymentSummary from "@/components/Checkout/PaymentSummary";
+import CheckoutCoupon from "@/components/Checkout/CheckoutCoupon";
+import CheckoutPoint from "@/components/Checkout/CheckoutPoint";
+import PaymentMethods from "@/components/Checkout/PaymentMethods";
 import { CartSectionType } from "@/types/cart";
 import { OrdererFormValues } from "@/types/checkout";
 import { EMAIL_DOMAINS } from "@/constants/checkout";
@@ -72,18 +75,20 @@ const CheckoutPage = () => {
 
   return (
     <div className={styles.root}>
-      <Text tag="h1" fontSize={22} fontWeight={700} color="gray01" className={styles.pageTitle}>
-        주문/결제
-      </Text>
-
       <div className={styles.layout}>
         <div className={styles.main}>
+          <Text tag="h1" fontSize={24} fontWeight={700} color="gray01" className={styles.pageTitle}>
+            주문/결제
+          </Text>
           <ShippingAddress
             deliveryRequest={form.deliveryRequest}
             onDeliveryRequestChange={(value) => setField("deliveryRequest", value)}
           />
           <OrdererForm form={form} onFieldChange={setField} />
           <OrderItems sections={sections} totalCount={allItems.length} isLoading={isLoading} />
+          <CheckoutCoupon />
+          <CheckoutPoint />
+          <PaymentMethods />
         </div>
 
         <aside className={styles.sidebar}>

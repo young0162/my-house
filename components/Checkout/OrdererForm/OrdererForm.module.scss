@@ -1,49 +1,44 @@
 @use "@/styles/color_variables" as *;
 
 .root {
-  border: 1px solid $color-border;
-  border-radius: 8px;
   background: $color-bg-white;
-  margin-bottom: 16px;
-  overflow: hidden;
+  margin-bottom: 56px;
 }
 
 .header {
   display: flex;
   align-items: center;
-  padding: 16px 20px;
+  padding: 0 0 14px;
   border-bottom: 1px solid $color-border-light;
 }
 
 .formBody {
-  padding: 0 20px;
+  padding: 14px 0 0;
 }
 
 .formRow {
   display: flex;
   align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid $color-border-light;
+  padding: 8px 0;
 
   &:last-child {
-    border-bottom: none;
-    padding-bottom: 20px;
+    padding-bottom: 0;
   }
 }
 
 .formLabel {
-  width: 72px;
+  width: 78px;
   flex-shrink: 0;
   color: $color-text-secondary;
 }
 
 .textInput {
-  flex: 1;
-  height: 36px;
-  padding: 0 12px;
+  width: 290px;
+  height: 44px;
+  padding: 0 16px;
   border: 1px solid $color-border;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 16px;
   color: $color-text-primary;
   background: $color-bg-white;
   outline: none;
@@ -62,7 +57,7 @@
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 14px;
   min-width: 0;
 }
 
@@ -75,12 +70,13 @@
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 18px;
   min-width: 0;
 }
 
 .phoneInput {
-  flex: 1;
+  width: 188px;
+  flex: initial;
 }
 
 .selectWrapper {
@@ -103,12 +99,12 @@
 }
 
 .select {
-  height: 36px;
-  padding: 0 28px 0 10px;
+  height: 44px;
+  padding: 0 34px 0 14px;
   border: 1px solid $color-border;
   border-radius: 4px;
   background: $color-bg-white;
-  font-size: 13px;
+  font-size: 16px;
   color: $color-text-primary;
   appearance: none;
   cursor: pointer;
@@ -120,9 +116,42 @@
 }
 
 .selectDomain {
-  width: 130px;
+  width: 290px;
 }
 
 .selectAreaCode {
-  width: 76px;
+  width: 84px;
+}
+
+@media (max-width: 768px) {
+  .root {
+    margin-bottom: 44px;
+  }
+
+  .formRow,
+  .emailGroup,
+  .phoneGroup {
+    align-items: stretch;
+  }
+
+  .formRow {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .formLabel {
+    width: auto;
+  }
+
+  .emailGroup,
+  .phoneGroup {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .textInput,
+  .selectDomain,
+  .phoneInput {
+    width: 100%;
+  }
 }

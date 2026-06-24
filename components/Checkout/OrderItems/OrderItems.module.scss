@@ -1,17 +1,15 @@
 @use "@/styles/color_variables" as *;
 
 .root {
-  border: 1px solid $color-border;
-  border-radius: 8px;
   background: $color-bg-white;
-  overflow: hidden;
+  margin-top: 2px;
 }
 
 .header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 16px 20px;
+  gap: 10px;
+  padding: 0 0 13px;
   border-bottom: 1px solid $color-border-light;
 }
 
@@ -19,20 +17,28 @@
   color: $color-text-tertiary;
 }
 
-.section {
-  padding: 16px 20px;
-  border-top: 1px solid $color-border-light;
+.sectionList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
 
-  &:first-of-type {
-    border-top: none;
-  }
+.section {
+  padding: 0;
+  border: 1px solid $color-border-light;
+  border-radius: 4px;
+  overflow: hidden;
+  background: $color-bg-white;
 }
 
 .sectionHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
+  min-height: 34px;
+  padding: 0 14px;
+  border-bottom: 1px solid $color-border-light;
 }
 
 .freeShipping {
@@ -40,32 +46,44 @@
   color: $color-primary;
 }
 
+.shippingDue {
+  color: $color-text-secondary;
+}
+
 .deliveryType {
+  background: $color-bg-light;
   color: $color-text-tertiary;
-  margin-bottom: 14px;
+  padding: 11px 14px;
+  text-align: center;
 }
 
 .itemList {
   list-style: none;
   margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0;
+  padding: 0;
 }
 
 .item {
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  min-height: 86px;
+  padding: 14px;
+
+  & + & {
+    border-top: 1px solid $color-border-light;
+  }
 }
 
 .imageWrap {
   position: relative;
   flex-shrink: 0;
-  width: 72px;
-  height: 72px;
-  border-radius: 6px;
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
   overflow: hidden;
   background: $color-bg-gray;
 }
@@ -79,19 +97,37 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .itemName {
-  line-height: 1.45;
+  line-height: 1.4;
+  word-break: keep-all;
 }
 
 .itemOption {
+  color: $color-text-tertiary;
+  line-height: 1.35;
+}
+
+.itemPriceRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.quantity {
   color: $color-text-tertiary;
 }
 
 .loadingWrap {
   padding: 24px 20px;
+}
+
+.emptyWrap {
+  padding: 24px 20px;
+  border-bottom: 1px solid $color-border-light;
 }
 
 .loadingText {

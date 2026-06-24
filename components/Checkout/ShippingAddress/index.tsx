@@ -12,21 +12,21 @@ interface ShippingAddressProps {
 const ShippingAddress = ({ deliveryRequest, onDeliveryRequestChange }: ShippingAddressProps) => (
   <section className={styles.root}>
     <div className={styles.header}>
-      <Text tag="h2" fontSize={16} fontWeight={700} color="gray01">배송지</Text>
+      <Text tag="h2" fontSize={22} fontWeight={700} color="gray01">배송지</Text>
       <button type="button" className={styles.changeBtn}>
-        <Text tag="span" fontSize={13} color="primary">변경</Text>
+        <Text tag="span" fontSize={16} fontWeight={700} color="primary">변경</Text>
       </button>
     </div>
 
     <div className={styles.addressBody}>
       <div className={styles.nameRow}>
-        <Text tag="span" fontSize={14} fontWeight={600} color="gray01">장도영</Text>
+        <Text tag="span" fontSize={17} fontWeight={700} color="gray01">장도영</Text>
         <span className={styles.defaultBadge}>기본배송지</span>
       </div>
-      <Text tag="p" fontSize={14} className={styles.addressText}>
+      <Text tag="p" fontSize={16} className={styles.addressText}>
         서울 광진구 영화사로3길 20-8 (중곡동), 202호
       </Text>
-      <Text tag="p" fontSize={13} className={styles.phoneText}>
+      <Text tag="p" fontSize={14} className={styles.phoneText}>
         장도영 010-3825-0313
       </Text>
     </div>

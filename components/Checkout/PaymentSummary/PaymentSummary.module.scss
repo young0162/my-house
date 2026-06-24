@@ -1,6 +1,10 @@
 @use "@/styles/color_variables" as *;
 
 .root {
+  background: transparent;
+}
+
+.card {
   border: 1px solid $color-border;
   border-radius: 8px;
   background: $color-bg-white;
@@ -10,15 +14,14 @@
 .header {
   display: flex;
   align-items: center;
-  padding: 16px 20px;
-  border-bottom: 1px solid $color-border-light;
+  padding: 26px 26px 18px;
 }
 
 .priceRows {
-  padding: 16px 20px 4px;
+  padding: 16px 26px 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
 }
 
 .priceRow {
@@ -34,14 +37,15 @@
 .divider {
   height: 1px;
   background: $color-border;
-  margin: 16px 20px;
+  margin: 24px 26px;
 }
 
 .finalBlock {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 0 20px 16px;
+  padding: 0 26px 24px;
+  gap: 16px;
 }
 
 .finalRight {
@@ -55,16 +59,16 @@
 
 .pointEarned {
   color: $color-text-tertiary;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .legalBox {
-  padding: 14px 20px;
+  padding: 18px 26px;
   background: $color-bg-light;
   border-top: 1px solid $color-border-light;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .legalText {
@@ -78,12 +82,38 @@
   justify-content: center;
   width: 100%;
   height: 52px;
+  margin-top: 22px;
   background: $color-primary;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   transition: background-color 0.12s;
 
   &:hover {
     background: $color-primary-hover;
+  }
+}
+
+@media (max-width: 768px) {
+  .header,
+  .priceRows,
+  .legalBox {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .divider {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .finalBlock {
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .finalRight {
+    width: 100%;
   }
 }

@@ -1,0 +1,35 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  margin-top: 46px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.emptyText {
+  color: $color-text-tertiary;
+}
+
+.couponButton {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 100%;
+  height: 38px;
+  padding: 0 16px;
+  background: $color-bg-light;
+  border: none;
+  cursor: pointer;
+}
+
+.couponText,
+.chevron {
+  color: $color-text-tertiary;
+}

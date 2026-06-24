@@ -1,0 +1,43 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  margin-top: 46px;
+}
+
+.header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.pointControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.pointInput {
+  width: 224px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid $color-border-light;
+  border-radius: 4px;
+  color: $color-text-disabled;
+  font-size: 14px;
+  outline: none;
+}
+
+.useAllButton {
+  height: 36px;
+  padding: 0 14px;
+  background: $color-bg-white;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  color: $color-text-tertiary;
+  cursor: pointer;
+}
+
+.availablePoint {
+  margin-top: 12px;
+  color: $color-text-primary;
+}

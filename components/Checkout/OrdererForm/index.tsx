@@ -13,12 +13,12 @@ interface OrdererFormProps {
 const OrdererForm = ({ form, onFieldChange }: OrdererFormProps) => (
   <section className={styles.root}>
     <div className={styles.header}>
-      <Text tag="h2" fontSize={16} fontWeight={700} color="gray01">주문자</Text>
+      <Text tag="h2" fontSize={22} fontWeight={700} color="gray01">주문자</Text>
     </div>
 
     <div className={styles.formBody}>
       <div className={styles.formRow}>
-        <Text tag="span" fontSize={13} className={styles.formLabel}>이름</Text>
+        <Text tag="span" fontSize={14} className={styles.formLabel}>이름</Text>
         <input
           type="text"
           className={styles.textInput}
@@ -29,7 +29,7 @@ const OrdererForm = ({ form, onFieldChange }: OrdererFormProps) => (
       </div>
 
       <div className={styles.formRow}>
-        <Text tag="span" fontSize={13} className={styles.formLabel}>이메일</Text>
+        <Text tag="span" fontSize={14} className={styles.formLabel}>이메일</Text>
         <div className={styles.emailGroup}>
           <input
             type="text"
@@ -38,7 +38,7 @@ const OrdererForm = ({ form, onFieldChange }: OrdererFormProps) => (
             onChange={(e) => onFieldChange("emailLocal", e.target.value)}
             aria-label="이메일 아이디"
           />
-          <Text tag="span" fontSize={14} className={styles.atSign}>@</Text>
+          <Text tag="span" fontSize={18} className={styles.atSign}>@</Text>
           <div className={styles.selectWrapper}>
             <select
               className={`${styles.select} ${styles.selectDomain}`}
@@ -55,7 +55,7 @@ const OrdererForm = ({ form, onFieldChange }: OrdererFormProps) => (
       </div>
 
       <div className={styles.formRow}>
-        <Text tag="span" fontSize={13} className={styles.formLabel}>전화번호</Text>
+        <Text tag="span" fontSize={14} className={styles.formLabel}>전화번호</Text>
         <div className={styles.phoneGroup}>
           <div className={styles.selectWrapper}>
             <select

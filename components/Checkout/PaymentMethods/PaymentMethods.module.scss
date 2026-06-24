@@ -1,0 +1,138 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  margin-top: 46px;
+}
+
+.header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.naverBenefit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  margin: 16px 18px 0;
+  background: #edf1f3;
+  border-radius: 3px;
+}
+
+.naverBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #03c75a;
+  color: $color-text-white;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.naverText {
+  color: #03a84e;
+}
+
+.methodList {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.methodItem {
+  border-bottom: 1px solid $color-border-light;
+}
+
+.methodRow {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  gap: 10px;
+  padding: 0 18px;
+}
+
+.radio {
+  width: 16px;
+  height: 16px;
+  border: 1px solid $color-border;
+  border-radius: 50%;
+  background: $color-bg-white;
+}
+
+.selectedRadio {
+  border: 5px solid $color-primary;
+}
+
+.badge {
+  padding: 2px 4px;
+  border-radius: 3px;
+  background: $color-bg-gray;
+  color: $color-text-tertiary;
+}
+
+.rightText {
+  margin-left: auto;
+  color: $color-text-tertiary;
+}
+
+.easyPayPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 30px 14px 48px;
+}
+
+.easyPayOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  background: $color-bg-white;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.selectedOption {
+  background: $color-primary-light;
+  border-color: $color-primary;
+}
+
+.payLogo {
+  min-width: 32px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.kakao {
+  color: #111;
+}
+
+.toss {
+  color: #246bfe;
+}
+
+.naver {
+  color: #03c75a;
+}
+
+.payco {
+  color: #fa2828;
+}
+
+.optionBenefit {
+  margin-left: auto;
+  color: $color-text-tertiary;
+}
+
+.payNotice {
+  padding: 12px;
+  background: $color-bg-light;
+  color: $color-text-tertiary;
+}
