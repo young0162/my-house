@@ -30,6 +30,17 @@ enum ProductImageType {
   DETAIL
 }
 
+enum CheckoutSource {
+  PRODUCT_DETAIL
+  CART
+}
+
+enum CheckoutStatus {
+  PENDING
+  EXPIRED
+  ORDERED
+}
+
 model Product {
   id             Int        @id @default(autoincrement())
   image          String
@@ -53,6 +64,7 @@ model Product {
   productCoupons ProductCoupon[]
   carts          Cart[]
   productImages  ProductImage[]
+  checkoutItems  CheckoutItem[]
 
   @@index([brandId])
   @@index([categoryId])
@@ -143,6 +155,7 @@ model OptionValue {
   type                OptionType           @relation(fields: [typeId], references: [id])
   productOptionValues ProductOptionValue[]
   cartOptions         CartOption[]
+  checkoutItemOptions CheckoutItemOption[]
 
   @@unique([typeId, value])
   @@index([typeId])
@@ -248,6 +261,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   carts         Cart[]
+  checkouts     Checkout[]
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
@@ -297,4 +311,53 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Checkout {
+  id        String         @id @default(cuid())
+  userId    String         @map("user_id")
+  source    CheckoutSource
+  status    CheckoutStatus @default(PENDING)
+  expiresAt DateTime?      @map("expires_at")
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @updatedAt @map("updated_at")
+
+  user  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CheckoutItem[]
+
+  @@index([userId, status, createdAt])
+  @@index([expiresAt])
+  @@map("checkout")
+}
+
+model CheckoutItem {
+  id         Int    @id @default(autoincrement())
+  checkoutId String @map("checkout_id")
+  productId  Int    @map("product_id")
+  cartId     Int?   @map("cart_id")
+  quantity   Int
+  sortOrder  Int    @default(0) @map("sort_order")
+
+  checkout Checkout            @relation(fields: [checkoutId], references: [id], onDelete: Cascade)
+  product  Product             @relation(fields: [productId], references: [id])
+  options  CheckoutItemOption[]
+
+  @@index([checkoutId])
+  @@index([productId])
+  @@index([cartId])
+  @@map("checkout_item")
+}
+
+model CheckoutItemOption {
+  id             Int @id @default(autoincrement())
+  checkoutItemId Int @map("checkout_item_id")
+  optionValueId  Int @map("option_value_id")
+
+  checkoutItem CheckoutItem @relation(fields: [checkoutItemId], references: [id], onDelete: Cascade)
+  optionValue  OptionValue  @relation(fields: [optionValueId], references: [id])
+
+  @@unique([checkoutItemId, optionValueId])
+  @@index([checkoutItemId])
+  @@index([optionValueId])
+  @@map("checkout_item_option")
 }
