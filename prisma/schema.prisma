@@ -262,6 +262,7 @@ model User {
   sessions      Session[]
   carts         Cart[]
   checkouts     Checkout[]
+  addresses     UserAddress[]
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
@@ -311,6 +312,26 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model UserAddress {
+  id            Int       @id @default(autoincrement())
+  userId        String    @map("user_id")
+  recipientName String    @map("recipient_name") @db.VarChar(50)
+  phoneNumber   String    @map("phone_number") @db.VarChar(30)
+  zipCode       String?   @map("zip_code") @db.VarChar(20)
+  address       String    @db.VarChar(255)
+  detailAddress String?   @map("detail_address") @db.VarChar(255)
+  isDefault     Boolean   @default(false) @map("is_default")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deletedAt     DateTime? @map("deleted_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isDefault])
+  @@index([userId, deletedAt])
+  @@map("user_address")
 }
 
 model Checkout {
