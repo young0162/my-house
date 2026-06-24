@@ -7,9 +7,11 @@ import styles from "./CartSummary.module.scss";
 interface CartSummaryProps {
   totalPrice: number;
   checkedCount: number;
+  onCheckout: () => void;
+  isSubmitting?: boolean;
 }
 
-const CartSummary = ({ totalPrice, checkedCount }: CartSummaryProps) => {
+const CartSummary = ({ totalPrice, checkedCount, onCheckout, isSubmitting }: CartSummaryProps) => {
   const hasSelected = checkedCount > 0;
 
   return (
@@ -34,11 +36,16 @@ const CartSummary = ({ totalPrice, checkedCount }: CartSummaryProps) => {
 
       <button
         type="button"
-        className={`${styles.checkoutBtn} ${!hasSelected ? styles.disabled : ""}`}
-        disabled={!hasSelected}
+        className={`${styles.checkoutBtn} ${!hasSelected || isSubmitting ? styles.disabled : ""}`}
+        disabled={!hasSelected || isSubmitting}
+        onClick={onCheckout}
       >
         <Text tag="span" fontSize={15} fontWeight={700} color="white">
-          {hasSelected ? `${checkedCount}개 상품 주문하기` : "상품을 선택해주세요"}
+          {isSubmitting
+            ? "처리 중..."
+            : hasSelected
+              ? `${checkedCount}개 상품 주문하기`
+              : "상품을 선택해주세요"}
         </Text>
       </button>
     </aside>

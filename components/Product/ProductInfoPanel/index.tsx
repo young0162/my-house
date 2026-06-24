@@ -21,6 +21,7 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
   const [liked, setLiked] = useState(false);
   const [packageToggle, setPackageToggle] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
+  const [buyLoading, setBuyLoading] = useState(false);
   const increment = useCartStore((s) => s.increment);
 
   const handleOptionChange = (label: string, optionValueId: number) => {
@@ -61,6 +62,39 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
       alert("장바구니에 담았습니다.");
     } finally {
       setCartLoading(false);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    if (!allOptionsSelected || buyLoading) return;
+
+    setBuyLoading(true);
+    try {
+      const res = await fetch("/api/checkouts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "PRODUCT_DETAIL",
+          productId: product.id,
+          optionValueIds: Object.values(selectedOptions),
+          quantity: 1,
+        }),
+      });
+
+      if (res.status === 401) {
+        router.push("/login");
+        return;
+      }
+
+      if (!res.ok) {
+        alert("주문서 생성에 실패했습니다.");
+        return;
+      }
+
+      const data = await res.json();
+      router.push(data.redirectUrl);
+    } finally {
+      setBuyLoading(false);
     }
   };
 
@@ -313,8 +347,13 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
         >
           <Text tag="span">{cartLoading ? "담는 중..." : "장바구니"}</Text>
         </button>
-        <button type="button" className={styles.btnBuy}>
-          <Text tag="span">바로구매</Text>
+        <button
+          type="button"
+          className={styles.btnBuy}
+          onClick={handleBuyNow}
+          disabled={!allOptionsSelected || buyLoading}
+        >
+          <Text tag="span">{buyLoading ? "처리 중..." : "바로구매"}</Text>
         </button>
       </div>
 

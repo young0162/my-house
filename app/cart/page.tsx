@@ -16,6 +16,7 @@ const CartPage = () => {
   const [sections, setSections] = useState<CartSectionType[]>([]);
   const [checkedIds, setCheckedIds] = useState<Set<number>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const quantityTimers = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
   const decrement = useCartStore((s) => s.decrement);
 
@@ -118,6 +119,37 @@ const CartPage = () => {
     quantityTimers.current.set(id, timer);
   };
 
+  const handleCheckout = async () => {
+    if (checkedIds.size === 0 || isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/checkouts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "CART",
+          cartIds: Array.from(checkedIds),
+        }),
+      });
+
+      if (res.status === 401) {
+        router.push("/login");
+        return;
+      }
+
+      if (!res.ok) {
+        alert("주문서 생성에 실패했습니다.");
+        return;
+      }
+
+      const data = await res.json();
+      router.push(data.redirectUrl);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const totalPrice = allItems
     .filter((item: CartItemType) => checkedIds.has(item.id))
     .reduce((sum: number, item: CartItemType) => sum + item.price * item.quantity, 0);
@@ -173,7 +205,12 @@ const CartPage = () => {
         </div>
 
         <div className={styles.sidebar}>
-          <CartSummary totalPrice={totalPrice} checkedCount={checkedIds.size} />
+          <CartSummary
+            totalPrice={totalPrice}
+            checkedCount={checkedIds.size}
+            onCheckout={handleCheckout}
+            isSubmitting={isSubmitting}
+          />
         </div>
       </div>
     </div>

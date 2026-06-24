@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Text from "@/components/Common/Text";
 import ShippingAddress from "@/components/Checkout/ShippingAddress";
@@ -11,17 +11,20 @@ import PaymentSummary from "@/components/Checkout/PaymentSummary";
 import CheckoutCoupon from "@/components/Checkout/CheckoutCoupon";
 import CheckoutPoint from "@/components/Checkout/CheckoutPoint";
 import PaymentMethods from "@/components/Checkout/PaymentMethods";
-import { CartSectionType } from "@/types/cart";
-import { OrdererFormValues } from "@/types/checkout";
+import { CheckoutSection, OrdererFormValues } from "@/types/checkout";
 import { EMAIL_DOMAINS } from "@/constants/checkout";
 import styles from "./page.module.scss";
 
 const CheckoutPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { data: session } = useSession();
   const sessionInitialized = useRef(false);
 
-  const [sections, setSections] = useState<CartSectionType[]>([]);
+  const [sections, setSections] = useState<CheckoutSection[]>([]);
+  const [totalProductPrice, setTotalProductPrice] = useState(0);
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [pointEarned, setPointEarned] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [form, setForm] = useState<OrdererFormValues>({
     name: "",
@@ -51,27 +54,36 @@ const CheckoutPage = () => {
   }, [session]);
 
   useEffect(() => {
-    const fetchCart = async () => {
+    const checkoutId = searchParams.get("checkoutId");
+    if (!checkoutId) {
+      router.push("/cart");
+      return;
+    }
+
+    const fetchCheckout = async () => {
       try {
-        const res = await fetch("/api/cart");
+        const res = await fetch(`/api/checkouts/${checkoutId}`);
         if (res.status === 401) {
           router.push("/login");
           return;
         }
-        if (!res.ok) return;
+        if (!res.ok) {
+          router.push("/cart");
+          return;
+        }
         const data = await res.json();
         setSections(data.sections);
+        setTotalProductPrice(data.totalProductPrice);
+        setFinalPrice(data.finalPrice);
+        setPointEarned(data.pointEarned);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchCart();
-  }, [router]);
+    fetchCheckout();
+  }, [router, searchParams]);
 
   const allItems = sections.flatMap((s) => s.items);
-  const totalProductPrice = allItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const finalPrice = totalProductPrice;
-  const pointEarned = Math.floor(finalPrice * 0.001);
 
   return (
     <div className={styles.root}>

@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Text from "@/components/Common/Text";
 import { formatPrice } from "@/app/utils/format";
-import { CartSectionType } from "@/types/cart";
+import { CheckoutSection } from "@/types/checkout";
 import styles from "./OrderItems.module.scss";
 
 interface OrderItemsProps {
-  sections: CartSectionType[];
+  sections: CheckoutSection[];
   totalCount: number;
   isLoading: boolean;
 }
