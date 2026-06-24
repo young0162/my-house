@@ -150,4 +150,16 @@ export const cartDbService = {
     await prisma.cart.update({ where: { id: cartId }, data: { count } });
     return true;
   },
+
+  deleteCartItem: async (userId: string, cartId: number): Promise<boolean> => {
+    const cart = await prisma.cart.findUnique({
+      where: { id: cartId },
+      select: { userId: true },
+    });
+
+    if (!cart || cart.userId !== userId) return false;
+
+    await prisma.cart.delete({ where: { id: cartId } });
+    return true;
+  },
 };

@@ -30,4 +30,9 @@ export const cartApiService = {
     const res = await api.patch<{ success: true }>(`/cart/${id}`, data);
     return res.data;
   },
+
+  removeItem: async (id: number): Promise<{ success: true }> => {
+    const res = await api.delete<{ success: true }>(`/cart/${id}`);
+    return res.data;
+  },
 };

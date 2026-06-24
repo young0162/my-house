@@ -72,6 +72,7 @@ const CartPage = () => {
       return next;
     });
     decrement();
+    cartApiService.removeItem(id).catch(() => {});
   };
 
   const handleDeleteSelected = (sectionId: string) => {
@@ -136,6 +137,24 @@ const CartPage = () => {
     }
   };
 
+  const handleBuy = async (cartId: number) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    try {
+      const data = await checkoutApiService.create({ source: "CART", cartIds: [cartId] });
+      router.push(data.redirectUrl);
+    } catch (error: unknown) {
+      const status = (error as { response?: { status?: number } }).response?.status;
+      if (status === 401) {
+        router.push("/login");
+        return;
+      }
+      alert("주문서 생성에 실패했습니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const totalPrice = allItems
     .filter((item: CartItemType) => checkedIds.has(item.id))
     .reduce((sum: number, item: CartItemType) => sum + item.price * item.quantity, 0);
@@ -185,6 +204,7 @@ const CartPage = () => {
                 onRemove={handleRemove}
                 onQuantityChange={handleQuantityChange}
                 onDeleteSelected={handleDeleteSelected}
+                onBuy={handleBuy}
               />
             ))
           )}
