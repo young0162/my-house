@@ -164,6 +164,52 @@ const data = await cartApiService.getCart();
 
 ---
 
+## 중복 API/DB 요청 확인 규칙
+
+새 함수를 작성하기 **전에** 반드시 기존 코드를 확인한다.
+
+### 확인 순서
+
+1. **같은 엔드포인트가 이미 있는지** — `app/api/` 아래 동일한 HTTP 메서드 + 경로가 있으면 새로 만들지 않는다.
+
+```bash
+# 예: cart 관련 엔드포인트 목록 확인
+ls app/api/cart/
+```
+
+2. **같은 DB 쿼리가 이미 있는지** — 해당 도메인의 `.db.ts`를 열어 동일한 조건의 `findMany` / `findUnique`가 있으면 재사용한다.
+
+```bash
+# 예: cartDbService 함수 목록 확인
+grep -n "async" services/cart.db.ts
+```
+
+3. **같은 API service 함수가 이미 있는지** — 해당 도메인의 `.api.ts`를 열어 같은 URL을 호출하는 함수가 있으면 재사용한다.
+
+```bash
+# 예: cartApiService 함수 목록 확인
+grep -n "async" services/cart.api.ts
+```
+
+### 중복 판단 기준
+
+| 상황 | 처리 방법 |
+|------|-----------|
+| 완전히 동일한 엔드포인트·쿼리 | 기존 함수 그대로 재사용 |
+| 비슷하지만 파라미터가 다름 | 기존 함수에 optional 파라미터 추가 |
+| 결과 shape이 달라 재사용 불가 | 새 함수 추가, 기존 함수는 건드리지 않음 |
+
+### 새 도메인 서비스 추가 전 체크
+
+```bash
+# services/ 아래 이미 해당 도메인 파일이 있는지 확인
+ls services/ | grep {domain}
+```
+
+이미 `{domain}.api.ts` 또는 `{domain}.db.ts`가 있으면 해당 파일에 함수를 추가하고 새 파일을 만들지 않는다.
+
+---
+
 ## 완료 후 검증 체크리스트
 
 ```bash
