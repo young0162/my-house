@@ -49,6 +49,42 @@ export interface CheckoutSection {
   items: CheckoutItemView[];
 }
 
+export interface UserAddressView {
+  id: number;
+  recipientName: string;
+  phoneNumber: string;
+  zipCode: string | null;
+  address: string;
+  detailAddress: string | null;
+  isDefault: boolean;
+}
+
+export interface UserAddressListResponse {
+  addresses: UserAddressView[];
+}
+
+export interface DefaultUserAddressResponse {
+  address: UserAddressView | null;
+}
+
+export interface CreateUserAddressRequest {
+  recipientName: string;
+  phoneNumber: string;
+  zipCode?: string;
+  address: string;
+  detailAddress?: string;
+  isDefault?: boolean;
+}
+
+export interface UpdateUserAddressRequest {
+  recipientName?: string;
+  phoneNumber?: string;
+  zipCode?: string | null;
+  address?: string;
+  detailAddress?: string | null;
+  isDefault?: boolean;
+}
+
 export interface CheckoutResponse {
   id: string;
   source: CheckoutSource;

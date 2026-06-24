@@ -11,7 +11,7 @@ import PaymentSummary from "@/components/Checkout/PaymentSummary";
 import CheckoutCoupon from "@/components/Checkout/CheckoutCoupon";
 import CheckoutPoint from "@/components/Checkout/CheckoutPoint";
 import PaymentMethods from "@/components/Checkout/PaymentMethods";
-import { CheckoutSection, OrdererFormValues } from "@/types/checkout";
+import { CheckoutSection, OrdererFormValues, UserAddressView } from "@/types/checkout";
 import { EMAIL_DOMAINS } from "@/constants/checkout";
 import styles from "./page.module.scss";
 
@@ -26,6 +26,8 @@ const CheckoutPage = () => {
   const [finalPrice, setFinalPrice] = useState(0);
   const [pointEarned, setPointEarned] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [shippingAddress, setShippingAddress] = useState<UserAddressView | null>(null);
+  const [isAddressLoading, setIsAddressLoading] = useState(true);
   const [form, setForm] = useState<OrdererFormValues>({
     name: "",
     emailLocal: "",
@@ -52,6 +54,24 @@ const CheckoutPage = () => {
     }
     setForm((prev) => ({ ...prev, ...updates }));
   }, [session]);
+
+  useEffect(() => {
+    const fetchDefaultAddress = async () => {
+      try {
+        const res = await fetch("/api/me/addresses/default");
+        if (res.status === 401) {
+          router.push("/login");
+          return;
+        }
+        if (!res.ok) return;
+        const data = await res.json();
+        setShippingAddress(data.address);
+      } finally {
+        setIsAddressLoading(false);
+      }
+    };
+    fetchDefaultAddress();
+  }, [router]);
 
   useEffect(() => {
     const checkoutId = searchParams.get("checkoutId");
@@ -93,6 +113,8 @@ const CheckoutPage = () => {
             주문/결제
           </Text>
           <ShippingAddress
+            address={shippingAddress}
+            isLoading={isAddressLoading}
             deliveryRequest={form.deliveryRequest}
             onDeliveryRequestChange={(value) => setField("deliveryRequest", value)}
           />
