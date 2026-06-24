@@ -11,7 +11,8 @@ import MdPick from "@/components/Product/MdPick";
 import ProductCard from "@/components/Product/ProductCard";
 import SortDropdown from "@/components/Product/SortDropdown";
 import type { CategoryTreeResult } from "@/app/types/category";
-import type { ProductCardProps, SortOption } from "@/app/types/product";
+import type { ProductCardProps, SortOption } from "@/app/types/product/index";
+import { productApiService } from "@/services/product.api";
 import styles from "@/app/store/category/page.module.scss";
 
 interface CategoryPageContentProps {
@@ -27,13 +28,13 @@ const CategoryPageContent = ({ categoryTree }: CategoryPageContentProps) => {
   }));
 
   useEffect(() => {
-    const params = new URLSearchParams({ sortBy });
-    const categoryId = categoryTree.currentCategory?.id;
-    if (categoryId) params.set("categoryId", categoryId);
-
-    fetch(`/api/products?${params}`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
+    const categoryId = categoryTree.currentCategory?.id
+      ? Number(categoryTree.currentCategory.id)
+      : undefined;
+    productApiService
+      .getProducts({ sortBy, categoryId })
+      .then((data) => setProducts(data))
+      .catch(() => {});
   }, [sortBy, categoryTree.currentCategory?.id]);
 
   return (

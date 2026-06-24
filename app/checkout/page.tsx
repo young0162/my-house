@@ -12,6 +12,8 @@ import CheckoutCoupon from "@/components/Checkout/CheckoutCoupon";
 import CheckoutPoint from "@/components/Checkout/CheckoutPoint";
 import PaymentMethods from "@/components/Checkout/PaymentMethods";
 import { CheckoutSection, OrdererFormValues, UserAddressView } from "@/types/checkout";
+import { checkoutApiService } from "@/services/checkout.api";
+import { addressApiService } from "@/services/address.api";
 import { EMAIL_DOMAINS } from "@/constants/checkout";
 import styles from "./page.module.scss";
 
@@ -58,14 +60,11 @@ const CheckoutPage = () => {
   useEffect(() => {
     const fetchDefaultAddress = async () => {
       try {
-        const res = await fetch("/api/me/addresses/default");
-        if (res.status === 401) {
-          router.push("/login");
-          return;
-        }
-        if (!res.ok) return;
-        const data = await res.json();
-        setShippingAddress(data.address);
+        const address = await addressApiService.getDefaultAddress();
+        setShippingAddress(address);
+      } catch (error: unknown) {
+        const status = (error as { response?: { status?: number } }).response?.status;
+        if (status === 401) router.push("/login");
       } finally {
         setIsAddressLoading(false);
       }
@@ -82,20 +81,18 @@ const CheckoutPage = () => {
 
     const fetchCheckout = async () => {
       try {
-        const res = await fetch(`/api/checkouts/${checkoutId}`);
-        if (res.status === 401) {
-          router.push("/login");
-          return;
-        }
-        if (!res.ok) {
-          router.push("/cart");
-          return;
-        }
-        const data = await res.json();
+        const data = await checkoutApiService.getDetail(checkoutId);
         setSections(data.sections);
         setTotalProductPrice(data.totalProductPrice);
         setFinalPrice(data.finalPrice);
         setPointEarned(data.pointEarned);
+      } catch (error: unknown) {
+        const status = (error as { response?: { status?: number } }).response?.status;
+        if (status === 401) {
+          router.push("/login");
+        } else {
+          router.push("/cart");
+        }
       } finally {
         setIsLoading(false);
       }

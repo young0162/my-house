@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
+import { cartApiService } from "@/services/cart.api";
+import { checkoutApiService } from "@/services/checkout.api";
 import Link from "next/link";
 import Text from "@/components/Common/Text";
 import { ShareIcon, BookmarkIcon, StarIcon, ChevronRightIcon, InfoIcon } from "@/components/Common/Icon";
@@ -39,27 +41,19 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
 
     setCartLoading(true);
     try {
-      const res = await fetch("/api/cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: product.id,
-          optionValueIds: Object.values(selectedOptions),
-        }),
+      await cartApiService.addItem({
+        productId: product.id,
+        optionValueIds: Object.values(selectedOptions),
       });
-
-      if (res.status === 401) {
+      increment();
+      alert("장바구니에 담았습니다.");
+    } catch (error: unknown) {
+      const status = (error as { response?: { status?: number } }).response?.status;
+      if (status === 401) {
         router.push("/login");
         return;
       }
-
-      if (!res.ok) {
-        alert("장바구니 담기에 실패했습니다.");
-        return;
-      }
-
-      increment();
-      alert("장바구니에 담았습니다.");
+      alert("장바구니 담기에 실패했습니다.");
     } finally {
       setCartLoading(false);
     }
@@ -70,29 +64,20 @@ const ProductInfoPanel = ({ product }: ProductInfoPanelProps) => {
 
     setBuyLoading(true);
     try {
-      const res = await fetch("/api/checkouts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          source: "PRODUCT_DETAIL",
-          productId: product.id,
-          optionValueIds: Object.values(selectedOptions),
-          quantity: 1,
-        }),
+      const data = await checkoutApiService.create({
+        source: "PRODUCT_DETAIL",
+        productId: product.id,
+        optionValueIds: Object.values(selectedOptions),
+        quantity: 1,
       });
-
-      if (res.status === 401) {
+      router.push(data.redirectUrl);
+    } catch (error: unknown) {
+      const status = (error as { response?: { status?: number } }).response?.status;
+      if (status === 401) {
         router.push("/login");
         return;
       }
-
-      if (!res.ok) {
-        alert("주문서 생성에 실패했습니다.");
-        return;
-      }
-
-      const data = await res.json();
-      router.push(data.redirectUrl);
+      alert("주문서 생성에 실패했습니다.");
     } finally {
       setBuyLoading(false);
     }

@@ -5,16 +5,9 @@ import Text from "@/components/Common/Text";
 import MemberProfileForm from "@/components/MyPage/MemberProfileForm";
 import SettingsTabs from "@/components/MyPage/SettingsTabs";
 import { DEFAULT_MEMBER_PROFILE } from "@/constants/memberSettings";
+import { userApiService } from "@/services/user.api";
 import type { MemberProfile, SettingsTab } from "@/types/memberSettings";
 import styles from "./page.module.scss";
-
-interface MeResponse {
-  user: {
-    name: string | null;
-    email: string | null;
-    image: string | null;
-  };
-}
 
 const EditPage = () => {
   const [activeTab, setActiveTab] = useState<SettingsTab>("회원정보수정");
@@ -24,9 +17,7 @@ const EditPage = () => {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const response = await fetch("/api/me");
-        if (!response.ok) throw new Error("failed");
-        const { user } = (await response.json()) as MeResponse;
+        const { user } = await userApiService.getMe();
         setProfile({
           ...DEFAULT_MEMBER_PROFILE,
           nickname: user.name ?? DEFAULT_MEMBER_PROFILE.nickname,

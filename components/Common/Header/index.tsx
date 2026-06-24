@@ -9,6 +9,7 @@ import Text from "@/components/Common/Text";
 import { SearchIcon, HeartIcon, CartIcon, BellIcon } from "@/components/Common/Icon";
 import { HOME_NAV_ITEMS } from "@/constants/home";
 import { useCartStore } from "@/store/cartStore";
+import { cartApiService } from "@/services/cart.api";
 import styles from "./Header.module.scss";
 import { LogoIcon } from "../Icon/LogoIcon";
 
@@ -27,10 +28,7 @@ const Header = () => {
 
   useEffect(() => {
     if (status !== "authenticated") return;
-    fetch("/api/cart/count")
-      .then((res) => res.json())
-      .then((data) => setCount(data.count ?? 0))
-      .catch(() => {});
+    cartApiService.getCount().then((data) => setCount(data.count ?? 0)).catch(() => {});
   }, [status, setCount]);
 
   return (

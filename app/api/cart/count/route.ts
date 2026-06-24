@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { cartDbService } from "@/services/cart.db";
 
 export async function GET() {
   const session = await auth();
@@ -8,12 +8,6 @@ export async function GET() {
     return NextResponse.json({ count: 0 });
   }
 
-  const count = await prisma.cart.count({
-    where: {
-      userId: session.user.id,
-      product: { isActive: true },
-    },
-  });
-
+  const count = await cartDbService.getCartCount(session.user.id);
   return NextResponse.json({ count });
 }

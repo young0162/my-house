@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { authApiService } from "@/services/auth.api";
 import styles from "./page.module.scss";
 
 export default function SignupPage() {
@@ -15,24 +16,20 @@ export default function SignupPage() {
     setIsSubmitting(true);
 
     const formData = new FormData(event.currentTarget);
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: formData.get("email"),
-        password: formData.get("password"),
-        name: formData.get("name"),
-      }),
-    });
-
-    if (!response.ok) {
-      const body = (await response.json()) as { message?: string };
-      setError(body.message ?? "회원가입에 실패했습니다.");
+    try {
+      await authApiService.register({
+        email: String(formData.get("email") ?? ""),
+        password: String(formData.get("password") ?? ""),
+        name: formData.get("name") ? String(formData.get("name")) : undefined,
+      });
+      router.push("/login?registered=1");
+    } catch (error: unknown) {
+      const message =
+        (error as { response?: { data?: { message?: string } } }).response?.data?.message ??
+        "회원가입에 실패했습니다.";
+      setError(message);
       setIsSubmitting(false);
-      return;
     }
-
-    router.push("/login?registered=1");
   };
 
   return (

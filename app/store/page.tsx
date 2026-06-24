@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import ProductCard from "@/components/Product/ProductCard";
 import Text from "@/components/Common/Text";
 import { PRODUCT_SORT_OPTIONS, PRODUCT_BANNERS } from "@/constants/product";
-import { ProductCardProps, SortOption } from "@/app/types/product";
+import { ProductCardProps, SortOption } from "@/app/types/product/index";
+import { productApiService } from "@/services/product.api";
 import styles from "./page.module.scss";
 import NavBar from "@/components/Common/NavBar";
 import BannerSlider from "@/components/Common/BannerSlider";
@@ -15,9 +16,7 @@ const ProductPage = () => {
 
   useEffect(() => {
 
-    fetch(`/api/products?sortBy=${sortBy}`)
-    .then((res) => res.json())
-    .then((data) => setProducts(data))
+    productApiService.getProducts({ sortBy }).then((data) => setProducts(data)).catch(() => {})
   }, [sortBy]);
   
 

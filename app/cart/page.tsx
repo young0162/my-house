@@ -8,6 +8,8 @@ import CartTabs from "@/components/Cart/CartTabs";
 import CartSection from "@/components/Cart/CartSection";
 import CartSummary from "@/components/Cart/CartSummary";
 import { CartItemType, CartSectionType } from "@/types/cart";
+import { cartApiService } from "@/services/cart.api";
+import { checkoutApiService } from "@/services/checkout.api";
 import styles from "./page.module.scss";
 
 const CartPage = () => {
@@ -23,14 +25,11 @@ const CartPage = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await fetch("/api/cart");
-        if (res.status === 401) {
-          router.push("/login");
-          return;
-        }
-        if (!res.ok) return;
-        const data = await res.json();
+        const data = await cartApiService.getCart();
         setSections(data.sections);
+      } catch (error: unknown) {
+        const status = (error as { response?: { status?: number } }).response?.status;
+        if (status === 401) router.push("/login");
       } finally {
         setIsLoading(false);
       }
@@ -108,11 +107,7 @@ const CartPage = () => {
     if (existing) clearTimeout(existing);
 
     const timer = setTimeout(() => {
-      fetch(`/api/cart/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ count: quantity }),
-      });
+      cartApiService.updateCount(id, { count: quantity }).catch(() => {});
       quantityTimers.current.delete(id);
     }, 300);
 
@@ -124,27 +119,18 @@ const CartPage = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/checkouts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          source: "CART",
-          cartIds: Array.from(checkedIds),
-        }),
+      const data = await checkoutApiService.create({
+        source: "CART",
+        cartIds: Array.from(checkedIds),
       });
-
-      if (res.status === 401) {
+      router.push(data.redirectUrl);
+    } catch (error: unknown) {
+      const status = (error as { response?: { status?: number } }).response?.status;
+      if (status === 401) {
         router.push("/login");
         return;
       }
-
-      if (!res.ok) {
-        alert("주문서 생성에 실패했습니다.");
-        return;
-      }
-
-      const data = await res.json();
-      router.push(data.redirectUrl);
+      alert("주문서 생성에 실패했습니다.");
     } finally {
       setIsSubmitting(false);
     }

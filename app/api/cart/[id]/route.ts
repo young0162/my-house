@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { cartDbService } from "@/services/cart.db";
 
-export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -20,19 +23,10 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     return NextResponse.json({ error: "Invalid count" }, { status: 400 });
   }
 
-  const cart = await prisma.cart.findUnique({
-    where: { id: cartId },
-    select: { userId: true },
-  });
-
-  if (!cart || cart.userId !== session.user.id) {
+  const updated = await cartDbService.updateCartCount({ userId: session.user.id, cartId, count });
+  if (!updated) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
-
-  await prisma.cart.update({
-    where: { id: cartId },
-    data: { count },
-  });
 
   return NextResponse.json({ success: true });
 }
