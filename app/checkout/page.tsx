@@ -20,6 +20,7 @@ import {
 } from "@/types/checkout";
 import { checkoutApiService } from "@/services/checkout.api";
 import { addressApiService } from "@/services/address.api";
+import { orderApiService } from "@/services/order.api";
 import { EMAIL_DOMAINS } from "@/constants/checkout";
 import styles from "./page.module.scss";
 
@@ -125,22 +126,51 @@ const CheckoutPage = () => {
 
   const allItems = sections.flatMap((s) => s.items);
 
+  const placeOrder = async (address: UserAddressView) => {
+    const checkoutId = searchParams.get("checkoutId");
+    if (!checkoutId) return;
+
+    const ordererEmail =
+      form.emailDomain === "직접입력"
+        ? form.emailLocal
+        : `${form.emailLocal}@${form.emailDomain}`;
+
+    const result = await orderApiService.createOrder({
+      checkoutId,
+      ordererName: form.name,
+      ordererEmail,
+      ordererPhone: `${form.phoneArea}-${form.phoneNumber}`,
+      recipientName: address.recipientName,
+      recipientPhone: address.phoneNumber,
+      zipCode: address.zipCode ?? undefined,
+      address: address.address,
+      detailAddress: address.detailAddress ?? undefined,
+      deliveryRequest: form.deliveryRequest || undefined,
+      paymentMethod: "간편결제",
+    });
+
+    router.push(`/order/complete?orderId=${result.orderId}`);
+  };
+
   const handlePayment = async () => {
     if (isPaymentSubmitting) return;
 
-    if (shippingAddress) return;
-
-    const recipientName = emptyAddressForm.recipientName.trim();
-    const phoneNumber = emptyAddressForm.phoneNumber.trim();
-    const address = emptyAddressForm.address.trim();
-
-    if (!recipientName || !phoneNumber || !address) {
-      alert("배송지 정보를 입력해주세요.");
-      return;
-    }
-
     setIsPaymentSubmitting(true);
     try {
+      if (shippingAddress) {
+        await placeOrder(shippingAddress);
+        return;
+      }
+
+      const recipientName = emptyAddressForm.recipientName.trim();
+      const phoneNumber = emptyAddressForm.phoneNumber.trim();
+      const address = emptyAddressForm.address.trim();
+
+      if (!recipientName || !phoneNumber || !address) {
+        alert("배송지 정보를 입력해주세요.");
+        return;
+      }
+
       const createdAddress = await addressApiService.createAddress({
         recipientName,
         phoneNumber: `${emptyAddressForm.phoneArea}-${phoneNumber}`,
@@ -150,13 +180,14 @@ const CheckoutPage = () => {
         isDefault: emptyAddressForm.isDefault,
       });
       setShippingAddress(createdAddress);
+      await placeOrder(createdAddress);
     } catch (error: unknown) {
       const status = (error as { response?: { status?: number } }).response?.status;
       if (status === 401) {
         router.push("/login");
         return;
       }
-      alert("배송지 저장에 실패했습니다.");
+      alert("결제에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsPaymentSubmitting(false);
     }
