@@ -10,6 +10,10 @@ export interface UpdateCartCountRequest {
   count: number;
 }
 
+export interface UpdateCartOptionsRequest {
+  optionValueIds: number[];
+}
+
 export const cartApiService = {
   getCart: async (): Promise<{ sections: CartSectionType[] }> => {
     const res = await api.get<{ sections: CartSectionType[] }>("/cart");
@@ -27,6 +31,11 @@ export const cartApiService = {
   },
 
   updateCount: async (id: number, data: UpdateCartCountRequest): Promise<{ success: true }> => {
+    const res = await api.patch<{ success: true }>(`/cart/${id}`, data);
+    return res.data;
+  },
+
+  updateOptions: async (id: number, data: UpdateCartOptionsRequest): Promise<{ success: true }> => {
     const res = await api.patch<{ success: true }>(`/cart/${id}`, data);
     return res.data;
   },

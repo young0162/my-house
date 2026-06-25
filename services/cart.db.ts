@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { CartSectionType } from "@/types/cart";
+import { buildCartOptionLabel, isValidCartOptionSelection } from "@/app/utils/cartOption";
 
 const imageBaseUrl = process.env.PRODUCT_IMAGE_BASE_URL ?? "";
 const buildImageUrl = (filename: string) =>
@@ -15,6 +16,12 @@ export interface UpdateCartCountDbParams {
   userId: string;
   cartId: number;
   count: number;
+}
+
+export interface UpdateCartOptionsDbParams {
+  userId: string;
+  cartId: number;
+  optionValueIds: number[];
 }
 
 export const cartDbService = {
@@ -39,11 +46,21 @@ export const cartDbService = {
               take: 1,
               select: { url: true },
             },
+            productOptions: {
+              orderBy: { id: "asc" },
+              select: {
+                optionType: { select: { name: true } },
+                productOptionValues: {
+                  select: { optionValue: { select: { id: true, value: true } } },
+                },
+              },
+            },
           },
         },
         cartOptions: {
           orderBy: { id: "asc" },
           select: {
+            optionValueId: true,
             optionValue: { select: { value: true, type: { select: { name: true } } } },
           },
         },
@@ -53,11 +70,14 @@ export const cartDbService = {
     const sectionMap = new Map<number, CartSectionType>();
 
     for (const cart of carts) {
-      const { brand, productImages, image, name, price, isFreeShipping } = cart.product;
+      const { brand, productImages, image, name, price, isFreeShipping, productOptions } = cart.product;
       const thumbnail = productImages[0]?.url ?? image;
-      const optionLabel = cart.cartOptions
-        .map((co) => `${co.optionValue.type.name}: ${co.optionValue.value}`)
-        .join(" / ");
+      const optionLabel = buildCartOptionLabel(
+        cart.cartOptions.map((co) => ({
+          typeName: co.optionValue.type.name,
+          value: co.optionValue.value,
+        })),
+      );
 
       const item = {
         id: cart.id,
@@ -66,6 +86,14 @@ export const cartDbService = {
         brand: brand.name,
         name,
         optionLabel,
+        selectedOptionValueIds: cart.cartOptions.map((co) => co.optionValueId),
+        options: productOptions.map((option) => ({
+          label: option.optionType.name,
+          values: option.productOptionValues.map((pov) => ({
+            id: pov.optionValue.id,
+            value: pov.optionValue.value,
+          })),
+        })),
         price,
         quantity: cart.count,
         isFreeShipping,
@@ -148,6 +176,43 @@ export const cartDbService = {
     if (!cart || cart.userId !== userId) return false;
 
     await prisma.cart.update({ where: { id: cartId }, data: { count } });
+    return true;
+  },
+
+  updateCartOptions: async ({ userId, cartId, optionValueIds }: UpdateCartOptionsDbParams): Promise<boolean> => {
+    const cart = await prisma.cart.findUnique({
+      where: { id: cartId },
+      select: {
+        userId: true,
+        product: {
+          select: {
+            productOptions: {
+              select: {
+                productOptionValues: { select: { optionValue: { select: { id: true } } } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!cart || cart.userId !== userId) return false;
+
+    const productOptions = cart.product.productOptions.map((option) => ({
+      values: option.productOptionValues.map((pov) => ({ id: pov.optionValue.id })),
+    }));
+
+    if (!isValidCartOptionSelection(productOptions, optionValueIds)) {
+      throw Object.assign(new Error("Invalid option value"), { status: 400 });
+    }
+
+    await prisma.$transaction(async (tx) => {
+      await tx.cartOption.deleteMany({ where: { cartId } });
+      await tx.cartOption.createMany({
+        data: optionValueIds.map((optionValueId) => ({ cartId, optionValueId })),
+      });
+    });
+
     return true;
   },
 
