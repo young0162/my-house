@@ -1,3 +1,13 @@
+export interface CartOptionValueType {
+  id: number;
+  value: string;
+}
+
+export interface CartOptionType {
+  label: string;
+  values: CartOptionValueType[];
+}
+
 export interface CartItemType {
   id: number;
   productId: number;
@@ -5,6 +15,8 @@ export interface CartItemType {
   brand: string;
   name: string;
   optionLabel: string;
+  selectedOptionValueIds: number[];
+  options: CartOptionType[];
   price: number;
   quantity: number;
   isFreeShipping: boolean;

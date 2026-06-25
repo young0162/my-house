@@ -13,10 +13,19 @@ interface CartItemProps {
   onCheck: (id: number) => void;
   onRemove: (id: number) => void;
   onQuantityChange: (id: number, quantity: number) => void;
+  onOptionChange: (item: CartItemType) => void;
   onBuy: (id: number) => void;
 }
 
-const CartItem = ({ item, checked, onCheck, onRemove, onQuantityChange, onBuy }: CartItemProps) => (
+const CartItem = ({
+  item,
+  checked,
+  onCheck,
+  onRemove,
+  onQuantityChange,
+  onOptionChange,
+  onBuy,
+}: CartItemProps) => (
   <li className={styles.root}>
     <div className={styles.row}>
       <input
@@ -105,7 +114,7 @@ const CartItem = ({ item, checked, onCheck, onRemove, onQuantityChange, onBuy }:
 
     <div className={styles.actionRow}>
       <div className={styles.actionBtns}>
-        <button type="button" className={styles.actionBtn}>
+        <button type="button" className={styles.actionBtn} onClick={() => onOptionChange(item)}>
           <Text tag="span" fontSize={13}>옵션변경</Text>
         </button>
         <button type="button" className={`${styles.actionBtn} ${styles.buyBtn}`} onClick={() => onBuy(item.id)}>

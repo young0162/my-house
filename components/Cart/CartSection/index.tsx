@@ -11,6 +11,7 @@ interface CartSectionProps {
   onCheck: (id: number) => void;
   onRemove: (id: number) => void;
   onQuantityChange: (id: number, quantity: number) => void;
+  onOptionChange: (item: CartItemType) => void;
   onBuy: (id: number) => void;
 }
 
@@ -20,6 +21,7 @@ const CartSection = ({
   onCheck,
   onRemove,
   onQuantityChange,
+  onOptionChange,
   onBuy,
 }: CartSectionProps) => (
   <section className={styles.root}>
@@ -36,6 +38,7 @@ const CartSection = ({
             onCheck={onCheck}
             onRemove={onRemove}
             onQuantityChange={onQuantityChange}
+            onOptionChange={onOptionChange}
             onBuy={onBuy}
           />
         ))}

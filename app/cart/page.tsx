@@ -8,9 +8,11 @@ import CartTabs from "@/components/Cart/CartTabs";
 import CartSection from "@/components/Cart/CartSection";
 import CartSummary from "@/components/Cart/CartSummary";
 import RelatedProducts from "@/components/Cart/RelatedProducts";
+import CartOptionModal from "@/components/Cart/CartOptionModal";
 import { CartItemType, CartSectionType } from "@/types/cart";
 import { cartApiService } from "@/services/cart.api";
 import { checkoutApiService } from "@/services/checkout.api";
+import { buildCartOptionLabel } from "@/app/utils/cartOption";
 import styles from "./page.module.scss";
 
 const RELATED_PRODUCTS = [
@@ -80,6 +82,8 @@ const CartPage = () => {
   const [checkedIds, setCheckedIds] = useState<Set<number>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editingItem, setEditingItem] = useState<CartItemType | null>(null);
+  const [isOptionSubmitting, setIsOptionSubmitting] = useState(false);
   const quantityTimers = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
   const decrement = useCartStore((s) => s.decrement);
 
@@ -190,6 +194,56 @@ const CartPage = () => {
     }
   };
 
+  const handleConfirmOptionChange = async (
+    item: CartItemType,
+    optionValueIds: number[],
+    quantity: number,
+  ) => {
+    if (isOptionSubmitting) return;
+
+    setIsOptionSubmitting(true);
+    try {
+      await cartApiService.updateOptions(item.id, { optionValueIds });
+      if (quantity !== item.quantity) {
+        await cartApiService.updateCount(item.id, { count: quantity });
+      }
+
+      const selectedIds = new Set(optionValueIds);
+      const optionLabel = buildCartOptionLabel(
+        item.options.flatMap((option) => {
+          const selected = option.values.find((value) => selectedIds.has(value.id));
+          return selected ? [{ typeName: option.label, value: selected.value }] : [];
+        }),
+      );
+
+      setSections((prev) =>
+        prev.map((section) => ({
+          ...section,
+          items: section.items.map((cartItem) =>
+            cartItem.id === item.id
+              ? {
+                  ...cartItem,
+                  optionLabel,
+                  selectedOptionValueIds: optionValueIds,
+                  quantity,
+                }
+              : cartItem,
+          ),
+        })),
+      );
+      setEditingItem(null);
+    } catch (error: unknown) {
+      const status = (error as { response?: { status?: number } }).response?.status;
+      if (status === 401) {
+        router.push("/login");
+        return;
+      }
+      alert("옵션 변경에 실패했습니다.");
+    } finally {
+      setIsOptionSubmitting(false);
+    }
+  };
+
   const handleBuy = async (cartId: number) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
@@ -282,6 +336,7 @@ const CartPage = () => {
                 onCheck={handleCheck}
                 onRemove={handleRemove}
                 onQuantityChange={handleQuantityChange}
+                onOptionChange={setEditingItem}
                 onBuy={handleBuy}
               />
             ))
@@ -299,6 +354,16 @@ const CartPage = () => {
           />
         </div>
       </div>
+
+      {editingItem && (
+        <CartOptionModal
+          key={editingItem.id}
+          item={editingItem}
+          onClose={() => setEditingItem(null)}
+          onConfirm={handleConfirmOptionChange}
+          isSubmitting={isOptionSubmitting}
+        />
+      )}
     </div>
   );
 };
