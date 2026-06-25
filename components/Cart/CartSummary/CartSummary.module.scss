@@ -1,23 +1,26 @@
 @use "@/styles/color_variables" as *;
 
 .root {
-  position: sticky;
-  top: 80px;
+  background-color: transparent;
+}
+
+.panel {
   border: 1px solid $color-border;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
+  background-color: $color-bg-white;
 }
 
 .header {
-  padding: 18px 20px 14px;
+  padding: 16px 16px 14px;
   border-bottom: 1px solid $color-border-light;
 }
 
 .body {
-  padding: 20px;
+  padding: 18px 16px 22px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .totalPrice {
@@ -25,9 +28,8 @@
 }
 
 .hint {
-  color: $color-primary;
-  font-size: 13px;
-  line-height: 1.5;
+  color: $color-text-tertiary;
+  line-height: 1.45;
   cursor: pointer;
 
   &:hover {
@@ -38,19 +40,69 @@
 .checkoutBtn {
   display: block;
   width: 100%;
-  padding: 16px;
-  background-color: $color-text-primary;
+  height: 54px;
+  padding: 0 16px;
+  margin-top: 12px;
+  background-color: $color-primary;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   text-align: center;
   transition: background-color 0.15s;
 
   &:hover:not(.disabled) {
-    background-color: $color-text-secondary;
+    background-color: $color-primary-hover;
   }
 
   &.disabled {
     background-color: $color-border;
     cursor: default;
   }
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 16px 0;
+}
+
+.caret {
+  color: $color-text-primary;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.detailRows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px 16px 0;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.detailLabel,
+.detailValue {
+  color: $color-text-tertiary;
+}
+
+.finalRow {
+  padding-top: 28px;
+}
+
+.divider {
+  height: 1px;
+  margin: 24px 16px 0;
+  background-color: $color-border-light;
+}
+
+.panel > .hint {
+  display: block;
+  padding: 18px 16px 22px;
 }

@@ -1,22 +1,23 @@
 @use "@/styles/color_variables" as *;
 
 .root {
-  max-width: 1200px;
+  max-width: 1256px;
   margin: 0 auto;
-  padding: 32px 24px 80px;
-}
-
-.pageTitle {
-  display: block;
-  margin-bottom: 24px;
+  padding: 28px 60px 72px;
 }
 
 .selectBar {
+  position: sticky;
+  top: 95px;
+  z-index: 10;
   display: flex;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid $color-border-light;
-  margin-bottom: 16px;
+  justify-content: space-between;
+  height: 46px;
+  padding: 0 15px;
+  border: 1px solid $color-border-light;
+  margin-bottom: 10px;
+  background-color: $color-bg-white;
 }
 
 .selectAllLabel {
@@ -27,16 +28,92 @@
 }
 
 .selectAllCheckbox {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
   accent-color: $color-text-primary;
 }
 
+.selectDeleteButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 4px 0;
+
+  &:hover span {
+    text-decoration: underline;
+  }
+}
+
+.benefitPanels {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.couponPanel,
+.packagePanel {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  background-color: #f7f8fa;
+}
+
+.couponPanel {
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.couponButton {
+  height: 32px;
+  padding: 0 13px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  background-color: $color-bg-white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-bg-light;
+  }
+}
+
+.packagePanel {
+  padding: 0 14px 0 16px;
+}
+
+.packagePreview {
+  display: flex;
+  margin-left: auto;
+  margin-right: 9px;
+}
+
+.previewImage {
+  width: 28px;
+  height: 28px;
+  border: 1px solid $color-bg-white;
+  border-radius: 4px;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+
+  & + & {
+    margin-left: -8px;
+  }
+}
+
+.chevron {
+  color: $color-text-primary;
+  line-height: 1;
+  transform: translateY(-2px);
+}
+
 .layout {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 26px;
   align-items: flex-start;
 }
 
@@ -46,15 +123,30 @@
 
 .sidebar {
   min-width: 0;
+  position: sticky;
+  top: 95px;
+  z-index: 10;
+  align-self: flex-start;
 }
 
 .empty {
   padding: 80px 0;
   text-align: center;
   border: 1px solid $color-border;
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 .emptyText {
   color: $color-text-tertiary;
+}
+
+@media (max-width: 1024px) {
+  .root {
+    max-width: 100%;
+    padding: 24px 16px 64px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
 }

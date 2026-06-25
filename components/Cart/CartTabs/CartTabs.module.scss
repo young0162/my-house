@@ -2,7 +2,7 @@
 
 .root {
   border-bottom: 1px solid $color-border;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .list {
@@ -15,7 +15,8 @@
 
 .tab {
   position: relative;
-  padding: 14px 20px;
+  padding: 15px 14px 14px 0;
+  margin-right: 18px;
   background: none;
   border: none;
   cursor: pointer;
@@ -30,7 +31,7 @@
       bottom: -1px;
       left: 0;
       right: 0;
-      height: 2px;
+      height: 3px;
       background-color: $color-text-primary;
     }
   }

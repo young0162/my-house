@@ -2,39 +2,20 @@
 
 .root {
   border: 1px solid $color-border;
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
-  margin-bottom: 16px;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  background-color: $color-bg-light;
-  border-bottom: 1px solid $color-border-light;
-}
-
-.deleteBtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-
-  &:hover span {
-    text-decoration: underline;
-  }
+  margin-bottom: 10px;
+  background-color: $color-bg-white;
 }
 
 .brandGroup {
-  padding: 16px;
+  padding: 14px 15px 0;
 }
 
 .brandLabel {
   display: block;
   color: $color-text-tertiary;
-  margin-bottom: 4px;
+  margin-bottom: 15px;
 }
 
 .itemList {

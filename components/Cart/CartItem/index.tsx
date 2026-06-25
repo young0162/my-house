@@ -59,6 +59,9 @@ const CartItem = ({ item, checked, onCheck, onRemove, onQuantityChange, onBuy }:
           <Text tag="span" fontSize={12} className={styles.deliveryMethod}>
             {item.deliveryMethod}
           </Text>
+          <Text tag="span" fontSize={10} fontWeight={700} className={styles.saleBadge}>
+            특별할인가
+          </Text>
         </div>
       </div>
     </div>
