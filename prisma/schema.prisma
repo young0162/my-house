@@ -41,6 +41,14 @@ enum CheckoutStatus {
   ORDERED
 }
 
+enum OrderStatus {
+  PAID
+  SHIPPING
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
 model Product {
   id             Int        @id @default(autoincrement())
   image          String
@@ -263,6 +271,7 @@ model User {
   carts         Cart[]
   checkouts     Checkout[]
   addresses     UserAddress[]
+  orders        Order[]
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
@@ -381,4 +390,64 @@ model CheckoutItemOption {
   @@index([checkoutItemId])
   @@index([optionValueId])
   @@map("checkout_item_option")
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  userId        String      @map("user_id")
+  checkoutId    String?     @map("checkout_id")
+  status        OrderStatus @default(PAID)
+
+  // 주문자 정보 스냅샷
+  ordererName   String      @map("orderer_name")  @db.VarChar(100)
+  ordererEmail  String      @map("orderer_email") @db.VarChar(200)
+  ordererPhone  String      @map("orderer_phone") @db.VarChar(30)
+
+  // 배송지 스냅샷
+  recipientName   String  @map("recipient_name")   @db.VarChar(50)
+  recipientPhone  String  @map("recipient_phone")  @db.VarChar(30)
+  zipCode         String? @map("zip_code")         @db.VarChar(20)
+  address         String  @db.VarChar(255)
+  detailAddress   String? @map("detail_address")   @db.VarChar(255)
+  deliveryRequest String? @map("delivery_request") @db.VarChar(200)
+
+  // 결제 정보
+  paymentMethod      String @map("payment_method")       @db.VarChar(50)
+  totalProductPrice  Int    @map("total_product_price")
+  shippingFee        Int    @default(0) @map("shipping_fee")
+  couponDiscount     Int    @default(0) @map("coupon_discount")
+  pointDiscount      Int    @default(0) @map("point_discount")
+  finalPrice         Int    @map("final_price")
+  pointEarned        Int    @default(0) @map("point_earned")
+
+  orderedAt DateTime @default(now()) @map("ordered_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  user  User        @relation(fields: [userId], references: [id])
+  items OrderItem[]
+
+  @@index([userId, orderedAt])
+  @@index([status, orderedAt])
+  @@map("order")
+}
+
+model OrderItem {
+  id      Int    @id @default(autoincrement())
+  orderId String @map("order_id")
+
+  // 상품 정보 스냅샷 (외부 참조 없음)
+  productName    String  @map("product_name")    @db.VarChar(255)
+  brandName      String  @map("brand_name")      @db.VarChar(100)
+  productImage   String  @map("product_image")   @db.VarChar(500)
+  optionLabel    String? @map("option_label")    @db.VarChar(300)
+  price          Int
+  originalPrice  Int?    @map("original_price")
+  quantity       Int
+  isFreeShipping Boolean @default(false) @map("is_free_shipping")
+  deliveryMethod String  @map("delivery_method") @db.VarChar(100)
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("order_item")
 }
