@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Text from "@/components/Common/Text";
 import ShippingAddress from "@/components/Checkout/ShippingAddress";
+import ShippingAddressModal from "@/components/Checkout/ShippingAddressModal";
 import OrdererForm from "@/components/Checkout/OrdererForm";
 import OrderItems from "@/components/Checkout/OrderItems";
 import PaymentSummary from "@/components/Checkout/PaymentSummary";
@@ -30,6 +31,7 @@ const CheckoutPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [shippingAddress, setShippingAddress] = useState<UserAddressView | null>(null);
   const [isAddressLoading, setIsAddressLoading] = useState(true);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [form, setForm] = useState<OrdererFormValues>({
     name: "",
     emailLocal: "",
@@ -114,6 +116,7 @@ const CheckoutPage = () => {
             isLoading={isAddressLoading}
             deliveryRequest={form.deliveryRequest}
             onDeliveryRequestChange={(value) => setField("deliveryRequest", value)}
+            onChangeAddress={() => setIsAddressModalOpen(true)}
           />
           <OrdererForm form={form} onFieldChange={setField} />
           <OrderItems sections={sections} totalCount={allItems.length} isLoading={isLoading} />
@@ -130,6 +133,19 @@ const CheckoutPage = () => {
           />
         </aside>
       </div>
+
+      {isAddressModalOpen && (
+        <ShippingAddressModal
+          address={shippingAddress}
+          onClose={() => setIsAddressModalOpen(false)}
+          onSelect={(address) => {
+            setShippingAddress(address);
+            setIsAddressModalOpen(false);
+          }}
+          onUpdate={setShippingAddress}
+          onDelete={() => setShippingAddress(null)}
+        />
+      )}
     </div>
   );
 };

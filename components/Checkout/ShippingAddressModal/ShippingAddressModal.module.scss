@@ -1,0 +1,290 @@
+@use "@/styles/color_variables" as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(47, 52, 56, 0.62);
+}
+
+.modal {
+  position: relative;
+  width: 430px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: $color-bg-white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.editModal {
+  width: 432px;
+}
+
+.header {
+  position: relative;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.backButton {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  color: $color-text-primary;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.closeButton {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: $color-text-primary;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.body {
+  padding: 22px 18px 30px;
+  background-color: #f2f4f5;
+}
+
+.addressCard {
+  border-radius: 8px;
+  background-color: $color-bg-white;
+  padding: 22px;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.defaultBadge {
+  display: inline-flex;
+  height: 24px;
+  align-items: center;
+  padding: 0 9px;
+  border: 1px solid $color-primary;
+  border-radius: 12px;
+  background-color: $color-bg-white;
+}
+
+.addressText {
+  color: $color-text-primary;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.phoneText {
+  color: $color-text-tertiary;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.leftActions {
+  display: flex;
+  gap: 6px;
+}
+
+.secondaryButton {
+  height: 42px;
+  padding: 0 15px;
+  border: 1px solid $color-border;
+  border-radius: 6px;
+  background-color: $color-bg-white;
+  cursor: pointer;
+}
+
+.selectButton {
+  height: 42px;
+  padding: 0 18px;
+  border: 1px solid $color-primary;
+  border-radius: 6px;
+  background-color: $color-primary;
+  cursor: pointer;
+}
+
+.empty {
+  border-radius: 8px;
+  background-color: $color-bg-white;
+  padding: 40px 20px;
+  color: $color-text-tertiary;
+  text-align: center;
+}
+
+.footer {
+  padding: 18px;
+  background-color: $color-bg-white;
+}
+
+.addButton {
+  width: 100%;
+  height: 48px;
+  border: 1px solid $color-primary;
+  border-radius: 6px;
+  background-color: $color-primary;
+  cursor: pointer;
+}
+
+.editBody {
+  padding: 22px 18px 18px;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.fieldLabel {
+  color: $color-text-tertiary;
+}
+
+.input,
+.phoneSelect {
+  width: 100%;
+  height: 44px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  padding: 0 14px;
+  background-color: $color-bg-white;
+  color: $color-text-primary;
+  font-size: 15px;
+  outline: none;
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+.phoneFields {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px;
+}
+
+.phoneSelect {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, $color-text-tertiary 50%),
+    linear-gradient(135deg, $color-text-tertiary 50%, transparent 50%);
+  background-position: calc(100% - 18px) 19px, calc(100% - 13px) 19px;
+  background-size: 5px 5px, 5px 5px;
+}
+
+.addressFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.zipRow {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px;
+}
+
+.findAddressButton {
+  height: 44px;
+  border: 1px solid $color-primary;
+  border-radius: 6px;
+  background-color: $color-bg-white;
+  cursor: pointer;
+}
+
+.defaultCheck {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 26px 0 34px 82px;
+  cursor: pointer;
+
+  input {
+    width: 20px;
+    height: 20px;
+    accent-color: $color-primary;
+  }
+}
+
+.saveButton {
+  width: 100%;
+  height: 48px;
+  border: 1px solid $color-primary;
+  border-radius: 6px;
+  background-color: $color-primary;
+  cursor: pointer;
+}
+
+.confirmOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(47, 52, 56, 0.55);
+}
+
+.confirmModal {
+  width: 322px;
+  border-radius: 6px;
+  background-color: $color-bg-white;
+  padding: 34px 18px 18px;
+}
+
+.confirmText {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.confirmActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.confirmCancelButton,
+.confirmOkButton {
+  height: 48px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.confirmCancelButton {
+  border: 1px solid $color-border;
+  background-color: $color-bg-white;
+}
+
+.confirmOkButton {
+  border: 1px solid $color-primary;
+  background-color: $color-primary;
+}

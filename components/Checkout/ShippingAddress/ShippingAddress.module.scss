@@ -13,7 +13,8 @@
   border-bottom: 1px solid $color-border-light;
 }
 
-.changeBtn {
+.changeBtn,
+.sameAsOrdererBtn {
   background: none;
   border: none;
   cursor: pointer;
@@ -31,8 +32,135 @@
   gap: 7px;
 }
 
+.emptyAddressBody {
+  padding: 22px 0 0;
+}
+
 .stateText {
   color: $color-text-secondary;
+}
+
+.emptyAddressForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 686px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+}
+
+.formLabel {
+  color: $color-text-secondary;
+}
+
+.textInput {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  background: $color-bg-white;
+  color: $color-text-primary;
+  font-size: 16px;
+  outline: none;
+
+  &::placeholder {
+    color: $color-text-tertiary;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+.phoneGroup {
+  display: flex;
+  gap: 10px;
+  max-width: 300px;
+}
+
+.phoneAreaSelect {
+  width: 92px;
+  min-width: 92px;
+}
+
+.phoneInput {
+  width: 190px;
+}
+
+.addressFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.zipRow {
+  display: flex;
+  gap: 10px;
+}
+
+.findAddressBtn {
+  width: 82px;
+  height: 44px;
+  border: 1px solid $color-primary;
+  border-radius: 4px;
+  background: $color-bg-white;
+  cursor: pointer;
+}
+
+.zipInput {
+  width: 200px;
+  background: $color-bg-light;
+}
+
+.addressInput {
+  max-width: 686px;
+}
+
+.defaultCheck {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  cursor: pointer;
+
+  input {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    border: 1px solid $color-border;
+    border-radius: 4px;
+    background: $color-bg-white;
+    appearance: none;
+    cursor: pointer;
+
+    &:checked {
+      border-color: $color-primary;
+      background: $color-primary;
+    }
+
+    &:checked::after {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 3px;
+      width: 5px;
+      height: 10px;
+      border: solid $color-text-white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary-light;
+      outline-offset: 2px;
+    }
+  }
 }
 
 .nameRow {
@@ -114,6 +242,21 @@
 
   .addressBody {
     padding-top: 22px;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .phoneGroup,
+  .zipRow {
+    max-width: none;
+  }
+
+  .phoneInput,
+  .zipInput {
+    width: 100%;
   }
 
   .select {
