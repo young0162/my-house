@@ -8,9 +8,17 @@ interface PaymentSummaryProps {
   totalProductPrice: number;
   finalPrice: number;
   pointEarned: number;
+  isSubmitting?: boolean;
+  onPayment: () => void;
 }
 
-const PaymentSummary = ({ totalProductPrice, finalPrice, pointEarned }: PaymentSummaryProps) => (
+const PaymentSummary = ({
+  totalProductPrice,
+  finalPrice,
+  pointEarned,
+  isSubmitting,
+  onPayment,
+}: PaymentSummaryProps) => (
   <div className={styles.root}>
     <div className={styles.card}>
       <div className={styles.header}>
@@ -60,9 +68,14 @@ const PaymentSummary = ({ totalProductPrice, finalPrice, pointEarned }: PaymentS
       </div>
     </div>
 
-    <button type="button" className={styles.payBtn}>
+    <button
+      type="button"
+      className={styles.payBtn}
+      onClick={onPayment}
+      disabled={isSubmitting}
+    >
       <Text tag="span" fontSize={16} fontWeight={700} color="white">
-        {formatPrice(finalPrice)}원 결제하기
+        {isSubmitting ? "결제 진행 중..." : `${formatPrice(finalPrice)}원 결제하기`}
       </Text>
     </button>
   </div>

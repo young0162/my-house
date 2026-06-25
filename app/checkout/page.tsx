@@ -12,7 +12,12 @@ import PaymentSummary from "@/components/Checkout/PaymentSummary";
 import CheckoutCoupon from "@/components/Checkout/CheckoutCoupon";
 import CheckoutPoint from "@/components/Checkout/CheckoutPoint";
 import PaymentMethods from "@/components/Checkout/PaymentMethods";
-import { CheckoutSection, OrdererFormValues, UserAddressView } from "@/types/checkout";
+import {
+  CheckoutSection,
+  OrdererFormValues,
+  ShippingAddressFormValues,
+  UserAddressView,
+} from "@/types/checkout";
 import { checkoutApiService } from "@/services/checkout.api";
 import { addressApiService } from "@/services/address.api";
 import { EMAIL_DOMAINS } from "@/constants/checkout";
@@ -32,6 +37,7 @@ const CheckoutPage = () => {
   const [shippingAddress, setShippingAddress] = useState<UserAddressView | null>(null);
   const [isAddressLoading, setIsAddressLoading] = useState(true);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isPaymentSubmitting, setIsPaymentSubmitting] = useState(false);
   const [form, setForm] = useState<OrdererFormValues>({
     name: "",
     emailLocal: "",
@@ -40,9 +46,24 @@ const CheckoutPage = () => {
     phoneNumber: "",
     deliveryRequest: "",
   });
+  const [emptyAddressForm, setEmptyAddressForm] = useState<ShippingAddressFormValues>({
+    addressName: "집",
+    recipientName: "장도영",
+    phoneArea: "010",
+    phoneNumber: "3825-0313",
+    zipCode: "04946",
+    address: "서울특별시 광진구 영화사로3길 20-8 (중곡동)",
+    detailAddress: "",
+    isDefault: true,
+  });
 
   const setField = <K extends keyof OrdererFormValues>(key: K, value: OrdererFormValues[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
+
+  const setEmptyAddressField = <K extends keyof ShippingAddressFormValues>(
+    key: K,
+    value: ShippingAddressFormValues[K],
+  ) => setEmptyAddressForm((prev) => ({ ...prev, [key]: value }));
 
   useEffect(() => {
     if (sessionInitialized.current || !session?.user) return;
@@ -104,6 +125,43 @@ const CheckoutPage = () => {
 
   const allItems = sections.flatMap((s) => s.items);
 
+  const handlePayment = async () => {
+    if (isPaymentSubmitting) return;
+
+    if (shippingAddress) return;
+
+    const recipientName = emptyAddressForm.recipientName.trim();
+    const phoneNumber = emptyAddressForm.phoneNumber.trim();
+    const address = emptyAddressForm.address.trim();
+
+    if (!recipientName || !phoneNumber || !address) {
+      alert("배송지 정보를 입력해주세요.");
+      return;
+    }
+
+    setIsPaymentSubmitting(true);
+    try {
+      const createdAddress = await addressApiService.createAddress({
+        recipientName,
+        phoneNumber: `${emptyAddressForm.phoneArea}-${phoneNumber}`,
+        zipCode: emptyAddressForm.zipCode.trim() || undefined,
+        address,
+        detailAddress: emptyAddressForm.detailAddress.trim() || undefined,
+        isDefault: emptyAddressForm.isDefault,
+      });
+      setShippingAddress(createdAddress);
+    } catch (error: unknown) {
+      const status = (error as { response?: { status?: number } }).response?.status;
+      if (status === 401) {
+        router.push("/login");
+        return;
+      }
+      alert("배송지 저장에 실패했습니다.");
+    } finally {
+      setIsPaymentSubmitting(false);
+    }
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.layout}>
@@ -114,6 +172,8 @@ const CheckoutPage = () => {
           <ShippingAddress
             address={shippingAddress}
             isLoading={isAddressLoading}
+            emptyAddressForm={emptyAddressForm}
+            onEmptyAddressFieldChange={setEmptyAddressField}
             deliveryRequest={form.deliveryRequest}
             onDeliveryRequestChange={(value) => setField("deliveryRequest", value)}
             onChangeAddress={() => setIsAddressModalOpen(true)}
@@ -130,6 +190,8 @@ const CheckoutPage = () => {
             totalProductPrice={totalProductPrice}
             finalPrice={finalPrice}
             pointEarned={pointEarned}
+            isSubmitting={isPaymentSubmitting}
+            onPayment={handlePayment}
           />
         </aside>
       </div>

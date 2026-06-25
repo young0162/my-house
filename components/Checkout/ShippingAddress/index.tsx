@@ -1,14 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import Text from "@/components/Common/Text";
 import { DELIVERY_REQUESTS, PHONE_AREA_CODES } from "@/constants/checkout";
-import { UserAddressView } from "@/types/checkout";
+import { ShippingAddressFormValues, UserAddressView } from "@/types/checkout";
 import styles from "./ShippingAddress.module.scss";
 
 interface ShippingAddressProps {
   address: UserAddressView | null;
   isLoading?: boolean;
+  emptyAddressForm: ShippingAddressFormValues;
+  onEmptyAddressFieldChange: <K extends keyof ShippingAddressFormValues>(
+    key: K,
+    value: ShippingAddressFormValues[K],
+  ) => void;
   deliveryRequest: string;
   onDeliveryRequestChange: (value: string) => void;
   onChangeAddress: () => void;
@@ -17,25 +21,12 @@ interface ShippingAddressProps {
 const ShippingAddress = ({
   address,
   isLoading,
+  emptyAddressForm,
+  onEmptyAddressFieldChange,
   deliveryRequest,
   onDeliveryRequestChange,
   onChangeAddress,
 }: ShippingAddressProps) => {
-  const [emptyAddressForm, setEmptyAddressForm] = useState({
-    addressName: "집",
-    recipientName: "장도영",
-    phoneArea: "010",
-    phoneNumber: "3825-0313",
-    zipCode: "04946",
-    address: "서울특별시 광진구 영화사로3길 20-8 (중곡동)",
-    detailAddress: "",
-    isDefault: true,
-  });
-
-  const updateEmptyAddressField = (key: keyof typeof emptyAddressForm, value: string | boolean) => {
-    setEmptyAddressForm((prev) => ({ ...prev, [key]: value }));
-  };
-
   return (
     <section className={styles.root}>
       <div className={styles.header}>
@@ -61,7 +52,7 @@ const ShippingAddress = ({
               <input
                 className={styles.textInput}
                 value={emptyAddressForm.addressName}
-                onChange={(e) => updateEmptyAddressField("addressName", e.target.value)}
+                onChange={(e) => onEmptyAddressFieldChange("addressName", e.target.value)}
               />
             </label>
             <label className={styles.formRow}>
@@ -69,7 +60,7 @@ const ShippingAddress = ({
               <input
                 className={styles.textInput}
                 value={emptyAddressForm.recipientName}
-                onChange={(e) => updateEmptyAddressField("recipientName", e.target.value)}
+                onChange={(e) => onEmptyAddressFieldChange("recipientName", e.target.value)}
               />
             </label>
             <div className={styles.formRow}>
@@ -79,7 +70,7 @@ const ShippingAddress = ({
                   <select
                     className={`${styles.select} ${styles.phoneAreaSelect}`}
                     value={emptyAddressForm.phoneArea}
-                    onChange={(e) => updateEmptyAddressField("phoneArea", e.target.value)}
+                    onChange={(e) => onEmptyAddressFieldChange("phoneArea", e.target.value)}
                     aria-label="배송지 전화번호 앞자리"
                   >
                     {PHONE_AREA_CODES.map((code) => (
@@ -90,7 +81,7 @@ const ShippingAddress = ({
                 <input
                   className={`${styles.textInput} ${styles.phoneInput}`}
                   value={emptyAddressForm.phoneNumber}
-                  onChange={(e) => updateEmptyAddressField("phoneNumber", e.target.value)}
+                  onChange={(e) => onEmptyAddressFieldChange("phoneNumber", e.target.value)}
                   aria-label="배송지 전화번호"
                 />
               </div>
@@ -105,20 +96,20 @@ const ShippingAddress = ({
                   <input
                     className={`${styles.textInput} ${styles.zipInput}`}
                     value={emptyAddressForm.zipCode}
-                    onChange={(e) => updateEmptyAddressField("zipCode", e.target.value)}
+                    onChange={(e) => onEmptyAddressFieldChange("zipCode", e.target.value)}
                     aria-label="우편번호"
                   />
                 </div>
                 <input
                   className={`${styles.textInput} ${styles.addressInput}`}
                   value={emptyAddressForm.address}
-                  onChange={(e) => updateEmptyAddressField("address", e.target.value)}
+                  onChange={(e) => onEmptyAddressFieldChange("address", e.target.value)}
                   aria-label="주소"
                 />
                 <input
                   className={`${styles.textInput} ${styles.addressInput}`}
                   value={emptyAddressForm.detailAddress}
-                  onChange={(e) => updateEmptyAddressField("detailAddress", e.target.value)}
+                  onChange={(e) => onEmptyAddressFieldChange("detailAddress", e.target.value)}
                   placeholder="상세주소 입력"
                   aria-label="상세주소"
                 />
@@ -128,7 +119,7 @@ const ShippingAddress = ({
               <input
                 type="checkbox"
                 checked={emptyAddressForm.isDefault}
-                onChange={(e) => updateEmptyAddressField("isDefault", e.target.checked)}
+                onChange={(e) => onEmptyAddressFieldChange("isDefault", e.target.checked)}
               />
               <Text tag="span" fontSize={16} color="gray01">기본 배송지로 저장</Text>
             </label>

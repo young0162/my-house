@@ -7,6 +7,17 @@ export interface OrdererFormValues {
   deliveryRequest: string;
 }
 
+export interface ShippingAddressFormValues {
+  addressName: string;
+  recipientName: string;
+  phoneArea: string;
+  phoneNumber: string;
+  zipCode: string;
+  address: string;
+  detailAddress: string;
+  isDefault: boolean;
+}
+
 export type CheckoutSource = "PRODUCT_DETAIL" | "CART";
 export type CheckoutStatus = "PENDING" | "EXPIRED" | "ORDERED";
 
