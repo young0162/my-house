@@ -1,0 +1,88 @@
+@use "@/styles/color_variables" as *;
+
+.root {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 80px 24px 120px;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.iconWrap {
+  margin-bottom: 28px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: $color-text-tertiary;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.orderIdBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: $color-bg-gray;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  width: 100%;
+  justify-content: center;
+}
+
+.orderIdLabel {
+  color: $color-text-tertiary;
+}
+
+.orderIdValue {
+  word-break: break-all;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.primaryBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  background: $color-primary;
+  border-radius: 8px;
+  text-decoration: none;
+
+  &:hover {
+    background: $color-primary-hover;
+  }
+}
+
+.secondaryBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  background: $color-bg-white;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  text-decoration: none;
+
+  &:hover {
+    background: $color-bg-gray;
+  }
+}
