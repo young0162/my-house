@@ -21,6 +21,7 @@ import {
 import { checkoutApiService } from "@/services/checkout.api";
 import { addressApiService } from "@/services/address.api";
 import { orderApiService } from "@/services/order.api";
+import { useCartStore } from "@/store/cartStore";
 import { EMAIL_DOMAINS } from "@/constants/checkout";
 import styles from "./page.module.scss";
 
@@ -39,6 +40,7 @@ const CheckoutPage = () => {
   const [isAddressLoading, setIsAddressLoading] = useState(true);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isPaymentSubmitting, setIsPaymentSubmitting] = useState(false);
+  const decrementCart = useCartStore((s) => s.decrement);
   const [form, setForm] = useState<OrdererFormValues>({
     name: "",
     emailLocal: "",
@@ -149,6 +151,7 @@ const CheckoutPage = () => {
       paymentMethod: "간편결제",
     });
 
+    decrementCart(allItems.length);
     router.push(`/order/complete?orderId=${result.orderId}`);
   };
 
