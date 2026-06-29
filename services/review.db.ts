@@ -1,7 +1,32 @@
 import { prisma } from "@/lib/prisma";
-import type { CreateReviewRequest, CreateReviewResponse } from "@/types/review";
+import type { CreateReviewRequest, CreateReviewResponse, MyReviewSortType, MyReviewListResponse } from "@/types/review";
 
 export const reviewDbService = {
+  getMyReviews: async (userId: string, sort: MyReviewSortType): Promise<MyReviewListResponse> => {
+    const orderBy = sort === "best" ? { rating: "desc" as const } : { createdAt: "desc" as const };
+
+    const reviews = await prisma.review.findMany({
+      where: { userId },
+      orderBy,
+      include: {
+        orderItem: { select: { productName: true, optionLabel: true } },
+      },
+    });
+
+    return {
+      reviews: reviews.map((r) => ({
+        id: r.id,
+        productName: r.orderItem.productName,
+        optionLabel: r.orderItem.optionLabel,
+        rating: r.rating,
+        createdAt: r.createdAt.toISOString().slice(0, 10).replace(/-/g, "."),
+        content: r.description,
+        image: r.image,
+      })),
+      total: reviews.length,
+    };
+  },
+
   createReview: async (userId: string, params: CreateReviewRequest): Promise<CreateReviewResponse> => {
     const orderItem = await prisma.orderItem.findUnique({
       where: { id: params.orderItemId },

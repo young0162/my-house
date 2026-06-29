@@ -1,7 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { reviewDbService } from "@/services/review.db";
-import type { CreateReviewRequest } from "@/types/review";
+import type { CreateReviewRequest, MyReviewSortType } from "@/types/review";
+
+export const GET = async (req: NextRequest) => {
+  const session = await auth();
+  if (!session?.user?.id) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
+  try {
+    const sort = (req.nextUrl.searchParams.get("sort") ?? "newest") as MyReviewSortType;
+    const data = await reviewDbService.getMyReviews(session.user.id, sort);
+    return NextResponse.json(data);
+  } catch {
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+  }
+};
 
 export const POST = async (req: NextRequest) => {
   const session = await auth();
