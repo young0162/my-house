@@ -30,10 +30,12 @@ const ProductRow = ({ product }: { product: ShoppingOrderProduct }) => (
     </div>
 
     <div className={styles.actions}>
-      <button type="button" className={styles.actionBtnPrimary}>
-        <span className={styles.reviewDot} aria-hidden="true" />
-        <Text fontSize={13} fontWeight={600} color="primary">리뷰쓰기</Text>
-      </button>
+      {!product.hasReview && (
+        <button type="button" className={styles.actionBtnPrimary}>
+          <span className={styles.reviewDot} aria-hidden="true" />
+          <Text fontSize={13} fontWeight={600} color="primary">리뷰쓰기</Text>
+        </button>
+      )}
       <button type="button" className={styles.actionBtn}>
         <Text fontSize={13} color="gray01">문의</Text>
       </button>

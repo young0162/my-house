@@ -68,6 +68,7 @@ export const orderDbService = {
             optionLabel: true,
             price: true,
             quantity: true,
+            review: { select: { id: true } },
           },
         },
       },
@@ -85,11 +86,13 @@ export const orderDbService = {
         status: STATUS_LABEL_BY_STATUS[order.status],
         deliveryInfo: DELIVERY_INFO_BY_STATUS[order.status],
         products: order.items.map((item) => ({
+          orderItemId: item.id,
           name: item.productName,
           option: item.optionLabel ?? "옵션 없음",
           price: item.price,
           quantity: item.quantity,
           imageUrl: item.productImage,
+          hasReview: item.review !== null,
         })),
       };
     });

@@ -25,11 +25,13 @@ export type ShoppingOrderStep =
   | "구매확정";
 
 export interface ShoppingOrderProduct {
+  orderItemId: number;
   name: string;
   option: string;
   price: number;
   quantity: number;
   imageUrl: string;
+  hasReview: boolean;
 }
 
 export interface ShoppingOrder {
