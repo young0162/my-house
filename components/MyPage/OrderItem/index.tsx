@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { CartIcon } from "@/components/Common/Icon";
 import Text from "@/components/Common/Text";
 import type { ShoppingOrder, ShoppingOrderProduct } from "@/types/order";
@@ -50,9 +51,9 @@ const OrderItem = ({ order }: OrderItemProps) => (
   <article className={styles.root}>
     <div className={styles.dateRow}>
       <Text fontSize={14} fontWeight={600} color="gray01">{order.date}</Text>
-      <button type="button" className={styles.linkBtn}>
+      <Link href={`/order?id=${order.id}`} className={styles.linkBtn}>
         <Text fontSize={13} color="gray01">주문상세 &gt;</Text>
-      </button>
+      </Link>
     </div>
 
     <div className={styles.card}>
