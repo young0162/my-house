@@ -3,60 +3,6 @@
   background-color: $color-bg-white;
 }
 
-// ── 서브 탭 ──────────────────────────────────────────────
-.subTabsWrap {
-  background-color: $color-bg-white;
-  border-bottom: 1px solid $color-border-light;
-}
-
-.subTabsInner {
-  max-width: 1256px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-.subTabs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  list-style: none;
-}
-
-.subTab {
-  position: relative;
-  min-width: 92px;
-  padding: 21px 12px 23px;
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: $color-text-secondary;
-  background: none;
-  border: none;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: color 0.15s;
-
-  &:hover {
-    color: $color-text-primary;
-  }
-}
-
-.subTabActive {
-  color: $color-primary;
-  font-weight: 600;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background-color: $color-primary;
-  }
-}
-
-// ── 본문 ─────────────────────────────────────────────────
 .content {
   max-width: 1256px;
   margin: 0 auto;
@@ -66,171 +12,21 @@
   gap: 14px;
 }
 
-// ── 쿠폰/포인트/등급 카드 ────────────────────────────────
-.statsCard {
-  display: flex;
-  align-items: center;
-  background-color: $color-bg-white;
-  border: 1px solid $color-border-light;
-  border-radius: 8px;
-  min-height: 74px;
-  padding: 0;
-}
-
-.statItem {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 4px 0;
-}
-
-.statLabel {
-  flex-shrink: 0;
-}
-
-.statDivider {
-  width: 1px;
-  height: 40px;
-  background-color: $color-border-light;
-  flex-shrink: 0;
-}
-
-// ── 추천코드 카드 ─────────────────────────────────────────
-.referralCard {
-  display: flex;
-  align-items: center;
-  background-color: $color-bg-white;
-  border: 1px solid $color-border-light;
-  border-radius: 8px;
-  min-height: 72px;
-  padding: 0 48px;
-  gap: 0;
-}
-
-.referralLeft {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.referralCode {
-  letter-spacing: 0.5px;
-}
-
-.referralCenter {
-  flex: 1;
-  text-align: center;
-  border-left: 1px solid $color-border-light;
-  padding-left: 44px;
-}
-
-.referralBtn {
-  width: 128px;
-  height: 42px;
-  padding: 0 24px;
-  background-color: $color-primary;
-  color: #fff;
-  font-size: 1.5rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.15s;
-  white-space: nowrap;
-
-  &:hover {
-    background-color: $color-primary-hover;
-  }
-}
-
-// ── 진행중인 주문 ─────────────────────────────────────────
-.orderSection {
-  background-color: $color-bg-white;
-  border: 1px solid $color-border-light;
-  border-radius: 8px;
-  padding: 24px 18px 27px;
-}
-
-.orderTitle {
-  margin-bottom: 25px;
-}
-
-.orderSteps {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 34px;
-}
-
-.orderStepGroup {
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-
-.orderStep {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 9px;
-}
-
-.orderArrow {
-  flex-shrink: 0;
-  margin: 0 24px;
-  padding-bottom: 16px;
-}
-
-// ── 주문 목록 영역 ────────────────────────────────────────
 .orderListSection {
   background-color: $color-bg-white;
   padding: 4px 0 0;
 }
 
+.stateMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  border-bottom: 1px solid $color-border-light;
+}
+
 @media (max-width: 768px) {
-  .subTabsInner {
-    overflow-x: auto;
-    padding: 0;
-  }
-
-  .subTabs {
-    justify-content: flex-start;
-    min-width: max-content;
-    padding: 0 12px;
-  }
-
   .content {
     padding: 20px 12px 120px;
-  }
-
-  .statsCard,
-  .referralCard {
-    border-radius: 6px;
-  }
-
-  .referralCard {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 14px;
-    padding: 18px;
-  }
-
-  .referralCenter {
-    border-left: 0;
-    padding-left: 0;
-    text-align: left;
-  }
-
-  .orderSteps {
-    overflow-x: auto;
-    padding: 0;
-  }
-
-  .orderStepGroup {
-    min-width: 116px;
   }
 }

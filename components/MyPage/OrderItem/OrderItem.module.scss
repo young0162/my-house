@@ -34,6 +34,11 @@
   padding: 0;
 }
 
+.productDivider {
+  margin: 16px 20px;
+  border-top: 1px solid $color-border-light;
+}
+
 .productRow {
   display: flex;
   align-items: center;
@@ -42,40 +47,23 @@
 }
 
 .productImage {
-  position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  gap: 5px;
-  width: 58px;
-  height: 72px;
-  padding: 8px 7px 7px;
+  width: 64px;
+  height: 64px;
   background-color: #fff;
-  border: 0;
   border-radius: 4px;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
-.filterStick {
-  position: relative;
-  width: 10px;
-  height: 58px;
-  border: 1px solid #d4d9dd;
-  border-radius: 2px;
-  background: linear-gradient(90deg, #f7f8f9 0%, #fff 42%, #dfe4e8 100%);
-  box-shadow: inset -2px 0 2px rgba(0, 0, 0, 0.04);
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: -6px;
-    left: 50%;
-    width: 12px;
-    height: 6px;
-    border-radius: 2px 2px 0 0;
-    background-color: #2f3438;
-    transform: translateX(-50%);
-  }
+.image {
+  width: 64px;
+  height: 64px;
+  border: 1px solid $color-border-light;
+  border-radius: 4px;
+  object-fit: cover;
 }
 
 .productInfo {

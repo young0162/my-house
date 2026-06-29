@@ -1,116 +1,69 @@
 "use client";
 
-import { useState } from "react";
-import { CouponIcon, PointIcon, GradeIcon } from "@/components/Common/Icon";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Text from "@/components/Common/Text";
+import ShoppingSubTabs from "@/components/MyPage/ShoppingSubTabs";
+import StatsCard from "@/components/MyPage/StatsCard";
+import ReferralCard from "@/components/MyPage/ReferralCard";
+import OrderStatusSection from "@/components/MyPage/OrderStatusSection";
 import OrderFilter from "@/components/MyPage/OrderFilter";
 import ReviewPointBanner from "@/components/MyPage/ReviewPointBanner";
 import OrderItem from "@/components/MyPage/OrderItem";
-import { SUB_TABS, ORDER_STEPS } from "@/constants/mypage";
-import type { SubTab, Order } from "@/types/mypage";
+import { orderApiService } from "@/services/order.api";
+import type { SubTab } from "@/types/mypage";
+import type { ShoppingOrder, ShoppingOrdersResponse } from "@/types/order";
 import styles from "./page.module.scss";
 
-const MOCK_ORDERS: Order[] = [
-  {
-    id: "20230105-001",
-    date: "2023.01.05",
-    status: "구매확정",
-    deliveryInfo: "1/7(토) 도착 완료",
-    product: {
-      name: "샤워기 1차 필터 (불순물 차단 필터)",
-      option: "1차필터 1set(3개)",
-      price: 9900,
-      quantity: 1,
-      imageUrl: "/image/products/v1-400167436738688.jpg",
-    },
-  },
-];
-
 const ShoppingPage = () => {
+  const router = useRouter();
   const [activeSubTab, setActiveSubTab] = useState<SubTab>("주문배송목록");
+  const [orders, setOrders] = useState<ShoppingOrder[]>([]);
+  const [summary, setSummary] = useState<ShoppingOrdersResponse["summary"] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await orderApiService.getShoppingOrders();
+        setOrders(data.orders);
+        setSummary(data.summary);
+      } catch (error: unknown) {
+        const status = (error as { response?: { status?: number } }).response?.status;
+        if (status === 401) router.push("/login");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, [router]);
 
   return (
     <div className={styles.root}>
-      <div className={styles.subTabsWrap}>
-        <div className={styles.subTabsInner}>
-          <ul className={styles.subTabs}>
-            {SUB_TABS.map((tab) => (
-              <li key={tab}>
-                <button
-                  type="button"
-                  className={`${styles.subTab} ${activeSubTab === tab ? styles.subTabActive : ""}`}
-                  onClick={() => setActiveSubTab(tab)}
-                >
-                  <Text fontSize={14} fontWeight={activeSubTab === tab ? 600 : 400} color={activeSubTab === tab ? "primary" : "gray01"}>
-                    {tab}
-                  </Text>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <ShoppingSubTabs activeTab={activeSubTab} onTabChange={setActiveSubTab} />
 
       <div className={styles.content}>
-        <div className={styles.statsCard}>
-          <div className={styles.statItem}>
-            <CouponIcon />
-            <Text fontSize={14} color="gray01" className={styles.statLabel}>쿠폰</Text>
-            <Text fontSize={14} fontWeight={700} color="primary">0</Text>
-          </div>
-          <div className={styles.statDivider} />
-          <div className={styles.statItem}>
-            <PointIcon />
-            <Text fontSize={14} color="gray01" className={styles.statLabel}>포인트</Text>
-            <Text fontSize={14} fontWeight={700} color="primary">0P</Text>
-          </div>
-          <div className={styles.statDivider} />
-          <div className={styles.statItem}>
-            <GradeIcon />
-            <Text fontSize={14} color="gray01" className={styles.statLabel}>구매등급</Text>
-            <Text fontSize={14} fontWeight={700} color="primary">WELCOME</Text>
-          </div>
-        </div>
-
-        <div className={styles.referralCard}>
-          <div className={styles.referralLeft}>
-            <Text fontSize={14} color="gray01">나의 추천코드</Text>
-            <Text fontSize={15} fontWeight={700} color="gray01" className={styles.referralCode}>WK962OH5</Text>
-          </div>
-          <div className={styles.referralCenter}>
-            <Text fontSize={14} color="gray01">나는 5000P, 친구는 5000원 쿠폰</Text>
-          </div>
-          <button type="button" className={styles.referralBtn}>
-            <Text fontSize={15} fontWeight={700} color="white">추천하기</Text>
-          </button>
-        </div>
-
-        <section className={styles.orderSection}>
-          <h2 className={styles.orderTitle}>
-            <Text tag="span" fontSize={16} fontWeight={700} color="gray01">진행중인 주문</Text>
-            <Text tag="span" fontSize={13} color="gray01"> (최근 3개월)</Text>
-          </h2>
-          <div className={styles.orderSteps}>
-            {ORDER_STEPS.map((step, i) => (
-              <div key={step} className={styles.orderStepGroup}>
-                <div className={styles.orderStep}>
-                  <Text fontSize={13} color="gray01">{step}</Text>
-                  <Text fontSize={18} fontWeight={700} color="primary">0</Text>
-                </div>
-                {i < ORDER_STEPS.length - 1 && (
-                  <Text fontSize={20} color="gray01" className={styles.orderArrow}>›</Text>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
+        <StatsCard />
+        <ReferralCard />
+        <OrderStatusSection summary={summary} />
 
         <div className={styles.orderListSection}>
           <OrderFilter />
           <ReviewPointBanner />
-          {MOCK_ORDERS.map((order) => (
-            <OrderItem key={order.id} order={order} />
-          ))}
+          {isLoading ? (
+            <div className={styles.stateMessage}>
+              <Text tag="p" fontSize={14} color="gray01">주문내역을 불러오는 중입니다.</Text>
+            </div>
+          ) : orders.length === 0 ? (
+            <div className={styles.stateMessage}>
+              <Text tag="p" fontSize={14} color="gray01">주문내역이 없습니다.</Text>
+            </div>
+          ) : (
+            orders.map((order) => (
+              <OrderItem key={order.id} order={order} />
+            ))
+          )}
         </div>
       </div>
     </div>
