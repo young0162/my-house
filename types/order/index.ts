@@ -44,3 +44,38 @@ export interface ShoppingOrdersResponse {
   orders: ShoppingOrder[];
   summary: Record<ShoppingOrderStep, number>;
 }
+
+export interface OrderDetailItem {
+  id: number;
+  productName: string;
+  brandName: string;
+  optionLabel: string | null;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+  deliveryMethod: string;
+  isFreeShipping: boolean;
+}
+
+export interface OrderDetail {
+  id: string;
+  orderedAt: string;
+  status: string;
+  deliveryInfo: string;
+  ordererName: string;
+  ordererEmail: string;
+  ordererPhone: string;
+  recipientName: string;
+  recipientPhone: string;
+  zipCode: string | null;
+  address: string;
+  detailAddress: string | null;
+  deliveryRequest: string | null;
+  paymentMethod: string;
+  totalProductPrice: number;
+  shippingFee: number;
+  couponDiscount: number;
+  pointDiscount: number;
+  finalPrice: number;
+  items: OrderDetailItem[];
+}

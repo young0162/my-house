@@ -3,6 +3,7 @@ import { OrderStatus } from "@/app/generated/prisma";
 import {
   CreateOrderRequest,
   CreateOrderResponse,
+  OrderDetail,
   ShoppingOrderStep,
   ShoppingOrdersResponse,
 } from "@/types/order";
@@ -96,6 +97,84 @@ export const orderDbService = {
     return {
       orders: shoppingOrders,
       summary,
+    };
+  },
+
+  getOrderDetail: async (userId: string, orderId: string): Promise<OrderDetail> => {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      select: {
+        id: true,
+        userId: true,
+        status: true,
+        orderedAt: true,
+        ordererName: true,
+        ordererEmail: true,
+        ordererPhone: true,
+        recipientName: true,
+        recipientPhone: true,
+        zipCode: true,
+        address: true,
+        detailAddress: true,
+        deliveryRequest: true,
+        paymentMethod: true,
+        totalProductPrice: true,
+        shippingFee: true,
+        couponDiscount: true,
+        pointDiscount: true,
+        finalPrice: true,
+        items: {
+          orderBy: { id: "asc" },
+          select: {
+            id: true,
+            productName: true,
+            brandName: true,
+            productImage: true,
+            optionLabel: true,
+            price: true,
+            quantity: true,
+            deliveryMethod: true,
+            isFreeShipping: true,
+          },
+        },
+      },
+    });
+
+    if (!order || order.userId !== userId) {
+      throw Object.assign(new Error("Order not found"), { status: 404 });
+    }
+
+    return {
+      id: order.id,
+      orderedAt: formatOrderDate(order.orderedAt),
+      status: STATUS_LABEL_BY_STATUS[order.status],
+      deliveryInfo: DELIVERY_INFO_BY_STATUS[order.status],
+      ordererName: order.ordererName,
+      ordererEmail: order.ordererEmail,
+      ordererPhone: order.ordererPhone,
+      recipientName: order.recipientName,
+      recipientPhone: order.recipientPhone,
+      zipCode: order.zipCode,
+      address: order.address,
+      detailAddress: order.detailAddress,
+      deliveryRequest: order.deliveryRequest,
+      paymentMethod: order.paymentMethod,
+      totalProductPrice: order.totalProductPrice,
+      shippingFee: order.shippingFee,
+      couponDiscount: order.couponDiscount,
+      pointDiscount: order.pointDiscount,
+      finalPrice: order.finalPrice,
+      items: order.items.map((item) => ({
+        id: item.id,
+        productName: item.productName,
+        brandName: item.brandName,
+        optionLabel: item.optionLabel,
+        price: item.price,
+        quantity: item.quantity,
+        imageUrl: item.productImage,
+        deliveryMethod: item.deliveryMethod,
+        isFreeShipping: item.isFreeShipping,
+      })),
     };
   },
 

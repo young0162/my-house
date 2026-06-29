@@ -1,9 +1,14 @@
 import { api } from "@/lib/api";
-import { CreateOrderRequest, CreateOrderResponse, ShoppingOrdersResponse } from "@/types/order";
+import { CreateOrderRequest, CreateOrderResponse, OrderDetail, ShoppingOrdersResponse } from "@/types/order";
 
 export const orderApiService = {
   getShoppingOrders: async (): Promise<ShoppingOrdersResponse> => {
     const res = await api.get<ShoppingOrdersResponse>("/orders");
+    return res.data;
+  },
+
+  getOrderDetail: async (id: string): Promise<OrderDetail> => {
+    const res = await api.get<OrderDetail>(`/orders/${id}`);
     return res.data;
   },
 
