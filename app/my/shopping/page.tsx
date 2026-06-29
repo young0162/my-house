@@ -17,11 +17,11 @@ const MOCK_ORDERS: Order[] = [
     status: "구매확정",
     deliveryInfo: "1/7(토) 도착 완료",
     product: {
-      name: "샤워기 9차 필터 (봉돌 슛 차단 필터)",
-      option: "1자담터 1set(3개)",
+      name: "샤워기 1차 필터 (불순물 차단 필터)",
+      option: "1차필터 1set(3개)",
       price: 9900,
       quantity: 1,
-      imageUrl: "https://picsum.photos/64/64?random=1",
+      imageUrl: "/image/products/v1-400167436738688.jpg",
     },
   },
 ];
@@ -83,34 +83,6 @@ const ShoppingPage = () => {
           <button type="button" className={styles.referralBtn}>
             <Text fontSize={15} fontWeight={700} color="white">추천하기</Text>
           </button>
-        </div>
-
-        <div className={styles.banner}>
-          <div className={styles.bannerMain}>
-            <p className={styles.bannerText}>
-              <Text tag="strong" fontWeight={800} color="white">절요한세일</Text>
-              <Text color="white"> 알림 신청하고 </Text>
-              <Text tag="strong" fontWeight={800} color="white">990원 시크릿딜 링크 받기</Text>
-              <Text fontSize={22} fontWeight={700} color="white"> ›</Text>
-            </p>
-            <div className={styles.bannerDots}>
-              <span className={`${styles.dot} ${styles.dotActive}`} />
-              <span className={styles.dot} />
-              <span className={styles.dot} />
-              <span className={styles.dot} />
-            </div>
-          </div>
-          <div className={styles.bannerGift}>
-            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-              <rect x="15" y="35" width="50" height="38" rx="3" fill="#ff8fab" />
-              <rect x="10" y="28" width="60" height="14" rx="3" fill="#ff6b9d" />
-              <rect x="36" y="28" width="8" height="45" fill="#fff" opacity="0.6" />
-              <path d="M40 28 C40 28 28 22 28 14 C28 9 33 6 38 10 C40 12 40 28 40 28 Z" fill="#ff6b9d" />
-              <path d="M40 28 C40 28 52 22 52 14 C52 9 47 6 42 10 C40 12 40 28 40 28 Z" fill="#e0457b" />
-              <circle cx="58" cy="30" r="4" fill="#ffe066" opacity="0.7" />
-              <circle cx="64" cy="22" r="2.5" fill="#ffe066" opacity="0.5" />
-            </svg>
-          </div>
         </div>
 
         <section className={styles.orderSection}>

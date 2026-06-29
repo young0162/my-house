@@ -2,8 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid $color-border-light;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid $color-border-light;
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .left {
@@ -15,7 +18,7 @@
 .icon {
   display: flex;
   align-items: center;
-  color: $color-border-light;
+  color: #ff8a3d;
 }
 
 .pointBtn {

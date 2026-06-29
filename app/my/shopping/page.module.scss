@@ -1,6 +1,6 @@
 .root {
   min-height: 100vh;
-  background-color: $color-bg-gray;
+  background-color: $color-bg-white;
 }
 
 // ── 서브 탭 ──────────────────────────────────────────────
@@ -12,19 +12,21 @@
 .subTabsInner {
   max-width: 1256px;
   margin: 0 auto;
-  padding: 0 60px;
+  padding: 0 16px;
 }
 
 .subTabs {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0;
   list-style: none;
 }
 
 .subTab {
   position: relative;
-  padding: 14px 18px;
+  min-width: 92px;
+  padding: 21px 12px 23px;
   font-size: 1.4rem;
   font-weight: 400;
   color: $color-text-secondary;
@@ -49,7 +51,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 2px;
+    height: 3px;
     background-color: $color-primary;
   }
 }
@@ -58,10 +60,10 @@
 .content {
   max-width: 1256px;
   margin: 0 auto;
-  padding: 20px 60px 60px;
+  padding: 28px 16px 390px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 // ── 쿠폰/포인트/등급 카드 ────────────────────────────────
@@ -71,7 +73,8 @@
   background-color: $color-bg-white;
   border: 1px solid $color-border-light;
   border-radius: 8px;
-  padding: 20px 0;
+  min-height: 74px;
+  padding: 0;
 }
 
 .statItem {
@@ -79,7 +82,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 9px;
   padding: 4px 0;
 }
 
@@ -89,7 +92,7 @@
 
 .statDivider {
   width: 1px;
-  height: 24px;
+  height: 40px;
   background-color: $color-border-light;
   flex-shrink: 0;
 }
@@ -101,7 +104,8 @@
   background-color: $color-bg-white;
   border: 1px solid $color-border-light;
   border-radius: 8px;
-  padding: 20px 28px;
+  min-height: 72px;
+  padding: 0 48px;
   gap: 0;
 }
 
@@ -109,7 +113,7 @@
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .referralCode {
@@ -119,10 +123,14 @@
 .referralCenter {
   flex: 1;
   text-align: center;
+  border-left: 1px solid $color-border-light;
+  padding-left: 44px;
 }
 
 .referralBtn {
-  padding: 12px 28px;
+  width: 128px;
+  height: 42px;
+  padding: 0 24px;
   background-color: $color-primary;
   color: #fff;
   font-size: 1.5rem;
@@ -138,83 +146,23 @@
   }
 }
 
-// ── 배너 ─────────────────────────────────────────────────
-.banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #29b6f6 0%, #1565c0 100%);
-  border-radius: 8px;
-  padding: 20px 36px;
-  min-height: 80px;
-  overflow: hidden;
-}
-
-.bannerMain {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  flex: 1;
-}
-
-.bannerText {
-  font-size: 1.9rem;
-  font-weight: 500;
-  color: #fff;
-  line-height: 1.4;
-  text-align: center;
-
-  strong {
-    font-weight: 800;
-  }
-}
-
-.bannerArrow {
-  font-size: 2.2rem;
-  font-weight: 700;
-}
-
-.bannerGift {
-  flex-shrink: 0;
-  margin-left: 8px;
-  display: flex;
-  align-items: center;
-}
-
-.bannerDots {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.4);
-}
-
-.dotActive {
-  background-color: #fff;
-}
-
 // ── 진행중인 주문 ─────────────────────────────────────────
 .orderSection {
   background-color: $color-bg-white;
   border: 1px solid $color-border-light;
   border-radius: 8px;
-  padding: 24px 28px 28px;
+  padding: 24px 18px 27px;
 }
 
 .orderTitle {
-  margin-bottom: 24px;
+  margin-bottom: 25px;
 }
 
 .orderSteps {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 34px;
 }
 
 .orderStepGroup {
@@ -228,19 +176,61 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
 }
 
 .orderArrow {
   flex-shrink: 0;
-  margin: 0 4px;
+  margin: 0 24px;
   padding-bottom: 16px;
 }
 
 // ── 주문 목록 영역 ────────────────────────────────────────
 .orderListSection {
   background-color: $color-bg-white;
-  border: 1px solid $color-border-light;
-  border-radius: 8px;
-  padding: 0 28px;
+  padding: 4px 0 0;
+}
+
+@media (max-width: 768px) {
+  .subTabsInner {
+    overflow-x: auto;
+    padding: 0;
+  }
+
+  .subTabs {
+    justify-content: flex-start;
+    min-width: max-content;
+    padding: 0 12px;
+  }
+
+  .content {
+    padding: 20px 12px 120px;
+  }
+
+  .statsCard,
+  .referralCard {
+    border-radius: 6px;
+  }
+
+  .referralCard {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .referralCenter {
+    border-left: 0;
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .orderSteps {
+    overflow-x: auto;
+    padding: 0;
+  }
+
+  .orderStepGroup {
+    min-width: 116px;
+  }
 }

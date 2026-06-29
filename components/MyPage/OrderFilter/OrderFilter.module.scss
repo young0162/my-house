@@ -3,8 +3,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid $color-border-light;
+  padding: 0 0 18px;
 }
 
 .selects {
@@ -21,7 +20,9 @@
 
 .select {
   appearance: none;
-  padding: 8px 32px 8px 12px;
+  width: 132px;
+  height: 30px;
+  padding: 0 32px 0 12px;
   font-size: 1.3rem;
   color: $color-text-primary;
   background-color: $color-bg-white;
@@ -50,7 +51,8 @@
   border: 1px solid $color-border-light;
   border-radius: 4px;
   overflow: hidden;
-  width: 280px;
+  width: 304px;
+  height: 30px;
 
   &:focus-within {
     border-color: $color-primary;
@@ -59,7 +61,8 @@
 
 .searchInput {
   flex: 1;
-  padding: 8px 12px;
+  min-width: 0;
+  padding: 0 12px;
   font-size: 1.3rem;
   color: $color-text-primary;
   border: none;
@@ -75,7 +78,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 10px;
+  width: 34px;
+  height: 30px;
+  padding: 0;
   background: none;
   border: none;
   cursor: pointer;
@@ -83,5 +88,22 @@
 
   &:hover {
     color: $color-text-primary;
+  }
+}
+
+@media (max-width: 768px) {
+  .root {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .selects {
+    width: 100%;
+  }
+
+  .selectWrap,
+  .select,
+  .searchWrap {
+    width: 100%;
   }
 }
