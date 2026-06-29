@@ -1,0 +1,32 @@
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+.card {
+  border: 1px solid $color-border-light;
+  border-radius: 6px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.divider {
+  border-top: 1px solid $color-border-light;
+  margin: 4px 0;
+}
+
+.muted {
+  color: $color-text-tertiary;
+}

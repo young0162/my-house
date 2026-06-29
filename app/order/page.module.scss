@@ -11,7 +11,6 @@
   min-height: 300px;
 }
 
-// ── 페이지 헤더 ────────────────────────────────────────────
 .pageHeader {
   margin-bottom: 40px;
 }
@@ -20,7 +19,6 @@
   margin-bottom: 8px;
 }
 
-// ── 공통 섹션 ──────────────────────────────────────────────
 .section {
   margin-bottom: 48px;
 }
@@ -29,37 +27,12 @@
   margin-bottom: 16px;
 }
 
-// ── 공통 카드 ──────────────────────────────────────────────
-.card {
-  border: 1px solid $color-border-light;
-  border-radius: 6px;
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-// ── 배송지 info row ────────────────────────────────────────
-.infoRow {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 8px;
-  align-items: flex-start;
-}
-
-.infoLabel {
-  color: $color-text-tertiary;
-  flex-shrink: 0;
-}
-
-// ── 주문상품 목록 ──────────────────────────────────────────
 .itemList {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-// ── 하단 2열 그리드 ────────────────────────────────────────
 .bottomGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -67,48 +40,6 @@
   align-items: flex-start;
 }
 
-.bottomSection {
-  display: flex;
-  flex-direction: column;
-}
-
-// ── 결제정보 ───────────────────────────────────────────────
-.paymentRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.paymentDivider {
-  border-top: 1px solid $color-border-light;
-  margin: 4px 0;
-}
-
-// ── 주문자정보 ─────────────────────────────────────────────
-.ordererCard {
-  border: 1px solid $color-border-light;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.ordererInfo {
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.customerService {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 14px 20px;
-  background-color: $color-bg-gray;
-  border-top: 1px solid $color-border-light;
-}
-
-// ── 공통 ───────────────────────────────────────────────────
 .muted {
   color: $color-text-tertiary;
 }
@@ -120,9 +51,5 @@
 
   .bottomGrid {
     grid-template-columns: 1fr;
-  }
-
-  .infoRow {
-    grid-template-columns: 70px 1fr;
   }
 }

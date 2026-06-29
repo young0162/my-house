@@ -1,0 +1,45 @@
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+.card {
+  border: 1px solid $color-border-light;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.info {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  color: $color-text-tertiary;
+}
+
+.muted {
+  color: $color-text-tertiary;
+}
+
+.customerService {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 14px 20px;
+  background-color: $color-bg-gray;
+  border-top: 1px solid $color-border-light;
+}

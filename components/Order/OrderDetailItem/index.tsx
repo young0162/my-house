@@ -8,9 +8,10 @@ interface OrderDetailItemProps {
   status: string;
   deliveryInfo: string;
   shippingFee: number;
+  onReview: () => void;
 }
 
-const OrderDetailItem = ({ item, status, deliveryInfo, shippingFee }: OrderDetailItemProps) => (
+const OrderDetailItem = ({ item, status, deliveryInfo, shippingFee, onReview }: OrderDetailItemProps) => (
   <div className={styles.root}>
     <div className={styles.statusBar}>
       <Text fontSize={14} fontWeight={600} color="gray01">
@@ -49,7 +50,7 @@ const OrderDetailItem = ({ item, status, deliveryInfo, shippingFee }: OrderDetai
         <button type="button" className={styles.btnOutlined}>
           <Text fontSize={13} color="gray01">문의</Text>
         </button>
-        <button type="button" className={styles.btnPrimary}>
+        <button type="button" className={styles.btnPrimary} onClick={onReview}>
           <Text fontSize={13} fontWeight={600} color="primary">리뷰 남기기</Text>
         </button>
       </div>
