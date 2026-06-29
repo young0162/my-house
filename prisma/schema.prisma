@@ -186,15 +186,22 @@ model ProductOptionValue {
 
 model Review {
   id          Int       @id @default(autoincrement())
+  userId      String    @map("user_id")
+  orderItemId Int       @unique @map("order_item_id")
   name        String
   image       String?
-  productId   Int       @map("product_id")
-  product     Product   @relation(fields: [productId], references: [id])
+  productId   Int?      @map("product_id")
   rating      Int
+  description String    @db.Text
   createdAt   DateTime  @default(now()) @map("created_at")
   answeredAt  DateTime? @map("answered_at")
-  description String    @db.Text
 
+  user      User      @relation(fields: [userId], references: [id])
+  orderItem OrderItem @relation(fields: [orderItemId], references: [id])
+  product   Product?  @relation(fields: [productId], references: [id])
+
+  @@index([userId])
+  @@index([orderItemId])
   @@index([productId])
   @@index([createdAt])
   @@map("review")
@@ -272,6 +279,7 @@ model User {
   checkouts     Checkout[]
   addresses     UserAddress[]
   orders        Order[]
+  reviews       Review[]
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
@@ -446,7 +454,8 @@ model OrderItem {
   isFreeShipping Boolean @default(false) @map("is_free_shipping")
   deliveryMethod String  @map("delivery_method") @db.VarChar(100)
 
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  order  Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  review Review?
 
   @@index([orderId])
   @@map("order_item")
