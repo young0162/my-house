@@ -1,11 +1,104 @@
 import { prisma } from "@/lib/prisma";
-import { CreateOrderRequest, CreateOrderResponse } from "@/types/order";
+import { OrderStatus } from "@/app/generated/prisma";
+import {
+  CreateOrderRequest,
+  CreateOrderResponse,
+  ShoppingOrderStep,
+  ShoppingOrdersResponse,
+} from "@/types/order";
 
 const imageBaseUrl = process.env.PRODUCT_IMAGE_BASE_URL ?? "";
 const buildImageUrl = (filename: string) =>
   imageBaseUrl ? `${imageBaseUrl}/${filename}` : filename;
 
+const formatOrderDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
+  return `${year}.${month}.${day}`;
+};
+
+const ORDER_STEP_BY_STATUS: Partial<Record<OrderStatus, ShoppingOrderStep>> = {
+  PAID: "결제완료",
+  SHIPPING: "배송중",
+  DELIVERED: "구매확정",
+};
+
+const STATUS_LABEL_BY_STATUS = {
+  PAID: "결제완료",
+  SHIPPING: "배송중",
+  DELIVERED: "구매확정",
+  CANCELLED: "주문취소",
+  REFUNDED: "환불완료",
+} as const satisfies Record<OrderStatus, string>;
+
+const DELIVERY_INFO_BY_STATUS = {
+  PAID: "배송준비중",
+  SHIPPING: "배송중",
+  DELIVERED: "배송 완료",
+  CANCELLED: "주문취소",
+  REFUNDED: "환불완료",
+} as const satisfies Record<OrderStatus, string>;
+
+const createEmptySummary = (): Record<ShoppingOrderStep, number> => ({
+  입금대기: 0,
+  결제완료: 0,
+  배송준비: 0,
+  배송중: 0,
+  배송완료: 0,
+  구매확정: 0,
+});
+
 export const orderDbService = {
+  getShoppingOrders: async (userId: string): Promise<ShoppingOrdersResponse> => {
+    const orders = await prisma.order.findMany({
+      where: { userId },
+      orderBy: [{ orderedAt: "desc" }, { id: "desc" }],
+      select: {
+        id: true,
+        status: true,
+        orderedAt: true,
+        items: {
+          orderBy: { id: "asc" },
+          select: {
+            id: true,
+            productName: true,
+            productImage: true,
+            optionLabel: true,
+            price: true,
+            quantity: true,
+          },
+        },
+      },
+    });
+
+    const summary = createEmptySummary();
+
+    const shoppingOrders = orders.map((order) => {
+      const orderStep = ORDER_STEP_BY_STATUS[order.status];
+      if (orderStep) summary[orderStep] += 1;
+
+      return {
+        id: order.id,
+        date: formatOrderDate(order.orderedAt),
+        status: STATUS_LABEL_BY_STATUS[order.status],
+        deliveryInfo: DELIVERY_INFO_BY_STATUS[order.status],
+        products: order.items.map((item) => ({
+          name: item.productName,
+          option: item.optionLabel ?? "옵션 없음",
+          price: item.price,
+          quantity: item.quantity,
+          imageUrl: item.productImage,
+        })),
+      };
+    });
+
+    return {
+      orders: shoppingOrders,
+      summary,
+    };
+  },
+
   createOrder: async (
     userId: string,
     params: CreateOrderRequest,

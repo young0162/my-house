@@ -3,6 +3,20 @@ import { auth } from "@/auth";
 import { orderDbService } from "@/services/order.db";
 import { CreateOrderRequest } from "@/types/order";
 
+export const GET = async () => {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const data = await orderDbService.getShoppingOrders(session.user.id);
+    return NextResponse.json(data);
+  } catch {
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+  }
+};
+
 export const POST = async (req: NextRequest) => {
   const session = await auth();
   if (!session?.user?.id) {
