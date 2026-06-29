@@ -1,0 +1,95 @@
+.card {
+  padding: 24px 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:first-child {
+    border-top: 1px solid $color-border-light;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+
+.productName {
+  font-size: 16px;
+  font-weight: 600;
+  color: $color-text-primary;
+  line-height: 1.4;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover span {
+    color: $color-text-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+.option {
+  font-size: 13px;
+  color: $color-text-tertiary;
+  margin-bottom: 8px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.starFilled {
+  color: $color-primary;
+}
+
+.starEmpty {
+  color: $color-border;
+}
+
+.date {
+  font-size: 13px;
+  color: $color-text-tertiary;
+}
+
+.dot {
+  font-size: 13px;
+  color: $color-text-tertiary;
+}
+
+.purchaseSource {
+  font-size: 13px;
+  color: $color-text-tertiary;
+}
+
+.content {
+  font-size: 14px;
+  color: $color-text-primary;
+  line-height: 1.6;
+  white-space: pre-line;
+}

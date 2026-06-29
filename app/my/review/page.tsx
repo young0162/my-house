@@ -3,7 +3,7 @@
 import { useState } from "react";
 import MyReviewTabs from "@/components/MyPage/MyReviewTabs";
 import ReviewableProductsSection from "@/components/MyPage/ReviewableProductsSection";
-import Text from "@/components/Common/Text";
+import MyReviewSection from "@/components/MyPage/MyReviewSection";
 import { MOCK_REVIEWABLE_PRODUCTS } from "@/constants/myReview";
 import type { MyReviewTab } from "@/types/myReview";
 import styles from "./page.module.scss";
@@ -18,9 +18,7 @@ const ReviewPage = () => {
         {activeTab === "리뷰 남기기" ? (
           <ReviewableProductsSection products={MOCK_REVIEWABLE_PRODUCTS} />
         ) : (
-          <div className={styles.empty}>
-            <Text fontSize={15} color="gray01">내가 남긴 리뷰가 없습니다.</Text>
-          </div>
+          <MyReviewSection />
         )}
       </main>
     </div>
